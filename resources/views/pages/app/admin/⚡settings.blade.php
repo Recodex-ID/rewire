@@ -73,8 +73,13 @@ new #[Title('Settings')] class extends Component
         <flux:subheading>App-wide values used across the public site.</flux:subheading>
     </div>
 
-    <flux:card class="w-full space-y-6">
-        <form wire:submit="save" class="space-y-6">
+    <form wire:submit="save" class="space-y-6">
+        <flux:card class="space-y-4">
+            <div>
+                <flux:heading size="lg">SEO &amp; analytics</flux:heading>
+                <flux:subheading>Applied site-wide on the public pages.</flux:subheading>
+            </div>
+
             <flux:textarea
                 wire:model="seoDescription"
                 label="SEO meta description"
@@ -87,29 +92,37 @@ new #[Title('Settings')] class extends Component
                 label="Google Analytics measurement ID"
                 description="e.g. G-XXXXXXXXXX. Leave blank to disable tracking."
             />
+        </flux:card>
 
-            <div class="space-y-4">
-                <flux:heading size="sm">Social links</flux:heading>
+        <flux:card class="space-y-4">
+            <div>
+                <flux:heading size="lg">Social links</flux:heading>
                 <flux:subheading>Shown in the public site footer. Leave any blank to hide that icon.</flux:subheading>
+            </div>
 
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <flux:input wire:model="socialLinkedin" label="LinkedIn URL" placeholder="https://linkedin.com/company/..." />
                 <flux:input wire:model="socialTwitter" label="Twitter / X URL" placeholder="https://x.com/..." />
                 <flux:input wire:model="socialGithub" label="GitHub URL" placeholder="https://github.com/..." />
                 <flux:input wire:model="socialInstagram" label="Instagram URL" placeholder="https://instagram.com/..." />
             </div>
+        </flux:card>
 
-            <div class="space-y-4">
-                <flux:heading size="sm">Contact details</flux:heading>
+        <flux:card class="space-y-4">
+            <div>
+                <flux:heading size="lg">Contact details</flux:heading>
                 <flux:subheading>Shown in the landing page's call-to-action section.</flux:subheading>
+            </div>
 
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                 <flux:input wire:model="contactAddress" label="Address" placeholder="Jakarta, Indonesia" />
                 <flux:input wire:model="contactEmail" label="Email" placeholder="hello@example.com" />
                 <flux:input wire:model="contactPhone" label="Phone" placeholder="+62 21 0000 0000" />
             </div>
+        </flux:card>
 
-            <div class="flex justify-end">
-                <flux:button type="submit" variant="primary">Save</flux:button>
-            </div>
-        </form>
-    </flux:card>
+        <div class="flex justify-end">
+            <flux:button type="submit" variant="primary">Save</flux:button>
+        </div>
+    </form>
 </div>
