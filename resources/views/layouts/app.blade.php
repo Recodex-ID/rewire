@@ -10,9 +10,9 @@
              otherwise they render as if on a light background and become unreadable. --}}
         <flux:sidebar sticky collapsible="mobile" class="dark border-e border-brand-navy/50 bg-brand-navy">
             <flux:sidebar.header>
-                <flux:sidebar.brand name="Rewire Starter Kit" :href="route('dashboard')" wire:navigate>
-                    <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-lg bg-brand-snow">
-                        <x-landing.icon name="check" class="size-4 text-brand-navy" />
+                <flux:sidebar.brand name="{{ config('app.name') }}" :href="route('dashboard')" wire:navigate>
+                    <x-slot name="logo" class="ring-1 ring-white/10">
+                        <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-6 object-cover">
                     </x-slot>
                 </flux:sidebar.brand>
                 <flux:sidebar.collapse class="lg:hidden" />

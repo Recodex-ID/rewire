@@ -30,9 +30,7 @@
                 </div>
 
                 <a href="{{ route('home') }}" class="relative z-10 flex items-center gap-3" wire:navigate>
-                    <span class="flex size-11 items-center justify-center rounded-xl bg-brand-snow">
-                        <x-landing.icon name="check" class="size-5 text-brand-navy" />
-                    </span>
+                    <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-11 rounded-xl ring-1 ring-brand-snow/10">
                     <span class="flex flex-col leading-none">
                         <span class="font-display text-lg font-bold text-brand-snow">Rewire</span>
                         <span class="mt-1 font-mono text-[10px] tracking-[0.25em] text-brand-silver/60 uppercase">Starter Kit</span>
@@ -78,9 +76,7 @@
             {{-- Form panel --}}
             <div class="relative flex flex-1 flex-col justify-center bg-brand-snow px-6 py-12 sm:px-12 lg:px-16 xl:px-24">
                 <a href="{{ route('home') }}" class="absolute top-8 left-6 flex items-center gap-3 sm:left-12 lg:hidden" wire:navigate>
-                    <span class="flex size-10 items-center justify-center rounded-xl bg-brand-navy">
-                        <x-landing.icon name="check" class="size-4 text-brand-accent" />
-                    </span>
+                    <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-10 rounded-xl">
                     <span class="flex flex-col leading-none">
                         <span class="font-display font-bold text-brand-navy">Rewire</span>
                         <span class="mt-1 font-mono text-[9px] tracking-[0.25em] text-brand-navy/60 uppercase">Starter Kit</span>
