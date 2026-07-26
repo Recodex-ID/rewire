@@ -37,6 +37,9 @@
                         <flux:sidebar.item icon="clock" :href="route('admin.activity')" :current="request()->routeIs('admin.activity')" wire:navigate>
                             Activity log
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="map" :href="route('admin.sitemap')" :current="request()->routeIs('admin.sitemap')" wire:navigate>
+                            Sitemap
+                        </flux:sidebar.item>
                         <flux:sidebar.item icon="cog-6-tooth" :href="route('admin.settings')" :current="request()->routeIs('admin.settings')" wire:navigate>
                             Settings
                         </flux:sidebar.item>
@@ -115,10 +118,24 @@
         </flux:header>
 
         <!-- Desktop Topbar -->
+        @php
+            $breadcrumbGroup = match (true) {
+                str_starts_with(request()->route()?->getName() ?? '', 'admin.') => 'Admin',
+                str_starts_with(request()->route()?->getName() ?? '', 'content-management.') => 'Content Management',
+                default => null,
+            };
+        @endphp
         <flux:header sticky class="hidden border-b border-zinc-200 bg-white lg:flex">
             <div>
-                <div class="font-mono text-[10px] tracking-wider text-zinc-400 uppercase">Rewire</div>
-                <flux:heading size="lg" class="font-display!">{{ $title ?? 'Dashboard' }}</flux:heading>
+                <flux:breadcrumbs>
+                    @unless (request()->routeIs('dashboard'))
+                        <flux:breadcrumbs.item icon="home" :href="route('dashboard')" wire:navigate />
+                    @endunless
+                    @if ($breadcrumbGroup)
+                        <flux:breadcrumbs.item>{{ $breadcrumbGroup }}</flux:breadcrumbs.item>
+                    @endif
+                    <flux:breadcrumbs.item>{{ $title ?? 'Dashboard' }}</flux:breadcrumbs.item>
+                </flux:breadcrumbs>
             </div>
 
             <flux:spacer />
