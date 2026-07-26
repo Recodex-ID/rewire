@@ -48,7 +48,10 @@ test('changing a role logs activity', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')->call('updateRole', $member->id, 'admin');
+    Livewire::test('pages::app.admin.users')
+        ->call('edit', $member->id)
+        ->set('editingRole', 'admin')
+        ->call('updateRole');
 
     $activity = Activity::query()->latest()->first();
 

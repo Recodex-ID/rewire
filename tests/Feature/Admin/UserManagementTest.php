@@ -30,7 +30,10 @@ test('admin can change another user\'s role', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')->call('updateRole', $member->id, 'admin');
+    Livewire::test('pages::app.admin.users')
+        ->call('edit', $member->id)
+        ->set('editingRole', 'admin')
+        ->call('updateRole');
 
     expect($member->fresh()->hasRole('admin'))->toBeTrue();
     expect($member->fresh()->hasRole('member'))->toBeFalse();
@@ -44,7 +47,11 @@ test('changing a role to one that does not exist is rejected', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')->call('updateRole', $member->id, 'superuser');
+    Livewire::test('pages::app.admin.users')
+        ->call('edit', $member->id)
+        ->set('editingRole', 'superuser')
+        ->call('updateRole')
+        ->assertHasErrors(['editingRole']);
 
     expect($member->fresh()->hasRole('member'))->toBeTrue();
     expect($member->fresh()->hasRole('superuser'))->toBeFalse();
@@ -56,7 +63,10 @@ test('admin cannot remove their own admin role', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')->call('updateRole', $admin->id, 'member');
+    Livewire::test('pages::app.admin.users')
+        ->call('edit', $admin->id)
+        ->set('editingRole', 'member')
+        ->call('updateRole');
 
     expect($admin->fresh()->hasRole('admin'))->toBeTrue();
 });

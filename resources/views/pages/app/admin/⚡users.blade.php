@@ -27,6 +27,10 @@ new #[Title('Users')] class extends Component
 
     public string $role = 'member';
 
+    public ?int $editingUserId = null;
+
+    public string $editingRole = 'member';
+
     public function updatingSearch(): void
     {
         $this->resetPage();
@@ -61,27 +65,37 @@ new #[Title('Users')] class extends Component
         Flux::modal('create-user')->close();
     }
 
-    public function updateRole(int $userId, string $role): void
+    public function edit(int $userId): void
     {
-        if (! Role::query()->where('name', $role)->exists()) {
-            Flux::toast(variant: 'danger', text: 'That role does not exist.');
+        $user = User::query()->with('roles')->findOrFail($userId);
 
-            return;
-        }
+        $this->editingUserId = $user->id;
+        $this->editingRole = $user->roles->first()?->name ?? 'member';
 
-        $user = User::query()->findOrFail($userId);
+        Flux::modal('edit-user')->show();
+    }
 
-        if ($user->is(Auth::user()) && $role !== 'admin') {
+    public function updateRole(): void
+    {
+        $this->validate([
+            'editingRole' => ['required', 'string', Rule::in(Role::query()->pluck('name'))],
+        ]);
+
+        $user = User::query()->findOrFail($this->editingUserId);
+
+        if ($user->is(Auth::user()) && $this->editingRole !== 'admin') {
             Flux::toast(variant: 'danger', text: 'You cannot remove your own admin role.');
 
             return;
         }
 
-        $user->syncRoles([$role]);
+        $user->syncRoles([$this->editingRole]);
 
-        activity('users')->performedOn($user)->withProperties(['role' => $role])->log("{$user->name}'s role was changed to {$role}");
+        activity('users')->performedOn($user)->withProperties(['role' => $this->editingRole])->log("{$user->name}'s role was changed to {$this->editingRole}");
 
         Flux::toast(variant: 'success', text: "{$user->name}'s role was updated.");
+
+        Flux::modal('edit-user')->close();
     }
 
     public function delete(int $userId): void
@@ -108,6 +122,12 @@ new #[Title('Users')] class extends Component
     public function roles()
     {
         return Role::query()->pluck('name');
+    }
+
+    #[Computed]
+    public function editingUser(): ?User
+    {
+        return $this->editingUserId ? User::query()->find($this->editingUserId) : null;
     }
 
     #[Computed]
@@ -152,24 +172,20 @@ new #[Title('Users')] class extends Component
                     <flux:table.row :key="$user->id">
                         <flux:table.cell variant="strong">{{ $user->name }}</flux:table.cell>
                         <flux:table.cell class="whitespace-nowrap">{{ $user->email }}</flux:table.cell>
-                        <flux:table.cell class="py-2">
-                            <flux:select
-                                size="sm"
-                                class="w-32"
-                                wire:change="updateRole({{ $user->id }}, $event.target.value)"
-                            >
-                                @foreach ($this->roles as $role)
-                                    <flux:select.option value="{{ $role }}" :selected="$user->hasRole($role)">
-                                        {{ ucfirst($role) }}
-                                    </flux:select.option>
-                                @endforeach
-                            </flux:select>
+                        <flux:table.cell>
+                            <flux:badge size="sm" :color="$user->hasRole('admin') ? 'indigo' : 'zinc'">
+                                {{ ucfirst($user->roles->first()?->name ?? 'member') }}
+                            </flux:badge>
                         </flux:table.cell>
                         <flux:table.cell class="whitespace-nowrap">{{ $user->created_at->translatedFormat('l, j F Y') }}</flux:table.cell>
                         <flux:table.cell class="py-0">
-                            <flux:modal.trigger name="delete-user-{{ $user->id }}">
-                                <flux:button type="button" variant="danger" size="sm" icon="trash" :disabled="$user->is(Auth::user())" />
-                            </flux:modal.trigger>
+                            <div class="flex items-center gap-1">
+                                <flux:button type="button" variant="outline" size="sm" icon="pencil" wire:click="edit({{ $user->id }})" />
+
+                                <flux:modal.trigger name="delete-user-{{ $user->id }}">
+                                    <flux:button type="button" variant="danger" size="sm" icon="trash" :disabled="$user->is(Auth::user())" />
+                                </flux:modal.trigger>
+                            </div>
 
                             <flux:modal name="delete-user-{{ $user->id }}" class="max-w-md" focusable>
                                 <div class="space-y-6">
@@ -220,6 +236,29 @@ new #[Title('Users')] class extends Component
                 </flux:modal.close>
 
                 <flux:button type="submit" variant="primary">Create user</flux:button>
+            </div>
+        </form>
+    </flux:modal>
+
+    <flux:modal name="edit-user" class="max-w-md" focusable>
+        <form wire:submit="updateRole" class="space-y-6">
+            <div>
+                <flux:heading size="lg">Edit {{ $this->editingUser?->name }}</flux:heading>
+                <flux:subheading>Change this account's role.</flux:subheading>
+            </div>
+
+            <flux:select wire:model="editingRole" label="Role">
+                @foreach ($this->roles as $role)
+                    <flux:select.option value="{{ $role }}">{{ ucfirst($role) }}</flux:select.option>
+                @endforeach
+            </flux:select>
+
+            <div class="flex justify-end gap-2">
+                <flux:modal.close>
+                    <flux:button variant="filled">Cancel</flux:button>
+                </flux:modal.close>
+
+                <flux:button type="submit" variant="primary">Save</flux:button>
             </div>
         </form>
     </flux:modal>
