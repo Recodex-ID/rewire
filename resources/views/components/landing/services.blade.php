@@ -52,7 +52,7 @@
     $last = count($items) - 1;
 @endphp
 
-<section class="bg-brand-snow">
+<section id="services" class="scroll-mt-24 bg-brand-snow">
     <div class="mx-auto max-w-7xl px-6 py-24">
         <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div class="landing-reveal lg:w-3/5">

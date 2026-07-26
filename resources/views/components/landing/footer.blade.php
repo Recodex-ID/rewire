@@ -9,11 +9,11 @@
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div class="landing-reveal lg:col-span-4">
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
-                    <span class="flex size-9 items-center justify-center rounded-lg bg-brand-accent font-display text-lg font-bold text-brand-navy">R</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-9 rounded-lg ring-1 ring-brand-snow/10">
                     <span class="font-display text-lg font-semibold text-brand-snow">{{ config('app.name') }}</span>
                 </a>
                 <p class="mt-5 max-w-sm text-sm text-brand-silver/80">
-                    A reusable Laravel starter kit for internal and client projects — authentication, roles, and a CMS-managed landing page, ready to go.
+                    A reusable Laravel starter kit for internal and client projects — authentication, roles, a blog, and a back office, ready to go.
                 </p>
                 @if ($socialLinks->isNotEmpty())
                     <div class="mt-6 flex items-center gap-3">
@@ -35,17 +35,17 @@
                 [
                     'heading' => 'Product',
                     'links' => [
-                        ['label' => 'Services', 'url' => '#services'],
-                        ['label' => 'Infrastructure', 'url' => '#infrastructure'],
-                        ['label' => 'Solutions', 'url' => '#solutions'],
-                        ['label' => 'Blog', 'url' => '/blog'],
+                        ['label' => 'Services', 'url' => route('home').'#services'],
+                        ['label' => 'Infrastructure', 'url' => route('home').'#infrastructure'],
+                        ['label' => 'Solutions', 'url' => route('home').'#solutions'],
+                        ['label' => 'Blog', 'url' => route('blogs')],
                     ],
                 ],
                 [
                     'heading' => 'Company',
                     'links' => [
-                        ['label' => 'About', 'url' => '#about'],
-                        ['label' => 'Contact', 'url' => '#contact'],
+                        ['label' => 'About', 'url' => route('home').'#about'],
+                        ['label' => 'Contact', 'url' => route('home').'#contact'],
                     ],
                 ],
                 [

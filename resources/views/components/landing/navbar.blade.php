@@ -6,13 +6,8 @@
 >
     <div class="mx-auto max-w-7xl px-6">
         <div class="flex h-16 items-center justify-between lg:h-20">
-            <a href="/" class="flex items-center gap-3">
-                <span class="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-navy">
-                    <svg viewBox="0 0 24 24" class="size-5 text-brand-accent" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 4v16M4 12h16" />
-                        <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
-                    </svg>
-                </span>
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
+                <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-10 shrink-0 rounded-xl">
                 <span class="flex flex-col leading-none">
                     <span class="font-display text-lg font-bold text-brand-navy">
                         Rewire
@@ -25,12 +20,12 @@
 
             <div class="hidden items-center gap-1 lg:flex">
                 @foreach ([
-                    ['label' => 'Services', 'url' => '#services'],
-                    ['label' => 'Infrastructure', 'url' => '#infrastructure'],
-                    ['label' => 'Solutions', 'url' => '#solutions'],
-                    ['label' => 'About', 'url' => '#about'],
-                    ['label' => 'Blog', 'url' => '/blog'],
-                    ['label' => 'Contact', 'url' => '#contact'],
+                    ['label' => 'Services', 'url' => route('home').'#services'],
+                    ['label' => 'Infrastructure', 'url' => route('home').'#infrastructure'],
+                    ['label' => 'Solutions', 'url' => route('home').'#solutions'],
+                    ['label' => 'About', 'url' => route('home').'#about'],
+                    ['label' => 'Blog', 'url' => route('blogs')],
+                    ['label' => 'Contact', 'url' => route('home').'#contact'],
                 ] as $item)
                     <a
                         href="{{ $item['url'] }}"
@@ -43,7 +38,7 @@
 
             <div class="flex items-center gap-2">
                 <a
-                    href="#contact"
+                    href="{{ route('home') }}#contact"
                     class="hidden items-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light lg:inline-flex"
                 >
                     Get started
@@ -65,12 +60,12 @@
     <div x-show="open" x-collapse x-cloak class="border-t border-brand-navy/10 lg:hidden">
         <div class="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             @foreach ([
-                ['label' => 'Services', 'url' => '#services'],
-                ['label' => 'Infrastructure', 'url' => '#infrastructure'],
-                ['label' => 'Solutions', 'url' => '#solutions'],
-                ['label' => 'About', 'url' => '#about'],
-                ['label' => 'Blog', 'url' => '/blog'],
-                ['label' => 'Contact', 'url' => '#contact'],
+                ['label' => 'Services', 'url' => route('home').'#services'],
+                ['label' => 'Infrastructure', 'url' => route('home').'#infrastructure'],
+                ['label' => 'Solutions', 'url' => route('home').'#solutions'],
+                ['label' => 'About', 'url' => route('home').'#about'],
+                ['label' => 'Blog', 'url' => route('blogs')],
+                ['label' => 'Contact', 'url' => route('home').'#contact'],
             ] as $item)
                 <a
                     href="{{ $item['url'] }}"
@@ -81,7 +76,7 @@
                 </a>
             @endforeach
             <a
-                href="#contact"
+                href="{{ route('home') }}#contact"
                 class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light"
             >
                 Get started

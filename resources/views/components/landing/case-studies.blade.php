@@ -23,7 +23,7 @@
     ];
 @endphp
 
-<section class="bg-brand-snow py-24 sm:py-32">
+<section id="solutions" class="scroll-mt-24 bg-brand-snow py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="landing-reveal max-w-2xl">
             <p class="font-mono text-sm uppercase tracking-widest text-brand-accent-dark">

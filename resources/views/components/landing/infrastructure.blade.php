@@ -6,7 +6,7 @@
     ];
 @endphp
 
-<section class="relative overflow-hidden bg-brand-navy text-brand-snow">
+<section id="infrastructure" class="relative scroll-mt-24 overflow-hidden bg-brand-navy text-brand-snow">
     <div class="landing-grid-bg-dark absolute inset-0"></div>
     <div class="relative mx-auto max-w-7xl px-6 py-24 lg:px-8">
         <div class="grid gap-16 lg:grid-cols-12 lg:items-center lg:gap-8">

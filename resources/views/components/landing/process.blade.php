@@ -11,7 +11,7 @@
     ];
 @endphp
 
-<section class="bg-brand-snow py-24">
+<section id="about" class="scroll-mt-24 bg-brand-snow py-24">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
             <div class="landing-reveal lg:col-span-5">

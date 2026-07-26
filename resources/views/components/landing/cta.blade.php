@@ -4,7 +4,7 @@
     $contactPhone = \App\Models\Setting::get('contact_phone');
 @endphp
 
-<section class="bg-brand-snow py-24">
+<section id="contact" class="scroll-mt-24 bg-brand-snow py-24">
     <div class="landing-reveal relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-brand-navy px-6 py-16 sm:px-12 lg:px-16">
         <div class="landing-grid-bg-dark absolute inset-0"></div>
 
