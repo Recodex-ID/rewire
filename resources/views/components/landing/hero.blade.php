@@ -6,13 +6,13 @@
     ];
 @endphp
 
-<section id="hero" class="relative overflow-hidden bg-brand-navy">
+<section id="hero" class="relative h-screen overflow-hidden bg-brand-navy">
     <div class="landing-grid-bg-dark absolute inset-0 opacity-50"></div>
 
     <div class="landing-animate-float absolute -top-24 -left-24 size-72 rounded-full bg-brand-accent/20 blur-3xl"></div>
     <div class="landing-animate-float-slow absolute right-0 -bottom-24 size-72 rounded-full bg-brand-accent/10 blur-3xl"></div>
 
-    <div class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:py-32">
+    <div class="relative mx-auto grid h-full max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
         <div>
             <div class="landing-reveal inline-flex items-center gap-2 rounded-full border border-brand-snow/10 bg-brand-snow/5 px-4 py-1.5 font-mono text-xs text-brand-snow backdrop-blur-sm">
                 <span>Built on Laravel &amp; Livewire</span>
