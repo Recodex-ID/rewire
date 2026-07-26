@@ -42,6 +42,7 @@ composer install
 npm install
 cp .env.example .env
 php artisan key:generate
+php artisan storage:link
 php artisan migrate --seed
 composer run dev
 ```
@@ -70,7 +71,7 @@ Or `composer test`, which runs formatting, static analysis, and the full suite t
 ## Reusing this for a new project
 
 1. Update `APP_NAME` and other `.env` values for the new project.
-2. Swap the brand palette in `resources/css/app.css` (`--color-brand-*`) and the logo mark in `resources/views/components/landing/icon.blade.php`.
+2. Swap the brand palette in `resources/css/app.css` (`--color-brand-*`) and the logo mark in `public/images/logo.png`.
 3. Replace the seeded accounts (`database/seeders/UserSeeder.php`) and the landing page copy, which is hardcoded directly in `resources/views/components/landing/*`.
 4. Update `composer.json`'s `name`/`description` if the repo is being renamed too.
 
