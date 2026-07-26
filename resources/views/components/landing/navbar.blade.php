@@ -1,6 +1,6 @@
 @if ($section?->is_visible)
     <nav
-        x-data="{ open: false, scrolled: false }"
+        x-data="{ open: false, scrolled: false, dark: document.documentElement.classList.contains('dark') }"
         x-on:scroll.window="scrolled = window.scrollY > 20"
         :class="scrolled ? 'shadow-sm bg-brand-snow/95 dark:bg-zinc-900/95' : 'bg-brand-snow/80 dark:bg-zinc-900/80'"
         class="fixed inset-x-0 top-0 z-50 backdrop-blur transition-colors"
@@ -35,24 +35,34 @@
                     @endforeach
                 </div>
 
-                <div class="hidden lg:block">
+                <div class="flex items-center gap-2">
+                    <button
+                        type="button"
+                        x-on:click="dark = !dark; document.documentElement.classList.toggle('dark', dark); localStorage.setItem('landing-theme', dark ? 'dark' : 'light')"
+                        class="inline-flex size-10 items-center justify-center rounded-full text-brand-navy hover:bg-brand-navy/5 dark:text-brand-snow dark:hover:bg-brand-snow/10"
+                        aria-label="Toggle color scheme"
+                    >
+                        <x-landing.icon x-show="!dark" name="sun" class="size-5" />
+                        <x-landing.icon x-show="dark" x-cloak name="moon" class="size-5" />
+                    </button>
+
                     <a
                         href="{{ $section->content['cta_url'] ?? '#' }}"
-                        class="inline-flex items-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light dark:bg-brand-accent dark:text-brand-navy dark:hover:bg-brand-accent-dark"
+                        class="hidden items-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light lg:inline-flex dark:bg-brand-accent dark:text-brand-navy dark:hover:bg-brand-accent-dark"
                     >
                         {{ $section->content['cta_text'] ?? '' }}
                     </a>
-                </div>
 
-                <button
-                    type="button"
-                    x-on:click="open = !open"
-                    class="inline-flex size-10 items-center justify-center rounded-full text-brand-navy hover:bg-brand-navy/5 lg:hidden dark:text-brand-snow dark:hover:bg-brand-snow/10"
-                    aria-label="Toggle menu"
-                >
-                    <x-landing.icon x-show="!open" name="menu" class="size-5" />
-                    <x-landing.icon x-show="open" x-cloak name="close" class="size-5" />
-                </button>
+                    <button
+                        type="button"
+                        x-on:click="open = !open"
+                        class="inline-flex size-10 items-center justify-center rounded-full text-brand-navy hover:bg-brand-navy/5 lg:hidden dark:text-brand-snow dark:hover:bg-brand-snow/10"
+                        aria-label="Toggle menu"
+                    >
+                        <x-landing.icon x-show="!open" name="menu" class="size-5" />
+                        <x-landing.icon x-show="open" x-cloak name="close" class="size-5" />
+                    </button>
+                </div>
             </div>
         </div>
 

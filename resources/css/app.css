@@ -13,7 +13,7 @@
     --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-    /* Landing page brand palette — namespaced so it never collides with Flux's own --color-accent-*. */
+    /* Brand palette, shared by the landing page and (via --color-accent-* below) the Flux-powered app UI. */
     --color-brand-navy: #1a2a4b;
     --color-brand-navy-light: #2a3a5b;
     --color-brand-silver: #bcbfc4;
@@ -33,16 +33,16 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
-    --color-accent-foreground: var(--color-white);
+    --color-accent: var(--color-brand-navy);
+    --color-accent-content: var(--color-brand-accent-dark);
+    --color-accent-foreground: var(--color-brand-snow);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: var(--color-brand-accent);
+        --color-accent-content: var(--color-brand-accent);
+        --color-accent-foreground: var(--color-brand-navy);
     }
 }
 

@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
     {
         LandingPageSection::query()->updateOrCreate(['key' => 'navbar'], [
             'content' => [
-                'logo_text' => 'Recodex',
+                'logo_text' => 'Rewire',
                 'logo_subtext' => 'Starter Kit',
                 'nav_items' => [
                     ['label' => 'Services', 'url' => '#services'],
@@ -235,6 +235,7 @@ class DatabaseSeeder extends Seeder
                 'items' => [
                     ['quote' => 'This starter kit saved us weeks of setup on our last three client projects.', 'name' => 'Jane Doe', 'role' => 'Founder, Acme Inc', 'rating' => 5],
                     ['quote' => 'Handing the landing page over to the client was painless — they edit it themselves now.', 'name' => 'John Smith', 'role' => 'Lead Developer', 'rating' => 5],
+                    ['quote' => 'Roles were already wired up, so gating our admin panel took minutes instead of days.', 'name' => 'Amelia Putri', 'role' => 'CTO, Nimbus Studio', 'rating' => 5],
                 ],
             ],
         ]);
@@ -289,7 +290,7 @@ class DatabaseSeeder extends Seeder
                     ['platform' => 'twitter', 'url' => '#'],
                     ['platform' => 'github', 'url' => '#'],
                 ],
-                'copyright_text' => '© '.date('Y').' Recodex. All rights reserved.',
+                'copyright_text' => '© '.date('Y').' Rewire Starterkit. All rights reserved.',
             ],
         ]);
     }
