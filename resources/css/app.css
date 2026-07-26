@@ -10,6 +10,16 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* Landing page brand palette — namespaced so it never collides with Flux's own --color-accent-*. */
+    --color-brand-navy: #1a2a4b;
+    --color-brand-navy-light: #2a3a5b;
+    --color-brand-silver: #bcbfc4;
+    --color-brand-snow: #fefefe;
+    --color-brand-accent: #4da3ff;
+    --color-brand-accent-dark: #2e7dd8;
 
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
@@ -64,3 +74,92 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+/* Landing page — shared animation utilities (public marketing page, no Flux components used here). */
+.landing-grid-bg {
+    background-image:
+        linear-gradient(rgba(26, 42, 75, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 42, 75, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+.landing-grid-bg-dark {
+    background-image:
+        linear-gradient(rgba(254, 254, 254, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(254, 254, 254, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+.landing-dot-pattern {
+    background-image: radial-gradient(circle, rgba(26, 42, 75, 0.12) 1.2px, transparent 1.2px);
+    background-size: 28px 28px;
+}
+
+@keyframes landing-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes landing-spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes landing-spin-reverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+@keyframes landing-scroll-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes landing-pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.landing-animate-float { animation: landing-float 6s ease-in-out infinite; }
+.landing-animate-float-slow { animation: landing-float 8s ease-in-out infinite; animation-delay: 1s; }
+.landing-animate-spin-slow { animation: landing-spin-slow 40s linear infinite; }
+.landing-animate-spin-reverse { animation: landing-spin-reverse 30s linear infinite; }
+.landing-animate-scroll-x { animation: landing-scroll-x 40s linear infinite; }
+.landing-animate-pulse-soft { animation: landing-pulse-soft 3s ease-in-out infinite; }
+
+.landing-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-reveal.landing-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.landing-reveal-delay-1 { transition-delay: 0.1s; }
+.landing-reveal-delay-2 { transition-delay: 0.2s; }
+.landing-reveal-delay-3 { transition-delay: 0.3s; }
+.landing-reveal-delay-4 { transition-delay: 0.4s; }
+
+.landing-marquee-mask {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.landing-card-hover {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -15px rgba(26, 42, 75, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .landing-reveal, [class*='landing-animate-'] {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

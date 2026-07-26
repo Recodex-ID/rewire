@@ -1,13 +1,9 @@
 <?php
 
-use App\Models\LandingPageSection;
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index', [
-        'sections' => LandingPageSection::query()->get()->keyBy('key'),
-    ]);
-})->name('home');
+Route::get('/', [MainController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('dashboard', 'pages::dashboard')->name('dashboard');

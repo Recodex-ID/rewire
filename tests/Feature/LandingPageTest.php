@@ -5,20 +5,37 @@ use App\Models\LandingPageSection;
 test('landing page shows visible section content and hides invisible sections', function () {
     LandingPageSection::create([
         'key' => 'hero',
-        'content' => ['heading' => 'Welcome to Acme', 'subheading' => 'Sub', 'cta_text' => 'Start', 'cta_url' => '/register'],
+        'content' => [
+            'heading_line1' => 'Welcome to',
+            'heading_highlight' => 'Acme',
+            'heading_line2' => '',
+            'subheading' => 'Sub',
+            'primary_cta_text' => 'Start',
+            'primary_cta_url' => '/register',
+            'secondary_cta_text' => '',
+            'secondary_cta_url' => '',
+            'badge_text' => '',
+            'badge_secondary' => '',
+            'stats' => [],
+        ],
         'is_visible' => true,
     ]);
 
     LandingPageSection::create([
         'key' => 'cta',
-        'content' => ['heading' => 'Hidden CTA', 'button_text' => 'Go', 'button_url' => '/x'],
+        'content' => [
+            'eyebrow' => '', 'heading_line1' => 'Hidden CTA', 'heading_line2' => '', 'subheading' => '',
+            'primary_text' => 'Go', 'primary_url' => '/x', 'secondary_text' => '', 'secondary_url' => '',
+            'contact_label' => '', 'address_label' => '', 'address' => '', 'email' => '', 'phone' => '',
+        ],
         'is_visible' => false,
     ]);
 
     $response = $this->get(route('home'));
 
     $response->assertOk();
-    $response->assertSee('Welcome to Acme');
+    $response->assertSee('Welcome to');
+    $response->assertSee('Acme');
     $response->assertDontSee('Hidden CTA');
 });
 

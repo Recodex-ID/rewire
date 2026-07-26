@@ -5,13 +5,6 @@ use App\Models\User;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
-beforeEach(function () {
-    LandingPageSection::create(['key' => 'hero', 'content' => ['heading' => 'H', 'subheading' => 'S', 'cta_text' => 'C', 'cta_url' => '/'], 'is_visible' => true]);
-    LandingPageSection::create(['key' => 'features', 'content' => ['heading' => 'F', 'items' => []], 'is_visible' => true]);
-    LandingPageSection::create(['key' => 'testimonials', 'content' => ['heading' => 'T', 'items' => []], 'is_visible' => true]);
-    LandingPageSection::create(['key' => 'cta', 'content' => ['heading' => 'C', 'button_text' => 'B', 'button_url' => '/'], 'is_visible' => true]);
-});
-
 test('non-admin cannot access the landing page editor', function () {
     $user = User::factory()->create();
 
@@ -26,37 +19,83 @@ test('admin can view the landing page editor', function () {
 });
 
 test('admin can update the hero section', function () {
+    LandingPageSection::create([
+        'key' => 'hero',
+        'content' => [
+            'heading_line1' => 'H1', 'heading_highlight' => 'H2', 'heading_line2' => 'H3', 'subheading' => 'S',
+            'primary_cta_text' => 'Go', 'primary_cta_url' => '/', 'secondary_cta_text' => '', 'secondary_cta_url' => '',
+            'badge_text' => '', 'badge_secondary' => '', 'stats' => [],
+        ],
+        'is_visible' => true,
+    ]);
+
     $admin = User::factory()->create();
     $admin->assignRole(Role::findOrCreate('admin'));
 
     $this->actingAs($admin);
 
     Livewire::test('pages::admin.landing-page')
-        ->set('hero.heading', 'New heading')
-        ->set('hero.subheading', 'New subheading')
-        ->set('hero.cta_text', 'Go')
-        ->set('hero.cta_url', '/go')
-        ->call('saveHero')
+        ->set('hero.heading_line1', 'New heading')
+        ->call('save', 'hero')
         ->assertHasNoErrors();
 
-    expect(LandingPageSection::where('key', 'hero')->first()->content['heading'])->toBe('New heading');
+    expect(LandingPageSection::where('key', 'hero')->first()->content['heading_line1'])->toBe('New heading');
 });
 
-test('admin can add and save a feature item', function () {
+test('admin can add and save a service item', function () {
+    LandingPageSection::create([
+        'key' => 'services',
+        'content' => ['eyebrow' => '', 'heading' => 'H', 'subheading' => '', 'items' => []],
+        'is_visible' => true,
+    ]);
+
     $admin = User::factory()->create();
     $admin->assignRole(Role::findOrCreate('admin'));
 
     $this->actingAs($admin);
 
     Livewire::test('pages::admin.landing-page')
-        ->call('addFeature')
-        ->set('features.heading', 'Why us')
-        ->set('features.items.0.title', 'Fast')
-        ->set('features.items.0.description', 'Really fast')
-        ->call('saveFeatures')
+        ->call('addServiceItem')
+        ->set('services.items.0.number', '01')
+        ->set('services.items.0.category', 'Cat')
+        ->set('services.items.0.icon', 'cloud')
+        ->set('services.items.0.title', 'Fast')
+        ->set('services.items.0.description', 'Really fast')
+        ->set('services.items.0.tags', 'A, B')
+        ->call('save', 'services')
         ->assertHasNoErrors();
 
-    expect(LandingPageSection::where('key', 'features')->first()->content['items'])->toBe([
-        ['title' => 'Fast', 'description' => 'Really fast'],
+    expect(LandingPageSection::where('key', 'services')->first()->content['items'])->toBe([
+        ['number' => '01', 'category' => 'Cat', 'icon' => 'cloud', 'title' => 'Fast', 'description' => 'Really fast', 'tags' => ['A', 'B']],
+    ]);
+});
+
+test('admin can toggle a section footer link list', function () {
+    LandingPageSection::create([
+        'key' => 'footer',
+        'content' => ['tagline' => '', 'columns' => [], 'social' => [], 'copyright_text' => ''],
+        'is_visible' => true,
+    ]);
+
+    $admin = User::factory()->create();
+    $admin->assignRole(Role::findOrCreate('admin'));
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::admin.landing-page')
+        ->call('addFooterColumn')
+        ->set('footer.columns.0.heading', 'Product')
+        ->set('footer.columns.0.links', "Services|#services\nAbout|#about")
+        ->call('save', 'footer')
+        ->assertHasNoErrors();
+
+    expect(LandingPageSection::where('key', 'footer')->first()->content['columns'])->toBe([
+        [
+            'heading' => 'Product',
+            'links' => [
+                ['label' => 'Services', 'url' => '#services'],
+                ['label' => 'About', 'url' => '#about'],
+            ],
+        ],
     ]);
 });
