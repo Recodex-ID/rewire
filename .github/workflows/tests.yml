@@ -74,20 +74,22 @@ jobs:
       # Simulates exactly what `laravel new my-app --using=recodex-id/rewire` triggers under the
       # hood (`composer create-project`), against this checkout rather than whatever's currently
       # published on Packagist -- so a regression here is caught before it's ever published.
+      # The destination must live outside $GITHUB_WORKSPACE: it's also the path-repository
+      # source, and Composer refuses to install a path package into its own source directory.
       - name: Simulate a fresh `composer create-project` install
         run: |
           composer create-project \
             --repository='{"type":"path","url":"'"$GITHUB_WORKSPACE"'","options":{"symlink":false}}' \
-            recodex-id/rewire fresh-install --stability=dev --no-interaction
+            recodex-id/rewire "$RUNNER_TEMP/fresh-install" --stability=dev --no-interaction
 
       - name: Build frontend assets
-        working-directory: fresh-install
+        working-directory: ${{ runner.temp }}/fresh-install
         run: |
           npm install
           npm run build
 
       - name: Verify the installed app actually boots and serves seeded data
-        working-directory: fresh-install
+        working-directory: ${{ runner.temp }}/fresh-install
         run: |
           php artisan migrate:status
           php artisan serve --no-interaction &
