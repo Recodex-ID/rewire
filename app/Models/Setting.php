@@ -50,6 +50,22 @@ class Setting extends Model
             ->logOnlyDirty()
             ->dontLogEmptyChanges()
             ->useLogName('settings')
-            ->setDescriptionForEvent(fn (string $eventName) => "Setting \"{$this->key}\" was {$eventName}");
+            ->setDescriptionForEvent(fn (string $eventName) => self::label($this->key)." was {$eventName}");
+    }
+
+    private static function label(string $key): string
+    {
+        return match ($key) {
+            'seo_description' => 'SEO meta description',
+            'analytics_id' => 'Google Analytics measurement ID',
+            'social_linkedin' => 'LinkedIn URL',
+            'social_twitter' => 'Twitter / X URL',
+            'social_github' => 'GitHub URL',
+            'social_instagram' => 'Instagram URL',
+            'contact_address' => 'Contact address',
+            'contact_email' => 'Contact email',
+            'contact_phone' => 'Contact phone',
+            default => "Setting \"{$key}\"",
+        };
     }
 }
