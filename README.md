@@ -27,6 +27,14 @@ A reusable Laravel starter kit for internal and client projects — authenticati
 
 ## Getting started
 
+Requires a running MySQL server with an empty database created ahead of time (matching `DB_DATABASE` in `.env`, `rewire` by default):
+
+```bash
+mysql -u root -e "CREATE DATABASE rewire"
+```
+
+Then:
+
 ```bash
 git clone https://github.com/Recodex-ID/rewire.git
 cd rewire
