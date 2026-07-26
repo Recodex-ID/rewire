@@ -5,11 +5,10 @@ use Livewire\Component;
 
 new #[Title('Landing page')] class extends Component
 {
-    public string $activeTab = 'navbar';
+    public string $activeTab = 'hero';
 
     /** @var array<string, string> */
     private const SECTION_LABELS = [
-        'navbar' => 'Navbar',
         'hero' => 'Hero',
         'trusted-by' => 'Trusted by',
         'services' => 'Services',
@@ -19,7 +18,6 @@ new #[Title('Landing page')] class extends Component
         'process' => 'Process',
         'testimonials' => 'Testimonials',
         'cta' => 'Call to action',
-        'footer' => 'Footer',
     ];
 
     /**
@@ -51,9 +49,7 @@ new #[Title('Landing page')] class extends Component
         @endforeach
     </div>
 
-    @if ($activeTab === 'navbar')
-        <livewire:pages::app.landing-page.navbar key="landing-panel-navbar" />
-    @elseif ($activeTab === 'hero')
+    @if ($activeTab === 'hero')
         <livewire:pages::app.landing-page.hero key="landing-panel-hero" />
     @elseif ($activeTab === 'trusted-by')
         <livewire:pages::app.landing-page.trusted-by key="landing-panel-trusted-by" />
@@ -71,7 +67,5 @@ new #[Title('Landing page')] class extends Component
         <livewire:pages::app.landing-page.testimonials key="landing-panel-testimonials" />
     @elseif ($activeTab === 'cta')
         <livewire:pages::app.landing-page.cta key="landing-panel-cta" />
-    @elseif ($activeTab === 'footer')
-        <livewire:pages::app.landing-page.footer key="landing-panel-footer" />
     @endif
 </div>
