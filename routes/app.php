@@ -20,7 +20,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::livewire('app/landing-page', 'pages::app.landing-page')->name('app.landing-page.edit');
     Route::livewire('app/settings', 'pages::app.settings')->name('app.settings.edit');
     Route::livewire('app/users', 'pages::app.users')->name('app.users.index');
     Route::livewire('app/activity', 'pages::app.activity')->name('app.activity.index');

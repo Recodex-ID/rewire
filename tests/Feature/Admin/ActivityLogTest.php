@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\LandingPageSection;
 use App\Models\User;
 use Livewire\Livewire;
 use Spatie\Activitylog\Models\Activity;
@@ -17,37 +16,6 @@ test('admin can view the activity log page', function () {
     $admin->syncRoles(Role::findOrCreate('admin'));
 
     $this->actingAs($admin)->get(route('app.activity.index'))->assertOk();
-});
-
-test('updating a landing page section logs activity', function () {
-    LandingPageSection::create([
-        'key' => 'hero',
-        'content' => [
-            'heading_line1' => 'H1', 'heading_highlight' => 'H2', 'heading_line2' => 'H3', 'subheading' => 'S',
-            'primary_cta_text' => 'Go', 'primary_cta_url' => '/', 'secondary_cta_text' => '', 'secondary_cta_url' => '',
-            'badge_text' => '', 'badge_secondary' => '', 'stats' => [],
-        ],
-        'is_visible' => true,
-    ]);
-
-    $admin = User::factory()->create();
-    $admin->syncRoles(Role::findOrCreate('admin'));
-
-    $this->actingAs($admin);
-
-    expect(Activity::count())->toBe(1);
-
-    Livewire::test('pages::app.landing-page.hero')
-        ->set('data.heading_line1', 'New heading')
-        ->call('save')
-        ->assertHasNoErrors();
-
-    expect(Activity::count())->toBe(2);
-
-    $activity = Activity::query()->latest('id')->first();
-
-    expect($activity->event)->toBe('updated');
-    expect($activity->description)->toContain('hero');
 });
 
 test('creating a user logs activity with the acting admin as causer', function () {

@@ -1,0 +1,36 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+
+class UserSeeder extends Seeder
+{
+    use WithoutModelEvents;
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@recodex.id',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+        $admin->syncRoles(Role::findOrCreate('admin'));
+
+        $member = User::create([
+            'name' => 'Member',
+            'email' => 'member@recodex.id',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+        $member->assignRole(Role::findOrCreate('member'));
+    }
+}

@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\LandingPageSection;
+use App\Models\Post;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -12,9 +11,9 @@ new #[Title('Dashboard')] class extends Component
 
     public int $totalAdmins = 0;
 
-    public int $visibleSections = 0;
+    public int $publishedPosts = 0;
 
-    public int $totalSections = 0;
+    public int $totalPosts = 0;
 
     public int $newUsersThisWeek = 0;
 
@@ -28,8 +27,8 @@ new #[Title('Dashboard')] class extends Component
     {
         $this->totalUsers = User::query()->count();
         $this->totalAdmins = User::query()->whereHas('roles', fn ($query) => $query->where('name', 'admin'))->count();
-        $this->visibleSections = LandingPageSection::query()->where('is_visible', true)->count();
-        $this->totalSections = LandingPageSection::query()->count();
+        $this->publishedPosts = Post::query()->where('is_published', true)->count();
+        $this->totalPosts = Post::query()->count();
         $this->newUsersThisWeek = User::query()->where('created_at', '>=', now()->subDays(7))->count();
 
         $this->registrationsPerDay = collect(range(6, 0))
@@ -51,15 +50,15 @@ new #[Title('Dashboard')] class extends Component
             'at' => $user->created_at,
         ]);
 
-        $recentSections = LandingPageSection::query()->latest('updated_at')->take(5)->get()->map(fn (LandingPageSection $section) => [
-            'type' => 'section',
-            'icon' => 'pencil-square',
-            'title' => 'Landing page section updated',
-            'subtitle' => Str::headline($section->key),
-            'at' => $section->updated_at,
+        $recentPosts = Post::query()->latest('updated_at')->take(5)->get()->map(fn (Post $post) => [
+            'type' => 'post',
+            'icon' => 'newspaper',
+            'title' => 'Blog post updated',
+            'subtitle' => $post->title,
+            'at' => $post->updated_at,
         ]);
 
-        $this->activity = $recentUsers->concat($recentSections)
+        $this->activity = $recentUsers->concat($recentPosts)
             ->sortByDesc('at')
             ->take(6)
             ->map(fn (array $item) => [...$item, 'at' => $item['at']->diffForHumans()])
@@ -98,12 +97,12 @@ new #[Title('Dashboard')] class extends Component
         <flux:card class="space-y-4">
             <div class="flex items-start justify-between">
                 <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5">
-                    <flux:icon icon="rectangle-stack" class="text-brand-navy" />
+                    <flux:icon icon="newspaper" class="text-brand-navy" />
                 </div>
             </div>
             <div>
-                <div class="font-display text-3xl font-bold tracking-tight">{{ $visibleSections }}<span class="text-lg text-zinc-400">/{{ $totalSections }}</span></div>
-                <div class="mt-1 text-sm text-zinc-500">Landing sections visible</div>
+                <div class="font-display text-3xl font-bold tracking-tight">{{ $publishedPosts }}<span class="text-lg text-zinc-400">/{{ $totalPosts }}</span></div>
+                <div class="mt-1 text-sm text-zinc-500">Blog posts published</div>
             </div>
         </flux:card>
 
@@ -149,8 +148,8 @@ new #[Title('Dashboard')] class extends Component
                     Documentation
                 </flux:button>
                 @role('admin')
-                    <flux:button as="a" :href="route('app.landing-page.edit')" wire:navigate variant="outline" icon="pencil-square" class="w-full justify-start">
-                        Edit landing page
+                    <flux:button as="a" :href="route('app.blog.index')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
+                        Manage blog
                     </flux:button>
                 @endrole
                 <flux:button as="a" :href="route('profile.edit')" wire:navigate variant="outline" icon="cog" class="w-full justify-start">

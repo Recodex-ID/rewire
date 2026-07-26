@@ -1,5 +1,4 @@
 @props([
-    'sections' => [],
     'title' => null,
     'seoDescription' => null,
     'analyticsId' => null,
@@ -26,11 +25,11 @@
         @endif
     </head>
     <body class="min-h-screen bg-brand-snow">
-        <x-landing.navbar :section="$sections['navbar'] ?? null" />
+        <x-landing.navbar />
 
         {{ $slot }}
 
-        <x-landing.footer :section="$sections['footer'] ?? null" />
+        <x-landing.footer />
 
         @fluxScripts
     </body>

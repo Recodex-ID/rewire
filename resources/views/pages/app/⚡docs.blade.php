@@ -19,7 +19,8 @@ new #[Title('Documentation')] class extends Component
         <flux:link href="#getting-started" class="text-sm">Getting started</flux:link>
         <flux:link href="#authentication" class="text-sm">Authentication</flux:link>
         <flux:link href="#roles" class="text-sm">Roles &amp; permissions</flux:link>
-        <flux:link href="#landing-page" class="text-sm">Landing page CMS</flux:link>
+        <flux:link href="#blog" class="text-sm">Blog</flux:link>
+        <flux:link href="#settings" class="text-sm">Site settings</flux:link>
         <flux:link href="#stack" class="text-sm">Tech stack</flux:link>
         <flux:link href="#quality" class="text-sm">Tests &amp; quality</flux:link>
     </div>
@@ -51,10 +52,10 @@ new #[Title('Documentation')] class extends Component
             </table>
         </div>
         <flux:text>
-            The public landing page lives at <flux:link :href="route('home')">/</flux:link>, this dashboard at
-            <flux:link :href="route('dashboard')">/dashboard</flux:link>, and the admin-only landing page editor at
-            <flux:link :href="route('app.landing-page.edit')">/app/landing-page</flux:link> (visible in the sidebar once you're
-            signed in as an admin).
+            The public landing page lives at <flux:link :href="route('home')">/</flux:link>, the blog at
+            <flux:link :href="route('blog.index')">/blog</flux:link>, and this dashboard at
+            <flux:link :href="route('dashboard')">/dashboard</flux:link> (signed in as an admin unlocks the
+            "Admin" section in the sidebar: Settings, Users, Activity log, and Blog).
         </flux:text>
     </section>
 
@@ -96,40 +97,39 @@ new #[Title('Documentation')] class extends Component
 
     <flux:separator />
 
-    <section id="landing-page" class="space-y-4">
-        <flux:heading size="lg">Landing page CMS</flux:heading>
+    <section id="blog" class="space-y-4">
+        <flux:heading size="lg">Blog</flux:heading>
         <flux:text>
-            The public landing page is fully content-managed: every section's copy lives in the
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">landing_page_sections</code> table
-            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\LandingPageSection</code>), one row
-            per section keyed by name, with a JSON <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">content</code>
-            column and an <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">is_visible</code> toggle.
-        </flux:text>
-        <flux:text>Eleven sections ship by default:</flux:text>
-        <div class="flex flex-wrap gap-2">
-            @foreach (['navbar', 'hero', 'trusted_by', 'services', 'infrastructure', 'stats', 'case_studies', 'process', 'testimonials', 'cta', 'footer'] as $section)
-                <flux:badge size="sm" color="zinc">{{ $section }}</flux:badge>
-            @endforeach
-        </div>
-        <flux:text>
-            Admins edit all of it from <flux:link :href="route('app.landing-page.edit')">/app/landing-page</flux:link>. That page
-            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/⚡landing-page.blade.php</code>)
-            is just a tab switcher — each section is its own Livewire component under
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/landing-page/</code>
-            (e.g. <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">⚡hero.blade.php</code>), embedded with
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">&lt;livewire:pages::app.landing-page.hero&gt;</code>.
-            The public page is rendered by <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Http\Controllers\MainController</code>
-            through the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/components/landing/*</code> Blade
-            components. To add a twelfth section: seed a new row with a unique key, add a matching editor component under
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/app/landing-page/</code>, wire it into the
-            tab switcher, and add a matching <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">&lt;x-landing.your-section&gt;</code>
-            component to <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/index.blade.php</code>.
+            The public blog (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\Post</code>) is the one
+            piece of content that stays admin-editable without a redeploy: title, slug, excerpt, body, a featured image,
+            and a published toggle. Slugs come from
+            <flux:link href="https://github.com/spatie/laravel-sluggable" target="_blank">spatie/laravel-sluggable</flux:link> —
+            generated from the title on create, never silently regenerated on update, so published URLs stay stable.
         </flux:text>
         <flux:text>
-            The landing page deliberately does not use Flux components — it's plain Tailwind plus the shared
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">&lt;x-landing.icon&gt;</code> inline-SVG set, so it
-            never inherits app-UI styling. The authenticated app you're looking at right now (including this page) is the opposite —
-            build it with Flux.
+            Admins manage posts from <flux:link :href="route('app.blog.index')">/app/blog</flux:link>
+            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/⚡blog.blade.php</code> for the
+            list, <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/app/blog/⚡form.blade.php</code> shared by
+            create and edit). The public pages
+            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/main/blog-index.blade.php</code> and
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">blog-show.blade.php</code>) are plain Tailwind, no Flux,
+            same as the rest of the public site — both share
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/layouts/main.blade.php</code> for the
+            navbar/footer/head boilerplate.
+        </flux:text>
+    </section>
+
+    <flux:separator />
+
+    <section id="settings" class="space-y-4">
+        <flux:heading size="lg">Site settings</flux:heading>
+        <flux:text>
+            Everything else on the public site (branding, copy, images) is hardcoded directly in
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/components/landing/*</code> — edit those
+            files and redeploy. The handful of values that are genuinely per-deployment config live in the
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\Setting</code> key-value store instead, editable
+            from <flux:link :href="route('app.settings.edit')">/app/settings</flux:link>: SEO meta description, a Google
+            Analytics ID, social links, and the contact address/email/phone shown on the landing page's call-to-action.
         </flux:text>
     </section>
 

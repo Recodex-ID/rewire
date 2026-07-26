@@ -11,10 +11,31 @@ new #[Title('Settings')] class extends Component
 
     public string $analyticsId = '';
 
+    public string $socialLinkedin = '';
+
+    public string $socialTwitter = '';
+
+    public string $socialGithub = '';
+
+    public string $socialInstagram = '';
+
+    public string $contactAddress = '';
+
+    public string $contactEmail = '';
+
+    public string $contactPhone = '';
+
     public function mount(): void
     {
         $this->seoDescription = Setting::get('seo_description', '') ?? '';
         $this->analyticsId = Setting::get('analytics_id', '') ?? '';
+        $this->socialLinkedin = Setting::get('social_linkedin', '') ?? '';
+        $this->socialTwitter = Setting::get('social_twitter', '') ?? '';
+        $this->socialGithub = Setting::get('social_github', '') ?? '';
+        $this->socialInstagram = Setting::get('social_instagram', '') ?? '';
+        $this->contactAddress = Setting::get('contact_address', '') ?? '';
+        $this->contactEmail = Setting::get('contact_email', '') ?? '';
+        $this->contactPhone = Setting::get('contact_phone', '') ?? '';
     }
 
     public function save(): void
@@ -22,10 +43,24 @@ new #[Title('Settings')] class extends Component
         $this->validate([
             'seoDescription' => ['nullable', 'string', 'max:255'],
             'analyticsId' => ['nullable', 'string', 'max:64'],
+            'socialLinkedin' => ['nullable', 'url', 'max:255'],
+            'socialTwitter' => ['nullable', 'url', 'max:255'],
+            'socialGithub' => ['nullable', 'url', 'max:255'],
+            'socialInstagram' => ['nullable', 'url', 'max:255'],
+            'contactAddress' => ['nullable', 'string', 'max:255'],
+            'contactEmail' => ['nullable', 'email', 'max:255'],
+            'contactPhone' => ['nullable', 'string', 'max:64'],
         ]);
 
         Setting::put('seo_description', $this->seoDescription);
         Setting::put('analytics_id', $this->analyticsId);
+        Setting::put('social_linkedin', $this->socialLinkedin);
+        Setting::put('social_twitter', $this->socialTwitter);
+        Setting::put('social_github', $this->socialGithub);
+        Setting::put('social_instagram', $this->socialInstagram);
+        Setting::put('contact_address', $this->contactAddress);
+        Setting::put('contact_email', $this->contactEmail);
+        Setting::put('contact_phone', $this->contactPhone);
 
         Flux::toast(variant: 'success', text: 'Settings updated.');
     }
@@ -52,6 +87,25 @@ new #[Title('Settings')] class extends Component
                 label="Google Analytics measurement ID"
                 description="e.g. G-XXXXXXXXXX. Leave blank to disable tracking."
             />
+
+            <div class="space-y-4">
+                <flux:heading size="sm">Social links</flux:heading>
+                <flux:subheading>Shown in the public site footer. Leave any blank to hide that icon.</flux:subheading>
+
+                <flux:input wire:model="socialLinkedin" label="LinkedIn URL" placeholder="https://linkedin.com/company/..." />
+                <flux:input wire:model="socialTwitter" label="Twitter / X URL" placeholder="https://x.com/..." />
+                <flux:input wire:model="socialGithub" label="GitHub URL" placeholder="https://github.com/..." />
+                <flux:input wire:model="socialInstagram" label="Instagram URL" placeholder="https://instagram.com/..." />
+            </div>
+
+            <div class="space-y-4">
+                <flux:heading size="sm">Contact details</flux:heading>
+                <flux:subheading>Shown in the landing page's call-to-action section.</flux:subheading>
+
+                <flux:input wire:model="contactAddress" label="Address" placeholder="Jakarta, Indonesia" />
+                <flux:input wire:model="contactEmail" label="Email" placeholder="hello@example.com" />
+                <flux:input wire:model="contactPhone" label="Phone" placeholder="+62 21 0000 0000" />
+            </div>
 
             <div class="flex justify-end">
                 <flux:button type="submit" variant="primary">Save</flux:button>
