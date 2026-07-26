@@ -1,6 +1,6 @@
 # Rewire Starter Kit
 
-A reusable Laravel starter kit for internal and client projects — authentication, roles, and a fully CMS-managed landing page, so every new engagement starts from a working foundation instead of a blank repo.
+A reusable Laravel starter kit for internal and client projects — authentication, roles, a blog, and a back office ready to go, so every new engagement starts from a working foundation instead of a blank repo.
 
 ## Stack
 
@@ -18,8 +18,8 @@ A reusable Laravel starter kit for internal and client projects — authenticati
 
 - **Authentication** — login, registration, password reset out of the box.
 - **Roles & permissions** — every new user gets `member` automatically; `admin` unlocks a gated back office.
-- **CMS-managed landing page** — all 11 sections (hero, services, testimonials, etc.) are editable from the admin panel, no redeploy needed.
-- **Admin panel** — landing page editor, site settings (SEO description, Google Analytics), and user management (list, create, change role, delete).
+- **Blog** — the one piece of public content that's editable without a redeploy: title, excerpt, body, featured image, publish toggle, auto-generated slugs that never change on edit.
+- **Admin panel** — user management (list, create, change role, delete), an audit trail of admin actions, a sitemap viewer, and site settings (SEO description, Google Analytics, social links, contact info).
 - **Branded system pages** — error pages (404, 500, ...) and transactional emails match the app's look, not the framework defaults.
 - **Dashboard** — real usage stats, not placeholder data.
 - **In-app docs** — a `/docs` page inside the app with project-specific setup and architecture notes.
@@ -71,7 +71,7 @@ Or `composer test`, which runs formatting, static analysis, and the full suite t
 
 1. Update `APP_NAME` and other `.env` values for the new project.
 2. Swap the brand palette in `resources/css/app.css` (`--color-brand-*`) and the logo mark in `resources/views/components/landing/icon.blade.php`.
-3. Replace the seeded accounts and landing page copy in `database/seeders/DatabaseSeeder.php`.
+3. Replace the seeded accounts (`database/seeders/UserSeeder.php`) and the landing page copy, which is hardcoded directly in `resources/views/components/landing/*`.
 4. Update `composer.json`'s `name`/`description` if the repo is being renamed too.
 
 More detail — architecture notes, where each feature lives, how to extend the landing page — is in the in-app docs at `/docs` once you're logged in.
