@@ -42,7 +42,7 @@
                                 <div class="mt-6 flex items-center gap-2 text-xs text-brand-navy/50">
                                     <span>{{ $post->author?->name ?? config('app.name') }}</span>
                                     <span>&middot;</span>
-                                    <span>{{ $post->created_at->format('M j, Y') }}</span>
+                                    <span>{{ $post->created_at->translatedFormat('l, j F Y') }}</span>
                                 </div>
                             </div>
                         </a>

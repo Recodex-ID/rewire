@@ -135,34 +135,6 @@ new #[Title('Users')] class extends Component
         </flux:modal.trigger>
     </div>
 
-    <flux:modal name="create-user" class="max-w-md" focusable>
-        <form wire:submit="createUser" class="space-y-6">
-            <div>
-                <flux:heading size="lg">Create user</flux:heading>
-                <flux:subheading>Add a new account and assign it a role.</flux:subheading>
-            </div>
-
-            <flux:input label="Name" wire:model="name" />
-            <flux:input type="email" label="Email" wire:model="email" />
-            <flux:input type="password" viewable label="Password" wire:model="password" />
-            <flux:input type="password" viewable label="Confirm password" wire:model="password_confirmation" />
-
-            <flux:select wire:model="role" label="Role">
-                @foreach ($this->roles as $role)
-                    <flux:select.option value="{{ $role }}">{{ ucfirst($role) }}</flux:select.option>
-                @endforeach
-            </flux:select>
-
-            <div class="flex justify-end gap-2">
-                <flux:modal.close>
-                    <flux:button variant="filled">Cancel</flux:button>
-                </flux:modal.close>
-
-                <flux:button type="submit" variant="primary">Create user</flux:button>
-            </div>
-        </form>
-    </flux:modal>
-
     <flux:input wire:model.live.debounce.300ms="search" placeholder="Search by name or email" icon="magnifying-glass" class="max-w-sm" />
 
     <flux:card class="w-full">
@@ -172,7 +144,7 @@ new #[Title('Users')] class extends Component
                 <flux:table.column>Email</flux:table.column>
                 <flux:table.column>Role</flux:table.column>
                 <flux:table.column>Joined</flux:table.column>
-                <flux:table.column></flux:table.column>
+                <flux:table.column>Actions</flux:table.column>
             </flux:table.columns>
 
             <flux:table.rows>
@@ -193,7 +165,7 @@ new #[Title('Users')] class extends Component
                                 @endforeach
                             </flux:select>
                         </flux:table.cell>
-                        <flux:table.cell class="whitespace-nowrap">{{ $user->created_at->format('M j, Y') }}</flux:table.cell>
+                        <flux:table.cell class="whitespace-nowrap">{{ $user->created_at->translatedFormat('l, j F Y') }}</flux:table.cell>
                         <flux:table.cell class="py-0">
                             <flux:modal.trigger name="delete-user-{{ $user->id }}">
                                 <flux:button type="button" variant="danger" size="sm" icon="trash" :disabled="$user->is(Auth::user())" />
@@ -223,4 +195,32 @@ new #[Title('Users')] class extends Component
             </flux:table.rows>
         </flux:table>
     </flux:card>
+
+    <flux:modal flyout name="create-user" class="max-w-md" focusable>
+        <form wire:submit="createUser" class="space-y-6">
+            <div>
+                <flux:heading size="lg">Create user</flux:heading>
+                <flux:subheading>Add a new account and assign it a role.</flux:subheading>
+            </div>
+
+            <flux:input label="Name" wire:model="name" />
+            <flux:input type="email" label="Email" wire:model="email" />
+            <flux:input type="password" viewable label="Password" wire:model="password" />
+            <flux:input type="password" viewable label="Confirm password" wire:model="password_confirmation" />
+
+            <flux:select wire:model="role" label="Role">
+                @foreach ($this->roles as $role)
+                    <flux:select.option value="{{ $role }}">{{ ucfirst($role) }}</flux:select.option>
+                @endforeach
+            </flux:select>
+
+            <div class="flex justify-end gap-2">
+                <flux:modal.close>
+                    <flux:button variant="filled">Cancel</flux:button>
+                </flux:modal.close>
+
+                <flux:button type="submit" variant="primary">Create user</flux:button>
+            </div>
+        </form>
+    </flux:modal>
 </div>

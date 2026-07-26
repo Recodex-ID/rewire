@@ -147,9 +147,12 @@ new #[Title('Dashboard')] class extends Component
                 <flux:button as="a" :href="route('docs')" wire:navigate variant="outline" icon="book-open-text" class="w-full justify-start">
                     Documentation
                 </flux:button>
+                <flux:button as="a" :href="route('content-management.blogs')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
+                    Manage blog
+                </flux:button>
                 @role('admin')
-                    <flux:button as="a" :href="route('content-management.blogs')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
-                        Manage blog
+                    <flux:button as="a" :href="route('admin.sitemap')" wire:navigate variant="outline" icon="map" class="w-full justify-start">
+                        View sitemap
                     </flux:button>
                 @endrole
                 <flux:button as="a" :href="route('profile.edit')" wire:navigate variant="outline" icon="cog" class="w-full justify-start">

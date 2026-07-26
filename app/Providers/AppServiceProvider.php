@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
+        Date::setLocale(config('app.locale'));
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),
