@@ -39,6 +39,9 @@
                         <flux:sidebar.item icon="clock" :href="route('app.activity.index')" :current="request()->routeIs('app.activity.index')" wire:navigate>
                             Activity log
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="newspaper" :href="route('app.blog.index')" :current="request()->routeIs('app.blog.*')" wire:navigate>
+                            Blog
+                        </flux:sidebar.item>
                     </flux:sidebar.group>
                 @endrole
             </flux:sidebar.nav>

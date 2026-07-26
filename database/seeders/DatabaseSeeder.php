@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
                     ['label' => 'Infrastructure', 'url' => '#infrastructure'],
                     ['label' => 'Solutions', 'url' => '#solutions'],
                     ['label' => 'About', 'url' => '#about'],
+                    ['label' => 'Blog', 'url' => '/blog'],
                     ['label' => 'Contact', 'url' => '#contact'],
                 ],
                 'cta_text' => 'Get started',

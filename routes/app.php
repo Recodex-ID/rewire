@@ -24,4 +24,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::livewire('app/settings', 'pages::app.settings')->name('app.settings.edit');
     Route::livewire('app/users', 'pages::app.users')->name('app.users.index');
     Route::livewire('app/activity', 'pages::app.activity')->name('app.activity.index');
+    Route::livewire('app/blog', 'pages::app.blog')->name('app.blog.index');
+    Route::livewire('app/blog/create', 'pages::app.blog.form')->name('app.blog.create');
+    Route::livewire('app/blog/{post}/edit', 'pages::app.blog.form')->name('app.blog.edit');
 });
