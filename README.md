@@ -27,13 +27,15 @@ A reusable Laravel starter kit for internal and client projects — authenticati
 
 ## Getting started
 
-Requires a running MySQL server with an empty database created ahead of time (matching `DB_DATABASE` in `.env`, `rewire` by default):
+Uses SQLite by default — no separate database server to set up first.
+
+Starting a brand new project, via the [Laravel installer](https://packagist.org/packages/recodex-id/rewire):
 
 ```bash
-mysql -u root -e "CREATE DATABASE rewire"
+laravel new my-app --using=recodex-id/rewire
 ```
 
-Then:
+Or clone it directly:
 
 ```bash
 git clone https://github.com/Recodex-ID/rewire.git
@@ -41,6 +43,7 @@ cd rewire
 composer install
 npm install
 cp .env.example .env
+touch database/database.sqlite
 php artisan key:generate
 php artisan storage:link
 php artisan migrate --seed
