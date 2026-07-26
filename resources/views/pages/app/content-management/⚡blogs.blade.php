@@ -160,9 +160,9 @@ new #[Title('Blog')] class extends Component
                     <flux:table.row :key="$post->id">
                         <flux:table.cell class="py-2">
                             @if ($post->featured_image)
-                                <img src="{{ Storage::disk('public')->url($post->featured_image) }}" alt="" class="size-10 rounded-lg object-cover">
+                                <img src="{{ Storage::disk('public')->url($post->featured_image) }}" alt="" class="h-10 w-16 rounded-lg object-cover">
                             @else
-                                <div class="flex size-10 items-center justify-center rounded-lg bg-zinc-100 text-zinc-400">
+                                <div class="flex h-10 w-16 items-center justify-center rounded-lg bg-zinc-100 text-zinc-400">
                                     <flux:icon icon="photo" variant="micro" />
                                 </div>
                             @endif
