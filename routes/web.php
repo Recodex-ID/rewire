@@ -7,6 +7,7 @@ Route::get('/', [MainController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('dashboard', 'pages::dashboard')->name('dashboard');
+    Route::livewire('docs', 'pages::docs')->name('docs');
 });
 
 require __DIR__.'/settings.php';

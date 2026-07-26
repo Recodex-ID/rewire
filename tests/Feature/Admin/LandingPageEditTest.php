@@ -34,9 +34,9 @@ test('admin can update the hero section', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page')
-        ->set('hero.heading_line1', 'New heading')
-        ->call('save', 'hero')
+    Livewire::test('pages::admin.landing-page.hero')
+        ->set('data.heading_line1', 'New heading')
+        ->call('save')
         ->assertHasNoErrors();
 
     expect(LandingPageSection::where('key', 'hero')->first()->content['heading_line1'])->toBe('New heading');
@@ -54,15 +54,15 @@ test('admin can add and save a service item', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page')
-        ->call('addServiceItem')
-        ->set('services.items.0.number', '01')
-        ->set('services.items.0.category', 'Cat')
-        ->set('services.items.0.icon', 'cloud')
-        ->set('services.items.0.title', 'Fast')
-        ->set('services.items.0.description', 'Really fast')
-        ->set('services.items.0.tags', 'A, B')
-        ->call('save', 'services')
+    Livewire::test('pages::admin.landing-page.services')
+        ->call('addItem')
+        ->set('data.items.0.number', '01')
+        ->set('data.items.0.category', 'Cat')
+        ->set('data.items.0.icon', 'cloud')
+        ->set('data.items.0.title', 'Fast')
+        ->set('data.items.0.description', 'Really fast')
+        ->set('data.items.0.tags', 'A, B')
+        ->call('save')
         ->assertHasNoErrors();
 
     expect(LandingPageSection::where('key', 'services')->first()->content['items'])->toBe([
@@ -70,7 +70,7 @@ test('admin can add and save a service item', function () {
     ]);
 });
 
-test('admin can toggle a section footer link list', function () {
+test('admin can save a footer column with links', function () {
     LandingPageSection::create([
         'key' => 'footer',
         'content' => ['tagline' => '', 'columns' => [], 'social' => [], 'copyright_text' => ''],
@@ -82,11 +82,11 @@ test('admin can toggle a section footer link list', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page')
-        ->call('addFooterColumn')
-        ->set('footer.columns.0.heading', 'Product')
-        ->set('footer.columns.0.links', "Services|#services\nAbout|#about")
-        ->call('save', 'footer')
+    Livewire::test('pages::admin.landing-page.footer')
+        ->call('addColumn')
+        ->set('data.columns.0.heading', 'Product')
+        ->set('data.columns.0.links', "Services|#services\nAbout|#about")
+        ->call('save')
         ->assertHasNoErrors();
 
     expect(LandingPageSection::where('key', 'footer')->first()->content['columns'])->toBe([
