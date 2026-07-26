@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
-        $admin->assignRole(Role::findOrCreate('admin'));
+        $admin->syncRoles(Role::findOrCreate('admin'));
 
         $member = User::create([
             'name' => 'Member',
