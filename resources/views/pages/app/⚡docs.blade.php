@@ -74,11 +74,11 @@ new #[Title('Documentation')] class extends Component
                             </thead>
                             <tbody class="divide-y divide-zinc-200">
                                 <tr>
-                                    <td class="px-4 py-2 font-mono">admin@recodex.id</td>
+                                    <td class="px-4 py-2 font-mono">admin@mail.test</td>
                                     <td class="px-4 py-2"><flux:badge size="sm">admin</flux:badge></td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-2 font-mono">member@recodex.id</td>
+                                    <td class="px-4 py-2 font-mono">member@mail.test</td>
                                     <td class="px-4 py-2"><flux:badge size="sm" color="zinc">member</flux:badge></td>
                                 </tr>
                             </tbody>

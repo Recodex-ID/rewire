@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
     {
         $admin = User::create([
             'name' => 'Admin',
-            'email' => 'admin@recodex.id',
+            'email' => 'admin@mail.test',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
 
         $member = User::create([
             'name' => 'Member',
-            'email' => 'member@recodex.id',
+            'email' => 'member@mail.test',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);

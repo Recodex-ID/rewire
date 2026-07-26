@@ -54,8 +54,8 @@ Seeded by `database/seeders/DatabaseSeeder.php`, password `password` for both:
 
 | Email | Role |
 |---|---|
-| `admin@recodex.id` | admin |
-| `member@recodex.id` | member |
+| `admin@mail.test` | admin |
+| `member@mail.test` | member |
 
 ## Quality checks
 
