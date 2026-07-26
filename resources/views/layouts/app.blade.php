@@ -10,11 +10,14 @@
              otherwise they render as if on a light background and become unreadable. --}}
         <flux:sidebar sticky collapsible="mobile" class="dark border-e border-brand-navy/50 bg-brand-navy">
             <flux:sidebar.header>
-                <flux:sidebar.brand name="{{ config('app.name') }}" :href="route('dashboard')" wire:navigate>
-                    <x-slot name="logo" class="ring-1 ring-white/10">
-                        <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-6 object-cover">
-                    </x-slot>
-                </flux:sidebar.brand>
+                <a href="{{ route('dashboard') }}" wire:navigate class="flex h-10 min-w-0 flex-1 items-center gap-2 px-2">
+                    <img
+                        src="{{ asset('images/logo.png') }}"
+                        alt="{{ config('app.name') }}"
+                        class="size-6 shrink-0 rounded-sm border border-brand-navy bg-brand-snow object-contain p-0.5"
+                    >
+                    <span class="min-w-0 truncate text-sm font-medium text-white">{{ config('app.name') }}</span>
+                </a>
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 

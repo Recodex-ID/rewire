@@ -117,6 +117,11 @@ img {
     margin-bottom: 10px;
     max-height: 75px;
     width: 75px;
+    padding: 12px;
+    border: 1px solid #1a2a4b;
+    border-radius: 12px;
+    background-color: #fefefe;
+    box-sizing: border-box;
 }
 
 /* Body */
