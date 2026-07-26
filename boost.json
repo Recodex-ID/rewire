@@ -6,6 +6,12 @@
     "guidelines": true,
     "mcp": true,
     "nightwatch": false,
+    "packages": [
+        "spatie/laravel-activitylog",
+        "livewire/blaze",
+        "spatie/laravel-permission",
+        "spatie/laravel-sluggable"
+    ],
     "sail": false,
     "skills": [
         "fortify-development",
@@ -13,6 +19,9 @@
         "fluxui-development",
         "livewire-development",
         "pest-testing",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "blaze-optimize",
+        "laravel-permission-development",
+        "sluggable-development"
     ]
 }
