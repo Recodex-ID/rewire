@@ -6,6 +6,7 @@ use App\Models\LandingPageSection;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
@@ -17,14 +18,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        $admin = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@recodex.id',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
-
         $admin->assignRole(Role::findOrCreate('admin'));
+
+        $member = User::create([
+            'name' => 'Member',
+            'email' => 'member@recodex.id',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+        $member->assignRole(Role::findOrCreate('member'));
 
         $this->seedLandingPageSections();
     }

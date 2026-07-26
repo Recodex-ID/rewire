@@ -2,8 +2,8 @@
 
 use App\Models\User;
 
-test('new users are automatically assigned the user role', function () {
+test('new users are automatically assigned the member role', function () {
     $user = User::factory()->create();
 
-    expect($user->hasRole('user'))->toBeTrue();
+    expect($user->hasRole('member'))->toBeTrue();
 });
