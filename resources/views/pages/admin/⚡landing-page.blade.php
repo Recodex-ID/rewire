@@ -212,7 +212,7 @@ new #[Title('Landing page')] class extends Component
             'is_visible' => $isVisible,
         ]);
 
-        Flux::toast(variant: 'success', text: __('Section updated.'));
+        Flux::toast(variant: 'success', text: 'Section updated.');
     }
 
     private function addItem(string $property, string $listKey, array $template): void
@@ -293,39 +293,39 @@ new #[Title('Landing page')] class extends Component
 ?>
 
 <div class="w-full max-w-3xl space-y-12">
-    <flux:heading size="xl">{{ __('Landing page content') }}</flux:heading>
-    <flux:subheading>{{ __('Everything below is rendered on the public landing page.') }}</flux:subheading>
+    <flux:heading size="xl">Landing page content</flux:heading>
+    <flux:subheading>Everything below is rendered on the public landing page.</flux:subheading>
 
     {{-- Navbar --}}
     <form wire:submit="save('navbar')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Navbar') }}</flux:heading>
-            <flux:switch wire:model="navbar.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Navbar</flux:heading>
+            <flux:switch wire:model="navbar.is_visible" label="Visible" />
         </div>
 
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="navbar.logo_text" :label="__('Logo text')" />
-            <flux:input wire:model="navbar.logo_subtext" :label="__('Logo subtext')" />
+            <flux:input wire:model="navbar.logo_text" label="Logo text" />
+            <flux:input wire:model="navbar.logo_subtext" label="Logo subtext" />
         </div>
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Nav links') }}</flux:heading>
+            <flux:heading size="sm">Nav links</flux:heading>
             @foreach ($navbar['nav_items'] as $index => $item)
                 <div wire:key="nav-item-{{ $index }}" class="flex items-end gap-3">
-                    <flux:input wire:model="navbar.nav_items.{{ $index }}.label" :label="__('Label')" class="flex-1" />
-                    <flux:input wire:model="navbar.nav_items.{{ $index }}.url" :label="__('URL')" class="flex-1" />
+                    <flux:input wire:model="navbar.nav_items.{{ $index }}.label" label="Label" class="flex-1" />
+                    <flux:input wire:model="navbar.nav_items.{{ $index }}.url" label="URL" class="flex-1" />
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeNavItem({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addNavItem">{{ __('Add link') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addNavItem">Add link</flux:button>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="navbar.cta_text" :label="__('CTA text')" />
-            <flux:input wire:model="navbar.cta_url" :label="__('CTA URL')" />
+            <flux:input wire:model="navbar.cta_text" label="CTA text" />
+            <flux:input wire:model="navbar.cta_url" label="CTA URL" />
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -333,43 +333,43 @@ new #[Title('Landing page')] class extends Component
     {{-- Hero --}}
     <form wire:submit="save('hero')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Hero') }}</flux:heading>
-            <flux:switch wire:model="hero.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Hero</flux:heading>
+            <flux:switch wire:model="hero.is_visible" label="Visible" />
         </div>
 
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="hero.badge_text" :label="__('Badge text')" />
-            <flux:input wire:model="hero.badge_secondary" :label="__('Badge secondary text')" />
+            <flux:input wire:model="hero.badge_text" label="Badge text" />
+            <flux:input wire:model="hero.badge_secondary" label="Badge secondary text" />
         </div>
         <div class="grid grid-cols-3 gap-4">
-            <flux:input wire:model="hero.heading_line1" :label="__('Heading line 1')" />
-            <flux:input wire:model="hero.heading_highlight" :label="__('Heading highlight')" />
-            <flux:input wire:model="hero.heading_line2" :label="__('Heading line 2')" />
+            <flux:input wire:model="hero.heading_line1" label="Heading line 1" />
+            <flux:input wire:model="hero.heading_highlight" label="Heading highlight" />
+            <flux:input wire:model="hero.heading_line2" label="Heading line 2" />
         </div>
-        <flux:textarea wire:model="hero.subheading" :label="__('Subheading')" rows="2" />
+        <flux:textarea wire:model="hero.subheading" label="Subheading" rows="2" />
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="hero.primary_cta_text" :label="__('Primary button text')" />
-            <flux:input wire:model="hero.primary_cta_url" :label="__('Primary button URL')" />
+            <flux:input wire:model="hero.primary_cta_text" label="Primary button text" />
+            <flux:input wire:model="hero.primary_cta_url" label="Primary button URL" />
         </div>
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="hero.secondary_cta_text" :label="__('Secondary button text')" />
-            <flux:input wire:model="hero.secondary_cta_url" :label="__('Secondary button URL')" />
+            <flux:input wire:model="hero.secondary_cta_text" label="Secondary button text" />
+            <flux:input wire:model="hero.secondary_cta_url" label="Secondary button URL" />
         </div>
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Stats') }}</flux:heading>
+            <flux:heading size="sm">Stats</flux:heading>
             @foreach ($hero['stats'] as $index => $stat)
                 <div wire:key="hero-stat-{{ $index }}" class="flex items-end gap-3">
-                    <flux:input wire:model="hero.stats.{{ $index }}.value" :label="__('Value')" class="w-24" />
-                    <flux:input wire:model="hero.stats.{{ $index }}.suffix" :label="__('Suffix')" class="w-20" />
-                    <flux:input wire:model="hero.stats.{{ $index }}.label" :label="__('Label')" class="flex-1" />
+                    <flux:input wire:model="hero.stats.{{ $index }}.value" label="Value" class="w-24" />
+                    <flux:input wire:model="hero.stats.{{ $index }}.suffix" label="Suffix" class="w-20" />
+                    <flux:input wire:model="hero.stats.{{ $index }}.label" label="Label" class="flex-1" />
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeHeroStat({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addHeroStat">{{ __('Add stat') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addHeroStat">Add stat</flux:button>
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -377,26 +377,26 @@ new #[Title('Landing page')] class extends Component
     {{-- Trusted by --}}
     <form wire:submit="save('trusted_by')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Trusted by') }}</flux:heading>
-            <flux:switch wire:model="trustedBy.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Trusted by</flux:heading>
+            <flux:switch wire:model="trustedBy.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="trustedBy.heading" :label="__('Heading')" />
+        <flux:input wire:model="trustedBy.heading" label="Heading" />
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Logos') }}</flux:heading>
+            <flux:heading size="sm">Logos</flux:heading>
             <div class="grid grid-cols-2 gap-3">
                 @foreach ($trustedBy['logos'] as $index => $logo)
                     <div wire:key="logo-{{ $index }}" class="flex items-end gap-3">
-                        <flux:input wire:model="trustedBy.logos.{{ $index }}.name" :label="__('Name')" class="flex-1" />
+                        <flux:input wire:model="trustedBy.logos.{{ $index }}.name" label="Name" class="flex-1" />
                         <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeLogo({{ $index }})" />
                     </div>
                 @endforeach
             </div>
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addLogo">{{ __('Add logo') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addLogo">Add logo</flux:button>
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -404,13 +404,13 @@ new #[Title('Landing page')] class extends Component
     {{-- Services --}}
     <form wire:submit="save('services')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Services') }}</flux:heading>
-            <flux:switch wire:model="services.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Services</flux:heading>
+            <flux:switch wire:model="services.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="services.eyebrow" :label="__('Eyebrow')" />
-        <flux:input wire:model="services.heading" :label="__('Heading')" />
-        <flux:textarea wire:model="services.subheading" :label="__('Subheading')" rows="2" />
+        <flux:input wire:model="services.eyebrow" label="Eyebrow" />
+        <flux:input wire:model="services.heading" label="Heading" />
+        <flux:textarea wire:model="services.subheading" label="Subheading" rows="2" />
 
         <div class="space-y-4">
             @foreach ($services['items'] as $index => $item)
@@ -418,9 +418,9 @@ new #[Title('Landing page')] class extends Component
                     <div class="flex items-start gap-3">
                         <div class="flex-1 space-y-3">
                             <div class="grid grid-cols-3 gap-3">
-                                <flux:input wire:model="services.items.{{ $index }}.number" :label="__('Number')" />
-                                <flux:input wire:model="services.items.{{ $index }}.category" :label="__('Category')" />
-                                <flux:select wire:model="services.items.{{ $index }}.icon" :label="__('Icon')">
+                                <flux:input wire:model="services.items.{{ $index }}.number" label="Number" />
+                                <flux:input wire:model="services.items.{{ $index }}.category" label="Category" />
+                                <flux:select wire:model="services.items.{{ $index }}.icon" label="Icon">
                                     <flux:select.option value="cloud">cloud</flux:select.option>
                                     <flux:select.option value="shield">shield</flux:select.option>
                                     <flux:select.option value="brain">brain</flux:select.option>
@@ -429,19 +429,19 @@ new #[Title('Landing page')] class extends Component
                                     <flux:select.option value="compass">compass</flux:select.option>
                                 </flux:select>
                             </div>
-                            <flux:input wire:model="services.items.{{ $index }}.title" :label="__('Title')" />
-                            <flux:textarea wire:model="services.items.{{ $index }}.description" :label="__('Description')" rows="2" />
-                            <flux:input wire:model="services.items.{{ $index }}.tags" :label="__('Tags')" :description="__('Comma-separated, e.g. Fortify, Sessions')" />
+                            <flux:input wire:model="services.items.{{ $index }}.title" label="Title" />
+                            <flux:textarea wire:model="services.items.{{ $index }}.description" label="Description" rows="2" />
+                            <flux:input wire:model="services.items.{{ $index }}.tags" label="Tags" description="Comma-separated, e.g. Fortify, Sessions" />
                         </div>
                         <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeServiceItem({{ $index }})" />
                     </div>
                 </div>
             @endforeach
         </div>
-        <flux:button type="button" variant="outline" icon="plus" wire:click="addServiceItem">{{ __('Add service') }}</flux:button>
+        <flux:button type="button" variant="outline" icon="plus" wire:click="addServiceItem">Add service</flux:button>
 
         <div>
-            <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+            <flux:button type="submit" variant="primary">Save</flux:button>
         </div>
     </form>
 
@@ -450,35 +450,35 @@ new #[Title('Landing page')] class extends Component
     {{-- Infrastructure --}}
     <form wire:submit="save('infrastructure')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Infrastructure') }}</flux:heading>
-            <flux:switch wire:model="infrastructure.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Infrastructure</flux:heading>
+            <flux:switch wire:model="infrastructure.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="infrastructure.eyebrow" :label="__('Eyebrow')" />
+        <flux:input wire:model="infrastructure.eyebrow" label="Eyebrow" />
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="infrastructure.heading_line1" :label="__('Heading line 1')" />
-            <flux:input wire:model="infrastructure.heading_highlight" :label="__('Heading highlight')" />
+            <flux:input wire:model="infrastructure.heading_line1" label="Heading line 1" />
+            <flux:input wire:model="infrastructure.heading_highlight" label="Heading highlight" />
         </div>
-        <flux:textarea wire:model="infrastructure.subheading" :label="__('Subheading')" rows="2" />
+        <flux:textarea wire:model="infrastructure.subheading" label="Subheading" rows="2" />
         <div class="grid grid-cols-3 gap-4">
-            <flux:input wire:model="infrastructure.status_label" :label="__('Status label')" />
-            <flux:input wire:model="infrastructure.latency_value" :label="__('Latency (ms)')" />
-            <flux:input wire:model="infrastructure.data_centers_value" :label="__('Data centers')" />
+            <flux:input wire:model="infrastructure.status_label" label="Status label" />
+            <flux:input wire:model="infrastructure.latency_value" label="Latency (ms)" />
+            <flux:input wire:model="infrastructure.data_centers_value" label="Data centers" />
         </div>
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Regions') }}</flux:heading>
+            <flux:heading size="sm">Regions</flux:heading>
             @foreach ($infrastructure['regions'] as $index => $region)
                 <div wire:key="region-{{ $index }}" class="flex items-end gap-3">
-                    <flux:input wire:model="infrastructure.regions.{{ $index }}.name" :label="__('Name')" class="w-40" />
-                    <flux:input wire:model="infrastructure.regions.{{ $index }}.cities" :label="__('Detail')" class="flex-1" />
+                    <flux:input wire:model="infrastructure.regions.{{ $index }}.name" label="Name" class="w-40" />
+                    <flux:input wire:model="infrastructure.regions.{{ $index }}.cities" label="Detail" class="flex-1" />
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeRegion({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addRegion">{{ __('Add region') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addRegion">Add region</flux:button>
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -486,30 +486,30 @@ new #[Title('Landing page')] class extends Component
     {{-- Stats --}}
     <form wire:submit="save('stats')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Stats') }}</flux:heading>
-            <flux:switch wire:model="stats.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Stats</flux:heading>
+            <flux:switch wire:model="stats.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="stats.eyebrow" :label="__('Eyebrow')" />
+        <flux:input wire:model="stats.eyebrow" label="Eyebrow" />
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="stats.heading_line1" :label="__('Heading line 1')" />
-            <flux:input wire:model="stats.heading_highlight" :label="__('Heading highlight')" />
+            <flux:input wire:model="stats.heading_line1" label="Heading line 1" />
+            <flux:input wire:model="stats.heading_highlight" label="Heading highlight" />
         </div>
 
         <div class="space-y-4">
             @foreach ($stats['items'] as $index => $item)
                 <div wire:key="stat-item-{{ $index }}" class="flex items-end gap-3">
-                    <flux:input wire:model="stats.items.{{ $index }}.value" :label="__('Value')" class="w-24" />
-                    <flux:input wire:model="stats.items.{{ $index }}.suffix" :label="__('Suffix')" class="w-20" />
-                    <flux:input wire:model="stats.items.{{ $index }}.label" :label="__('Label')" class="flex-1" />
-                    <flux:input wire:model="stats.items.{{ $index }}.sublabel" :label="__('Sublabel')" class="flex-1" />
+                    <flux:input wire:model="stats.items.{{ $index }}.value" label="Value" class="w-24" />
+                    <flux:input wire:model="stats.items.{{ $index }}.suffix" label="Suffix" class="w-20" />
+                    <flux:input wire:model="stats.items.{{ $index }}.label" label="Label" class="flex-1" />
+                    <flux:input wire:model="stats.items.{{ $index }}.sublabel" label="Sublabel" class="flex-1" />
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeStatItem({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addStatItem">{{ __('Add stat') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addStatItem">Add stat</flux:button>
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -517,12 +517,12 @@ new #[Title('Landing page')] class extends Component
     {{-- Case studies --}}
     <form wire:submit="save('case_studies')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Case studies') }}</flux:heading>
-            <flux:switch wire:model="caseStudies.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Case studies</flux:heading>
+            <flux:switch wire:model="caseStudies.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="caseStudies.eyebrow" :label="__('Eyebrow')" />
-        <flux:input wire:model="caseStudies.heading" :label="__('Heading')" />
+        <flux:input wire:model="caseStudies.eyebrow" label="Eyebrow" />
+        <flux:input wire:model="caseStudies.heading" label="Heading" />
 
         <div class="space-y-4">
             @foreach ($caseStudies['items'] as $index => $item)
@@ -530,22 +530,22 @@ new #[Title('Landing page')] class extends Component
                     <div class="flex items-start gap-3">
                         <div class="flex-1 space-y-3">
                             <div class="grid grid-cols-2 gap-3">
-                                <flux:input wire:model="caseStudies.items.{{ $index }}.category" :label="__('Category')" />
-                                <flux:input wire:model="caseStudies.items.{{ $index }}.year" :label="__('Year')" />
+                                <flux:input wire:model="caseStudies.items.{{ $index }}.category" label="Category" />
+                                <flux:input wire:model="caseStudies.items.{{ $index }}.year" label="Year" />
                             </div>
-                            <flux:input wire:model="caseStudies.items.{{ $index }}.title" :label="__('Title')" />
-                            <flux:textarea wire:model="caseStudies.items.{{ $index }}.description" :label="__('Description')" rows="2" />
-                            <flux:input wire:model="caseStudies.items.{{ $index }}.metrics" :label="__('Metrics')" :description="__('Format: value:label, value:label — e.g. 73%:Latency Cut, 8M:Active Users')" />
+                            <flux:input wire:model="caseStudies.items.{{ $index }}.title" label="Title" />
+                            <flux:textarea wire:model="caseStudies.items.{{ $index }}.description" label="Description" rows="2" />
+                            <flux:input wire:model="caseStudies.items.{{ $index }}.metrics" label="Metrics" description="Format: value:label, value:label — e.g. 73%:Latency Cut, 8M:Active Users" />
                         </div>
                         <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeCaseStudy({{ $index }})" />
                     </div>
                 </div>
             @endforeach
         </div>
-        <flux:button type="button" variant="outline" icon="plus" wire:click="addCaseStudy">{{ __('Add case study') }}</flux:button>
+        <flux:button type="button" variant="outline" icon="plus" wire:click="addCaseStudy">Add case study</flux:button>
 
         <div>
-            <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+            <flux:button type="submit" variant="primary">Save</flux:button>
         </div>
     </form>
 
@@ -554,47 +554,47 @@ new #[Title('Landing page')] class extends Component
     {{-- Process --}}
     <form wire:submit="save('process')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Process') }}</flux:heading>
-            <flux:switch wire:model="process.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Process</flux:heading>
+            <flux:switch wire:model="process.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="process.eyebrow" :label="__('Eyebrow')" />
-        <flux:input wire:model="process.heading" :label="__('Heading')" />
-        <flux:textarea wire:model="process.subheading" :label="__('Subheading')" rows="2" />
+        <flux:input wire:model="process.eyebrow" label="Eyebrow" />
+        <flux:input wire:model="process.heading" label="Heading" />
+        <flux:textarea wire:model="process.subheading" label="Subheading" rows="2" />
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Supporting stats') }}</flux:heading>
+            <flux:heading size="sm">Supporting stats</flux:heading>
             @foreach ($process['stats'] as $index => $stat)
                 <div wire:key="process-stat-{{ $index }}" class="flex items-end gap-3">
-                    <flux:input wire:model="process.stats.{{ $index }}.value" :label="__('Value')" class="w-24" />
-                    <flux:input wire:model="process.stats.{{ $index }}.label" :label="__('Label')" class="flex-1" />
+                    <flux:input wire:model="process.stats.{{ $index }}.value" label="Value" class="w-24" />
+                    <flux:input wire:model="process.stats.{{ $index }}.label" label="Label" class="flex-1" />
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeProcessStat({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addProcessStat">{{ __('Add stat') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addProcessStat">Add stat</flux:button>
         </div>
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Steps') }}</flux:heading>
+            <flux:heading size="sm">Steps</flux:heading>
             @foreach ($process['steps'] as $index => $step)
                 <div wire:key="process-step-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
                     <div class="flex items-start gap-3">
                         <div class="flex-1 space-y-3">
                             <div class="grid grid-cols-3 gap-3">
-                                <flux:input wire:model="process.steps.{{ $index }}.number" :label="__('Number')" />
-                                <flux:input wire:model="process.steps.{{ $index }}.title" :label="__('Title')" class="col-span-2" />
+                                <flux:input wire:model="process.steps.{{ $index }}.number" label="Number" />
+                                <flux:input wire:model="process.steps.{{ $index }}.title" label="Title" class="col-span-2" />
                             </div>
-                            <flux:textarea wire:model="process.steps.{{ $index }}.description" :label="__('Description')" rows="2" />
-                            <flux:input wire:model="process.steps.{{ $index }}.duration" :label="__('Duration')" />
+                            <flux:textarea wire:model="process.steps.{{ $index }}.description" label="Description" rows="2" />
+                            <flux:input wire:model="process.steps.{{ $index }}.duration" label="Duration" />
                         </div>
                         <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeProcessStep({{ $index }})" />
                     </div>
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addProcessStep">{{ __('Add step') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addProcessStep">Add step</flux:button>
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -602,32 +602,32 @@ new #[Title('Landing page')] class extends Component
     {{-- Testimonials --}}
     <form wire:submit="save('testimonials')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Testimonials') }}</flux:heading>
-            <flux:switch wire:model="testimonials.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Testimonials</flux:heading>
+            <flux:switch wire:model="testimonials.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="testimonials.eyebrow" :label="__('Eyebrow')" />
-        <flux:input wire:model="testimonials.heading" :label="__('Heading')" />
+        <flux:input wire:model="testimonials.eyebrow" label="Eyebrow" />
+        <flux:input wire:model="testimonials.heading" label="Heading" />
 
         <div class="space-y-4">
             @foreach ($testimonials['items'] as $index => $item)
                 <div wire:key="testimonial-{{ $index }}" class="flex items-start gap-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
                     <div class="flex-1 space-y-3">
                         <div class="grid grid-cols-3 gap-3">
-                            <flux:input wire:model="testimonials.items.{{ $index }}.name" :label="__('Name')" />
-                            <flux:input wire:model="testimonials.items.{{ $index }}.role" :label="__('Role')" />
-                            <flux:input wire:model="testimonials.items.{{ $index }}.rating" :label="__('Rating (1-5)')" type="number" min="1" max="5" />
+                            <flux:input wire:model="testimonials.items.{{ $index }}.name" label="Name" />
+                            <flux:input wire:model="testimonials.items.{{ $index }}.role" label="Role" />
+                            <flux:input wire:model="testimonials.items.{{ $index }}.rating" label="Rating (1-5)" type="number" min="1" max="5" />
                         </div>
-                        <flux:textarea wire:model="testimonials.items.{{ $index }}.quote" :label="__('Quote')" rows="2" />
+                        <flux:textarea wire:model="testimonials.items.{{ $index }}.quote" label="Quote" rows="2" />
                     </div>
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeTestimonial({{ $index }})" />
                 </div>
             @endforeach
         </div>
-        <flux:button type="button" variant="outline" icon="plus" wire:click="addTestimonial">{{ __('Add testimonial') }}</flux:button>
+        <flux:button type="button" variant="outline" icon="plus" wire:click="addTestimonial">Add testimonial</flux:button>
 
         <div>
-            <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+            <flux:button type="submit" variant="primary">Save</flux:button>
         </div>
     </form>
 
@@ -636,35 +636,35 @@ new #[Title('Landing page')] class extends Component
     {{-- CTA --}}
     <form wire:submit="save('cta')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Call to action') }}</flux:heading>
-            <flux:switch wire:model="cta.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Call to action</flux:heading>
+            <flux:switch wire:model="cta.is_visible" label="Visible" />
         </div>
 
-        <flux:input wire:model="cta.eyebrow" :label="__('Eyebrow')" />
+        <flux:input wire:model="cta.eyebrow" label="Eyebrow" />
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="cta.heading_line1" :label="__('Heading line 1')" />
-            <flux:input wire:model="cta.heading_line2" :label="__('Heading line 2')" />
+            <flux:input wire:model="cta.heading_line1" label="Heading line 1" />
+            <flux:input wire:model="cta.heading_line2" label="Heading line 2" />
         </div>
-        <flux:textarea wire:model="cta.subheading" :label="__('Subheading')" rows="2" />
+        <flux:textarea wire:model="cta.subheading" label="Subheading" rows="2" />
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="cta.primary_text" :label="__('Primary button text')" />
-            <flux:input wire:model="cta.primary_url" :label="__('Primary button URL')" />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="cta.secondary_text" :label="__('Secondary button text')" />
-            <flux:input wire:model="cta.secondary_url" :label="__('Secondary button URL')" />
-        </div>
-        <flux:input wire:model="cta.contact_label" :label="__('Contact label')" />
-        <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="cta.address_label" :label="__('Address label')" />
-            <flux:input wire:model="cta.address" :label="__('Address')" />
+            <flux:input wire:model="cta.primary_text" label="Primary button text" />
+            <flux:input wire:model="cta.primary_url" label="Primary button URL" />
         </div>
         <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="cta.email" :label="__('Email')" />
-            <flux:input wire:model="cta.phone" :label="__('Phone')" />
+            <flux:input wire:model="cta.secondary_text" label="Secondary button text" />
+            <flux:input wire:model="cta.secondary_url" label="Secondary button URL" />
+        </div>
+        <flux:input wire:model="cta.contact_label" label="Contact label" />
+        <div class="grid grid-cols-2 gap-4">
+            <flux:input wire:model="cta.address_label" label="Address label" />
+            <flux:input wire:model="cta.address" label="Address" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <flux:input wire:model="cta.email" label="Email" />
+            <flux:input wire:model="cta.phone" label="Phone" />
         </div>
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 
     <flux:separator />
@@ -672,44 +672,44 @@ new #[Title('Landing page')] class extends Component
     {{-- Footer --}}
     <form wire:submit="save('footer')" class="space-y-6">
         <div class="flex items-center justify-between">
-            <flux:heading size="lg">{{ __('Footer') }}</flux:heading>
-            <flux:switch wire:model="footer.is_visible" :label="__('Visible')" />
+            <flux:heading size="lg">Footer</flux:heading>
+            <flux:switch wire:model="footer.is_visible" label="Visible" />
         </div>
 
-        <flux:textarea wire:model="footer.tagline" :label="__('Tagline')" rows="2" />
+        <flux:textarea wire:model="footer.tagline" label="Tagline" rows="2" />
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Columns') }}</flux:heading>
+            <flux:heading size="sm">Columns</flux:heading>
             @foreach ($footer['columns'] as $index => $column)
                 <div wire:key="footer-column-{{ $index }}" class="flex items-start gap-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
                     <div class="flex-1 space-y-3">
-                        <flux:input wire:model="footer.columns.{{ $index }}.heading" :label="__('Column heading')" />
-                        <flux:textarea wire:model="footer.columns.{{ $index }}.links" :label="__('Links')" rows="3" :description="__('One per line, format: Label|URL')" />
+                        <flux:input wire:model="footer.columns.{{ $index }}.heading" label="Column heading" />
+                        <flux:textarea wire:model="footer.columns.{{ $index }}.links" label="Links" rows="3" description="One per line, format: Label|URL" />
                     </div>
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeFooterColumn({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addFooterColumn">{{ __('Add column') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addFooterColumn">Add column</flux:button>
         </div>
 
         <div class="space-y-4">
-            <flux:heading size="sm">{{ __('Social links') }}</flux:heading>
+            <flux:heading size="sm">Social links</flux:heading>
             @foreach ($footer['social'] as $index => $social)
                 <div wire:key="social-{{ $index }}" class="flex items-end gap-3">
-                    <flux:select wire:model="footer.social.{{ $index }}.platform" :label="__('Platform')" class="w-40">
+                    <flux:select wire:model="footer.social.{{ $index }}.platform" label="Platform" class="w-40">
                         <flux:select.option value="linkedin">LinkedIn</flux:select.option>
                         <flux:select.option value="twitter">X / Twitter</flux:select.option>
                         <flux:select.option value="github">GitHub</flux:select.option>
                     </flux:select>
-                    <flux:input wire:model="footer.social.{{ $index }}.url" :label="__('URL')" class="flex-1" />
+                    <flux:input wire:model="footer.social.{{ $index }}.url" label="URL" class="flex-1" />
                     <flux:button type="button" variant="ghost" size="sm" icon="trash" wire:click="removeSocialLink({{ $index }})" />
                 </div>
             @endforeach
-            <flux:button type="button" variant="outline" icon="plus" wire:click="addSocialLink">{{ __('Add social link') }}</flux:button>
+            <flux:button type="button" variant="outline" icon="plus" wire:click="addSocialLink">Add social link</flux:button>
         </div>
 
-        <flux:input wire:model="footer.copyright_text" :label="__('Copyright text')" />
+        <flux:input wire:model="footer.copyright_text" label="Copyright text" />
 
-        <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        <flux:button type="submit" variant="primary">Save</flux:button>
     </form>
 </div>

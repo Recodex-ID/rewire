@@ -10,7 +10,7 @@
             'text-brand-navy/60 hover:text-brand-navy dark:text-brand-silver dark:hover:text-brand-snow' => $active !== 'login',
         ])
     >
-        {{ __('Sign in') }}
+        Sign in
     </a>
     <a
         href="{{ route('register') }}"
@@ -21,6 +21,6 @@
             'text-brand-navy/60 hover:text-brand-navy dark:text-brand-silver dark:hover:text-brand-snow' => $active !== 'register',
         ])
     >
-        {{ __('Create account') }}
+        Create account
     </a>
 </div>

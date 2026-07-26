@@ -1,11 +1,11 @@
-<x-layouts::auth :title="__('Log in')">
+<x-layouts::auth title="Log in">
     <div class="flex flex-col gap-8">
         <x-auth-tabs active="login" />
 
         <x-auth-header
-            :eyebrow="__('Welcome back')"
-            :title="__('Access your dashboard')"
-            :description="__('Enter your credentials to continue where you left off.')"
+            eyebrow="Welcome back"
+            title="Access your dashboard"
+            description="Enter your credentials to continue where you left off."
         />
 
         <x-auth-session-status :status="session('status')" />
@@ -17,7 +17,7 @@
             <flux:input
                 name="email"
                 icon="envelope"
-                :label="__('Email address')"
+                label="Email address"
                 :value="old('email')"
                 type="email"
                 required
@@ -31,30 +31,30 @@
                 <flux:input
                     name="password"
                     icon="lock-closed"
-                    :label="__('Password')"
+                    label="Password"
                     type="password"
                     required
                     autocomplete="current-password"
-                    :placeholder="__('Password')"
+                    placeholder="Password"
                     viewable
                 />
 
                 @if (Route::has('password.request'))
                     <flux:link class="absolute top-0 end-0 text-xs text-brand-accent-dark dark:text-brand-accent" :href="route('password.request')" wire:navigate>
-                        {{ __('Forgot your password?') }}
+                        Forgot your password?
                     </flux:link>
                 @endif
             </div>
 
             <!-- Remember Me -->
-            <flux:checkbox name="remember" :label="__('Keep me signed in for 30 days')" :checked="old('remember')" />
+            <flux:checkbox name="remember" label="Keep me signed in for 30 days" :checked="old('remember')" />
 
             <flux:button variant="primary" type="submit" class="w-full" data-test="login-button">
-                {{ __('Sign in securely') }}
+                Sign in securely
             </flux:button>
 
             <flux:text class="text-center text-xs text-zinc-400">
-                {{ __('Protected by industry-standard encryption. Your data is transmitted securely.') }}
+                Protected by industry-standard encryption. Your data is transmitted securely.
             </flux:text>
         </form>
     </div>

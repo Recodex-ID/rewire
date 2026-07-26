@@ -1,11 +1,11 @@
-<x-layouts::auth :title="__('Register')">
+<x-layouts::auth title="Register">
     <div class="flex flex-col gap-8">
         <x-auth-tabs active="register" />
 
         <x-auth-header
-            :eyebrow="__('Get started')"
-            :title="__('Create your account')"
-            :description="__('Start building on a foundation that is already wired up.')"
+            eyebrow="Get started"
+            title="Create your account"
+            description="Start building on a foundation that is already wired up."
         />
 
         <x-auth-session-status :status="session('status')" />
@@ -16,20 +16,20 @@
             <flux:input
                 name="name"
                 icon="user"
-                :label="__('Name')"
+                label="Name"
                 :value="old('name')"
                 type="text"
                 required
                 autofocus
                 autocomplete="name"
-                :placeholder="__('Full name')"
+                placeholder="Full name"
             />
 
             <!-- Email Address -->
             <flux:input
                 name="email"
                 icon="envelope"
-                :label="__('Email address')"
+                label="Email address"
                 :value="old('email')"
                 type="email"
                 required
@@ -43,11 +43,11 @@
                     id="password"
                     name="password"
                     icon="lock-closed"
-                    :label="__('Password')"
+                    label="Password"
                     type="password"
                     required
                     autocomplete="new-password"
-                    :placeholder="__('Min. 8 characters')"
+                    placeholder="Min. 8 characters"
                     passwordrules="{{ \Illuminate\Validation\Rules\Password::defaults()->toPasswordRulesString() }}"
                     viewable
                     x-on:input="
@@ -74,17 +74,17 @@
             <flux:input
                 name="password_confirmation"
                 icon="lock-closed"
-                :label="__('Confirm password')"
+                label="Confirm password"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Confirm password')"
+                placeholder="Confirm password"
                 passwordrules="{{ \Illuminate\Validation\Rules\Password::defaults()->toPasswordRulesString() }}"
                 viewable
             />
 
             <flux:button type="submit" variant="primary" class="w-full" data-test="register-user-button">
-                {{ __('Create account') }}
+                Create account
             </flux:button>
         </form>
     </div>

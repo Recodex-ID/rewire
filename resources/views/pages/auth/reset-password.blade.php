@@ -1,9 +1,9 @@
-<x-layouts::auth :title="__('Reset password')">
+<x-layouts::auth title="Reset password">
     <div class="flex flex-col gap-8">
         <x-auth-header
-            :eyebrow="__('Account recovery')"
-            :title="__('Reset password')"
-            :description="__('Please enter your new password below.')"
+            eyebrow="Account recovery"
+            title="Reset password"
+            description="Please enter your new password below."
         />
 
         <x-auth-session-status :status="session('status')" />
@@ -18,7 +18,7 @@
                 name="email"
                 icon="envelope"
                 value="{{ request('email') }}"
-                :label="__('Email')"
+                label="Email"
                 type="email"
                 required
                 autocomplete="email"
@@ -28,11 +28,11 @@
             <flux:input
                 name="password"
                 icon="lock-closed"
-                :label="__('Password')"
+                label="Password"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Password')"
+                placeholder="Password"
                 passwordrules="{{ \Illuminate\Validation\Rules\Password::defaults()->toPasswordRulesString() }}"
                 viewable
             />
@@ -41,17 +41,17 @@
             <flux:input
                 name="password_confirmation"
                 icon="lock-closed"
-                :label="__('Confirm password')"
+                label="Confirm password"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Confirm password')"
+                placeholder="Confirm password"
                 passwordrules="{{ \Illuminate\Validation\Rules\Password::defaults()->toPasswordRulesString() }}"
                 viewable
             />
 
             <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">
-                {{ __('Reset password') }}
+                Reset password
             </flux:button>
         </form>
     </div>
