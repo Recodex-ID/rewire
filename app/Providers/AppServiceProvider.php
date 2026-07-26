@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogAuthenticationActivity;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureAuthenticationLogging();
     }
 
     /**
@@ -47,5 +50,13 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null,
         );
+    }
+
+    /**
+     * Record every real authentication event to the activity log audit trail.
+     */
+    protected function configureAuthenticationLogging(): void
+    {
+        Event::subscribe(LogAuthenticationActivity::class);
     }
 }
