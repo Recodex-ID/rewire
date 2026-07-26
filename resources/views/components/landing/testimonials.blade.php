@@ -38,9 +38,13 @@
                         </p>
 
                         <div class="mt-8 flex items-center gap-3 border-t border-brand-navy/10 pt-6 dark:border-brand-snow/10">
-                            <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-navy/5 font-mono text-xs font-medium text-brand-navy dark:bg-brand-snow/10 dark:text-brand-snow">
-                                {{ $initials }}
-                            </div>
+                            @if ($item['avatar'] ?? null)
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($item['avatar']) }}" class="size-10 shrink-0 rounded-full object-cover" alt="{{ $item['name'] ?? '' }}">
+                            @else
+                                <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-navy/5 font-mono text-xs font-medium text-brand-navy dark:bg-brand-snow/10 dark:text-brand-snow">
+                                    {{ $initials }}
+                                </div>
+                            @endif
                             <div>
                                 <p class="text-sm font-medium text-brand-navy dark:text-brand-snow">
                                     {{ $item['name'] ?? '' }}

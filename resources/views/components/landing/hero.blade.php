@@ -11,11 +11,19 @@
         $secondaryCtaText = $section->content['secondary_cta_text'] ?? '';
         $secondaryCtaUrl = $section->content['secondary_cta_url'] ?? '#';
         $stats = $section->content['stats'] ?? [];
+        $backgroundImage = $section->content['background_image'] ?? null;
     @endphp
 
     <section class="relative overflow-hidden bg-brand-snow dark:bg-zinc-900">
-        <div class="landing-grid-bg absolute inset-0 dark:hidden"></div>
-        <div class="landing-grid-bg-dark absolute inset-0 hidden dark:block"></div>
+        @if ($backgroundImage)
+            <div class="absolute inset-0">
+                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($backgroundImage) }}" class="size-full object-cover" alt="">
+                <div class="absolute inset-0 bg-brand-snow/85 dark:bg-zinc-900/85"></div>
+            </div>
+        @else
+            <div class="landing-grid-bg absolute inset-0 dark:hidden"></div>
+            <div class="landing-grid-bg-dark absolute inset-0 hidden dark:block"></div>
+        @endif
 
         <div class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:py-32">
             <div>

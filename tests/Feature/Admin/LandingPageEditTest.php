@@ -2,6 +2,8 @@
 
 use App\Models\LandingPageSection;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
@@ -98,4 +100,62 @@ test('admin can save a footer column with links', function () {
             ],
         ],
     ]);
+});
+
+test('admin can upload a hero background image', function () {
+    Storage::fake('public');
+
+    LandingPageSection::create([
+        'key' => 'hero',
+        'content' => [
+            'heading_line1' => 'H1', 'heading_highlight' => 'H2', 'heading_line2' => 'H3', 'subheading' => 'S',
+            'primary_cta_text' => 'Go', 'primary_cta_url' => '/', 'secondary_cta_text' => '', 'secondary_cta_url' => '',
+            'badge_text' => '', 'badge_secondary' => '', 'background_image' => '', 'stats' => [],
+        ],
+        'is_visible' => true,
+    ]);
+
+    $admin = User::factory()->create();
+    $admin->assignRole(Role::findOrCreate('admin'));
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::admin.landing-page.hero')
+        ->set('backgroundImageUpload', UploadedFile::fake()->image('hero.jpg'))
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $path = LandingPageSection::where('key', 'hero')->first()->content['background_image'];
+
+    expect($path)->not->toBeEmpty();
+    Storage::disk('public')->assertExists($path);
+});
+
+test('admin can upload a trusted-by logo image', function () {
+    Storage::fake('public');
+
+    LandingPageSection::create([
+        'key' => 'trusted_by',
+        'content' => ['heading' => 'H', 'logos' => []],
+        'is_visible' => true,
+    ]);
+
+    $admin = User::factory()->create();
+    $admin->assignRole(Role::findOrCreate('admin'));
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::admin.landing-page.trusted-by')
+        ->call('addLogo')
+        ->set('data.logos.0.name', 'Acme')
+        ->set('data.logos.0.upload', UploadedFile::fake()->image('logo.png'))
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $logos = LandingPageSection::where('key', 'trusted_by')->first()->content['logos'];
+
+    expect($logos)->toHaveCount(1);
+    expect($logos[0]['name'])->toBe('Acme');
+    expect($logos[0])->not->toHaveKey('upload');
+    Storage::disk('public')->assertExists($logos[0]['image']);
 });

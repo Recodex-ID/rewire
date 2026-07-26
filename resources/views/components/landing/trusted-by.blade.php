@@ -12,14 +12,22 @@
             <div class="landing-marquee-mask landing-reveal landing-reveal-delay-1 overflow-hidden">
                 <div class="landing-animate-scroll-x flex w-max items-center gap-16">
                     @foreach ($section->content['logos'] ?? [] as $logo)
-                        <span class="shrink-0 font-display text-2xl font-bold tracking-tight text-brand-navy/30 transition hover:text-brand-navy/60 dark:text-brand-snow/30 dark:hover:text-brand-snow/60">
-                            {{ $logo['name'] ?? '' }}
-                        </span>
+                        @if ($logo['image'] ?? null)
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($logo['image']) }}" class="h-8 w-auto shrink-0 object-contain opacity-40 transition hover:opacity-70 dark:opacity-50 dark:hover:opacity-80" alt="{{ $logo['name'] ?? '' }}">
+                        @else
+                            <span class="shrink-0 font-display text-2xl font-bold tracking-tight text-brand-navy/30 transition hover:text-brand-navy/60 dark:text-brand-snow/30 dark:hover:text-brand-snow/60">
+                                {{ $logo['name'] ?? '' }}
+                            </span>
+                        @endif
                     @endforeach
                     @foreach ($section->content['logos'] ?? [] as $logo)
-                        <span aria-hidden="true" class="shrink-0 font-display text-2xl font-bold tracking-tight text-brand-navy/30 transition hover:text-brand-navy/60 dark:text-brand-snow/30 dark:hover:text-brand-snow/60">
-                            {{ $logo['name'] ?? '' }}
-                        </span>
+                        @if ($logo['image'] ?? null)
+                            <img aria-hidden="true" src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($logo['image']) }}" class="h-8 w-auto shrink-0 object-contain opacity-40 transition hover:opacity-70 dark:opacity-50 dark:hover:opacity-80" alt="">
+                        @else
+                            <span aria-hidden="true" class="shrink-0 font-display text-2xl font-bold tracking-tight text-brand-navy/30 transition hover:text-brand-navy/60 dark:text-brand-snow/30 dark:hover:text-brand-snow/60">
+                                {{ $logo['name'] ?? '' }}
+                            </span>
+                        @endif
                     @endforeach
                 </div>
             </div>

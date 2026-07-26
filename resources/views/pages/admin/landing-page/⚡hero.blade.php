@@ -2,11 +2,17 @@
 
 use App\Models\LandingPageSection;
 use Flux\Flux;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 new class extends Component
 {
-    public array $data = ['badge_text' => '', 'badge_secondary' => '', 'heading_line1' => '', 'heading_highlight' => '', 'heading_line2' => '', 'subheading' => '', 'primary_cta_text' => '', 'primary_cta_url' => '', 'secondary_cta_text' => '', 'secondary_cta_url' => '', 'stats' => [], 'is_visible' => true];
+    use WithFileUploads;
+
+    public array $data = ['badge_text' => '', 'badge_secondary' => '', 'heading_line1' => '', 'heading_highlight' => '', 'heading_line2' => '', 'subheading' => '', 'primary_cta_text' => '', 'primary_cta_url' => '', 'secondary_cta_text' => '', 'secondary_cta_url' => '', 'background_image' => '', 'stats' => [], 'is_visible' => true];
+
+    public $backgroundImageUpload = null;
 
     public function mount(): void
     {
@@ -15,6 +21,15 @@ new class extends Component
         if ($section) {
             $this->data = [...$this->data, ...$section->content, 'is_visible' => $section->is_visible];
         }
+    }
+
+    public function removeBackgroundImage(): void
+    {
+        if ($this->data['background_image']) {
+            Storage::disk('public')->delete($this->data['background_image']);
+        }
+
+        $this->data['background_image'] = '';
     }
 
     public function addStat(): void
@@ -30,9 +45,22 @@ new class extends Component
 
     public function save(): void
     {
+        $this->validate([
+            'backgroundImageUpload' => ['nullable', 'image', 'max:2048'],
+        ]);
+
         $isVisible = (bool) ($this->data['is_visible'] ?? true);
         $content = $this->data;
         unset($content['is_visible']);
+
+        if ($this->backgroundImageUpload) {
+            if ($content['background_image']) {
+                Storage::disk('public')->delete($content['background_image']);
+            }
+
+            $content['background_image'] = $this->backgroundImageUpload->store('landing/hero', 'public');
+            $this->backgroundImageUpload = null;
+        }
 
         LandingPageSection::query()->where('key', 'hero')->update([
             'content' => $content,
@@ -68,6 +96,20 @@ new class extends Component
         <div class="grid grid-cols-2 gap-4">
             <flux:input wire:model="data.secondary_cta_text" label="Secondary button text" />
             <flux:input wire:model="data.secondary_cta_url" label="Secondary button URL" />
+        </div>
+
+        <div class="space-y-3">
+            <flux:heading size="sm">Background image</flux:heading>
+            @if ($data['background_image'])
+                <div class="flex items-center gap-4">
+                    <img src="{{ Storage::disk('public')->url($data['background_image']) }}" class="h-20 w-32 rounded-lg object-cover" alt="">
+                    <flux:button type="button" variant="danger" size="sm" wire:click="removeBackgroundImage">Remove</flux:button>
+                </div>
+            @endif
+            <flux:input type="file" wire:model="backgroundImageUpload" label="{{ $data['background_image'] ? 'Replace image' : 'Upload image' }}" accept="image/*" />
+            @if ($backgroundImageUpload)
+                <img src="{{ $backgroundImageUpload->temporaryUrl() }}" class="h-20 w-32 rounded-lg object-cover" alt="">
+            @endif
         </div>
 
         <div class="space-y-4">
