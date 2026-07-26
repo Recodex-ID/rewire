@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — PT. Reka Mitra Teknologi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#1A2A4B',
+            'navy-light': '#2A3A5B',
+            silver: '#BCBFC4',
+            snow: '#FEFEFE',
+            accent: '#4DA3FF',
+            'accent-dark': '#2E7DD8',
+            'bg-main': '#F8F9FB'
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F8F9FB;
+      color: #1A2A4B;
+    }
+
+    .grid-bg-dark {
+      background-image:
+        linear-gradient(rgba(254, 254, 254, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(254, 254, 254, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Scrollbar Styling */
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(254, 254, 254, 0.1); border-radius: 4px; }
+
+    .main-scroll::-webkit-scrollbar { width: 8px; }
+    .main-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+    .main-scroll::-webkit-scrollbar-thumb { background: #BCBFC4; border-radius: 4px; }
+
+    ::selection { background: #1A2A4B; color: #FEFEFE; }
+
+    /* Animations */
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -1000; }
+    }
+    .connection-line {
+      stroke-dasharray: 4 6;
+      animation: dash 30s linear infinite;
+    }
+
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px -15px rgba(26, 42, 75, 0.1);
+    }
+
+    .nav-item {
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .nav-item.active {
+      background: rgba(77, 163, 255, 0.1);
+      color: #FEFEFE;
+    }
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background: #4DA3FF;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .chart-path {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawLine 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .progress-bar {
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: growBar 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes growBar {
+      to { transform: scaleX(1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-navy text-snow flex flex-col h-full relative">
+    <div class="absolute inset-0 grid-bg-dark opacity-50 pointer-events-none"></div>
+
+    <!-- Logo -->
+    <div class="p-6 border-b border-snow/10 relative z-10">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-snow rounded-xl flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M4 4L20 20M20 4L4 20" stroke="#1A2A4B" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="3" fill="#4DA3FF"/>
+          </svg>
+        </div>
+        <div>
+          <div class="font-display font-bold text-snow leading-none text-lg">Reka Mitra</div>
+          <div class="font-mono text-[9px] tracking-[0.25em] text-silver/60 uppercase mt-1">Control Plane</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 overflow-y-auto sidebar-scroll py-4 relative z-10">
+      <div class="px-4 mb-3">
+        <div class="font-mono text-[10px] text-silver/40 uppercase tracking-wider px-3 mb-2">Operations</div>
+        <a href="#" class="nav-item active flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 mb-1">
+          <i class="fas fa-gauge-high w-4"></i> Overview
+        </a>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-server w-4"></i> Infrastructure
+        </a>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-deploydog w-4"></i> Deployments
+          <span class="ml-auto bg-accent/20 text-accent text-[10px] font-mono px-1.5 py-0.5 rounded">12</span>
+        </a>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-shield-halved w-4"></i> Security
+        </a>
+      </div>
+
+      <div class="px-4 mb-3">
+        <div class="font-mono text-[10px] text-silver/40 uppercase tracking-wider px-3 mb-2">Resources</div>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-chart-line w-4"></i> Analytics
+        </a>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-database w-4"></i> Data Storage
+        </a>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-users w-4"></i> Team
+        </a>
+      </div>
+
+      <div class="px-4">
+        <div class="font-mono text-[10px] text-silver/40 uppercase tracking-wider px-3 mb-2">System</div>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-gear w-4"></i> Settings
+        </a>
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-snow/70 hover:bg-snow/5 hover:text-snow mb-1">
+          <i class="fas fa-file-lines w-4"></i> Logs
+        </a>
+      </div>
+    </nav>
+
+    <!-- User Profile -->
+    <div class="p-4 border-t border-snow/10 relative z-10">
+      <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-snow/5 cursor-pointer transition">
+        <div class="w-9 h-9 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-display font-bold text-accent text-sm">
+          SH
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-medium text-snow truncate">Sarah Hartono</div>
+          <div class="text-xs text-silver/50 truncate">Admin · Helios Bank</div>
+        </div>
+        <i class="fas fa-ellipsis-vertical text-silver/40 text-sm"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col h-full overflow-hidden">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-snow border-b border-navy/5 px-8 flex items-center justify-between z-10">
+      <div>
+        <div class="font-mono text-[10px] text-navy/40 uppercase tracking-wider">Dashboard / Overview</div>
+        <h1 class="font-display font-bold text-xl text-navy tracking-tight">Infrastructure Control</h1>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Search -->
+        <div class="relative hidden md:block">
+          <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-navy/30 text-sm"></i>
+          <input type="text" placeholder="Search resources..." class="auth-input w-64 pl-11 pr-4 py-2.5 bg-bg-main border border-transparent rounded-lg text-sm text-navy placeholder:text-navy/30 focus:bg-snow focus:border-navy/10">
+          <kbd class="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] bg-navy/5 text-navy/40 px-1.5 py-0.5 rounded">⌘K</kbd>
+        </div>
+
+        <!-- Status -->
+        <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span class="text-xs font-medium text-green-700">All Systems Operational</span>
+        </div>
+
+        <button class="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-bg-main text-navy/60 transition">
+          <i class="fas fa-bell"></i>
+          <span class="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full border-2 border-snow"></span>
+        </button>
+
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-bg-main text-navy/60 transition">
+          <i class="fas fa-expand"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Dashboard Area -->
+    <div class="flex-1 overflow-y-auto main-scroll p-8 space-y-8">
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="card-hover bg-snow border border-navy/5 rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-11 h-11 bg-navy/5 rounded-xl flex items-center justify-center">
+              <i class="fas fa-network-wired text-navy"></i>
+            </div>
+            <div class="flex items-center gap-1 text-green-600 text-xs font-mono font-medium">
+              <i class="fas fa-arrow-up text-[10px]"></i> 12.5%
+            </div>
+          </div>
+          <div class="font-display font-bold text-3xl text-navy tracking-tight">1.2<span class="text-accent text-lg">B</span></div>
+          <div class="text-sm text-navy/50 mt-1">API Requests / Day</div>
+          <!-- Mini Sparkline -->
+          <svg class="mt-4 w-full h-10" viewBox="0 0 100 30" preserveAspectRatio="none">
+            <path d="M0,25 Q10,20 20,22 T40,15 T60,18 T80,5 T100,10" fill="none" stroke="#4DA3FF" stroke-width="2" stroke-linecap="round"/>
+            <path d="M0,25 Q10,20 20,22 T40,15 T60,18 T80,5 T100,10 L100,30 L0,30 Z" fill="url(#grad1)" opacity="0.3"/>
+            <defs>
+              <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4DA3FF"/>
+                <stop offset="100%" stop-color="#4DA3FF" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card-hover bg-snow border border-navy/5 rounded-2xl p-6 reveal" style="transition-delay: 0.1s;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-11 h-11 bg-navy/5 rounded-xl flex items-center justify-center">
+              <i class="fas fa-gauge-high text-navy"></i>
+            </div>
+            <div class="flex items-center gap-1 text-green-600 text-xs font-mono font-medium">
+              <i class="fas fa-arrow-up text-[10px]"></i> 0.01%
+            </div>
+          </div>
+          <div class="font-display font-bold text-3xl text-navy tracking-tight">99.99<span class="text-accent text-lg">%</span></div>
+          <div class="text-sm text-navy/50 mt-1">Global Uptime SLA</div>
+          <div class="mt-4 h-2 bg-navy/5 rounded-full overflow-hidden">
+            <div class="progress-bar h-full w-[99.99%] bg-green-500 rounded-full"></div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card-hover bg-snow border border-navy/5 rounded-2xl p-6 reveal" style="transition-delay: 0.2s;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-11 h-11 bg-navy/5 rounded-xl flex items-center justify-center">
+              <i class="fas fa-server text-navy"></i>
+            </div>
+            <div class="flex items-center gap-1 text-red-500 text-xs font-mono font-medium">
+              <i class="fas fa-arrow-down text-[10px]"></i> 2.1%
+            </div>
+          </div>
+          <div class="font-display font-bold text-3xl text-navy tracking-tight">23<span class="text-accent text-lg">ms</span></div>
+          <div class="text-sm text-navy/50 mt-1">Avg. Response Latency</div>
+          <div class="mt-4 flex items-end gap-1 h-10">
+            <div class="flex-1 bg-navy/10 rounded-sm" style="height: 40%;"></div>
+            <div class="flex-1 bg-navy/10 rounded-sm" style="height: 60%;"></div>
+            <div class="flex-1 bg-navy/10 rounded-sm" style="height: 45%;"></div>
+            <div class="flex-1 bg-navy/10 rounded-sm" style="height: 75%;"></div>
+            <div class="flex-1 bg-navy/10 rounded-sm" style="height: 50%;"></div>
+            <div class="flex-1 bg-accent rounded-sm" style="height: 35%;"></div>
+            <div class="flex-1 bg-navy/10 rounded-sm" style="height: 65%;"></div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card-hover bg-snow border border-navy/5 rounded-2xl p-6 reveal" style="transition-delay: 0.3s;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-11 h-11 bg-navy/5 rounded-xl flex items-center justify-center">
+              <i class="fas fa-shield-halved text-navy"></i>
+            </div>
+            <div class="px-2 py-0.5 bg-green-500/10 text-green-600 text-[10px] font-mono font-medium rounded">SECURED</div>
+          </div>
+          <div class="font-display font-bold text-3xl text-navy tracking-tight">0<span class="text-accent text-lg"> Threats</span></div>
+          <div class="text-sm text-navy/50 mt-1">Active Intrusions Blocked</div>
+          <div class="mt-4 flex items-center gap-2 text-xs text-navy/40 font-mono">
+            <i class="fas fa-lock text-green-500"></i> 256-bit Encrypted
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Traffic Chart -->
+        <div class="lg:col-span-2 bg-snow border border-navy/5 rounded-2xl p-6 reveal">
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <div>
+              <div class="font-mono text-[10px] text-accent uppercase tracking-wider mb-1">Analytics</div>
+              <h2 class="font-display font-bold text-xl text-navy">Global Network Traffic</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="px-3 py-1.5 text-xs font-medium text-navy/60 hover:bg-navy/5 rounded-lg transition">24H</button>
+              <button class="px-3 py-1.5 text-xs font-medium bg-navy text-snow rounded-lg">7D</button>
+              <button class="px-3 py-1.5 text-xs font-medium text-navy/60 hover:bg-navy/5 rounded-lg transition">30D</button>
+              <button class="px-3 py-1.5 text-xs font-medium text-navy/60 hover:bg-navy/5 rounded-lg transition">1Y</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-6 mb-6">
+            <div>
+              <div class="text-xs text-navy/40 uppercase tracking-wider">Total Ingress</div>
+              <div class="font-display font-bold text-2xl text-navy">845<span class="text-accent text-sm">GB</span></div>
+            </div>
+            <div class="w-px h-10 bg-navy/10"></div>
+            <div>
+              <div class="text-xs text-navy/40 uppercase tracking-wider">Total Egress</div>
+              <div class="font-display font-bold text-2xl text-navy">1.2<span class="text-accent text-sm">TB</span></div>
+            </div>
+            <div class="w-px h-10 bg-navy/10"></div>
+            <div>
+              <div class="text-xs text-navy/40 uppercase tracking-wider">Peak Throughput</div>
+              <div class="font-display font-bold text-2xl text-navy">12.5<span class="text-accent text-sm">Gbps</span></div>
+            </div>
+          </div>
+
+          <!-- SVG Chart -->
+          <div class="relative h-64 w-full">
+            <svg viewBox="0 0 600 200" class="w-full h-full overflow-visible">
+              <!-- Grid Lines -->
+              <g stroke="#E5E7EB" stroke-width="1">
+                <line x1="0" y1="50" x2="600" y2="50"/>
+                <line x1="0" y1="100" x2="600" y2="100"/>
+                <line x1="0" y1="150" x2="600" y2="150"/>
+              </g>
+
+              <!-- Area Fill -->
+              <path d="M0,150 L50,120 L100,140 L150,90 L200,110 L250,70 L300,80 L350,50 L400,60 L450,40 L500,55 L550,30 L600,40 L600,200 L0,200 Z" fill="url(#chartGrad)" />
+
+              <!-- Line -->
+              <path d="M0,150 L50,120 L100,140 L150,90 L200,110 L250,70 L300,80 L350,50 L400,60 L450,40 L500,55 L550,30 L600,40" fill="none" stroke="#1A2A4B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chart-path"/>
+
+              <!-- Dots on points -->
+              <circle cx="150" cy="90" r="4" fill="#FEFEFE" stroke="#1A2A4B" stroke-width="2"/>
+              <circle cx="350" cy="50" r="4" fill="#FEFEFE" stroke="#4DA3FF" stroke-width="2"/>
+              <circle cx="550" cy="30" r="4" fill="#FEFEFE" stroke="#1A2A4B" stroke-width="2"/>
+
+              <!-- Highlight Tooltip -->
+              <g transform="translate(350, 50)">
+                <line x1="0" y1="0" x2="0" y2="150" stroke="#4DA3FF" stroke-width="1" stroke-dasharray="3 3"/>
+                <rect x="-40" y="-35" width="80" height="25" rx="4" fill="#1A2A4B"/>
+                <text x="0" y="-17" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#FEFEFE">Peak: 15.2Gbps</text>
+              </g>
+
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4DA3FF" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#4DA3FF" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <!-- X Axis Labels -->
+            <div class="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] text-navy/40 font-mono mt-2 pt-2 border-t border-navy/5">
+              <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regional Status -->
+        <div class="bg-navy rounded-2xl p-6 text-snow relative overflow-hidden reveal" style="transition-delay: 0.1s;">
+          <div class="absolute inset-0 grid-bg-dark opacity-30"></div>
+          <div class="absolute top-0 right-0 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+
+          <div class="relative z-10">
+            <div class="font-mono text-[10px] text-accent uppercase tracking-wider mb-1">Infrastructure</div>
+            <h2 class="font-display font-bold text-xl text-snow mb-6">Regional Status</h2>
+
+            <div class="space-y-4">
+              <!-- Region 1 -->
+              <div class="border-b border-snow/10 pb-4">
+                <div class="flex justify-between items-center mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse-soft"></span>
+                    <span class="font-mono text-xs text-silver">APAC</span>
+                  </div>
+                  <span class="text-sm font-medium text-snow">12ms · Optimal</span>
+                </div>
+                <div class="flex gap-1 mt-2">
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                </div>
+              </div>
+
+              <!-- Region 2 -->
+              <div class="border-b border-snow/10 pb-4">
+                <div class="flex justify-between items-center mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse-soft"></span>
+                    <span class="font-mono text-xs text-silver">EMEA</span>
+                  </div>
+                  <span class="text-sm font-medium text-snow">48ms · Degraded</span>
+                </div>
+                <div class="flex gap-1 mt-2">
+                  <div class="flex-1 h-1 bg-yellow-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-yellow-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-yellow-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-snow/10 rounded-full"></div>
+                </div>
+              </div>
+
+              <!-- Region 3 -->
+              <div class="pb-4">
+                <div class="flex justify-between items-center mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse-soft"></span>
+                    <span class="font-mono text-xs text-silver">AMERICAS</span>
+                  </div>
+                  <span class="text-sm font-medium text-snow">24ms · Optimal</span>
+                </div>
+                <div class="flex gap-1 mt-2">
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                  <div class="flex-1 h-1 bg-green-500/80 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+
+            <button class="mt-6 w-full bg-snow/5 border border-snow/10 text-snow py-2.5 rounded-lg text-sm font-medium hover:bg-snow/10 transition flex items-center justify-center gap-2">
+              View All Regions
+              <i class="fas fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Grid: Map & Logs -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Global Map -->
+        <div class="lg:col-span-2 bg-snow border border-navy/5 rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <div class="font-mono text-[10px] text-accent uppercase tracking-wider mb-1">Live Network</div>
+              <h2 class="font-display font-bold text-xl text-navy">Edge Node Topology</h2>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-navy/50">
+              <span class="w-2 h-2 bg-accent rounded-full"></span> Active Node
+              <span class="w-2 h-2 bg-navy/20 rounded-full ml-3"></span> Data Route
+            </div>
+          </div>
+
+          <div class="relative bg-bg-main rounded-xl p-4 h-80 overflow-hidden">
+             <!-- Map SVG (Simplified abstract topology) -->
+             <svg viewBox="0 0 800 300" class="w-full h-full">
+               <!-- Grid -->
+               <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(26,42,75,0.05)" stroke-width="1"/>
+               </pattern>
+               <rect width="800" height="300" fill="url(#map-grid)"/>
+
+               <!-- Connection Lines -->
+               <g stroke="#1A2A4B" stroke-width="1.5" fill="none" opacity="0.3">
+                 <path d="M 100 150 Q 250 50 400 120" class="connection-line"/>
+                 <path d="M 400 120 Q 550 50 700 180" class="connection-line"/>
+                 <path d="M 100 150 Q 250 250 400 120" class="connection-line"/>
+                 <path d="M 400 120 Q 550 250 700 180" class="connection-line"/>
+               </g>
+
+               <!-- Nodes -->
+               <g>
+                 <!-- Node 1 -->
+                 <circle cx="100" cy="150" r="15" fill="#4DA3FF" opacity="0.1"/>
+                 <circle cx="100" cy="150" r="8" fill="#4DA3FF" opacity="0.2"/>
+                 <circle cx="100" cy="150" r="4" fill="#4DA3FF"/>
+                 <text x="100" y="180" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1A2A4B" font-weight="600">JKT-01</text>
+
+                 <!-- Node 2 -->
+                 <circle cx="400" cy="120" r="20" fill="#4DA3FF" opacity="0.1"/>
+                 <circle cx="400" cy="120" r="10" fill="#4DA3FF" opacity="0.2"/>
+                 <circle cx="400" cy="120" r="5" fill="#4DA3FF"/>
+                 <text x="400" y="155" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1A2A4B" font-weight="600">SIN-01</text>
+
+                 <!-- Node 3 -->
+                 <circle cx="700" cy="180" r="18" fill="#4DA3FF" opacity="0.1"/>
+                 <circle cx="700" cy="180" r="9" fill="#4DA3FF" opacity="0.2"/>
+                 <circle cx="700" cy="180" r="4.5" fill="#4DA3FF"/>
+                 <text x="700" y="210" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1A2A4B" font-weight="600">NYC-01</text>
+
+                 <!-- Node 4 -->
+                 <circle cx="250" cy="220" r="12" fill="#4DA3FF" opacity="0.1"/>
+                 <circle cx="250" cy="220" r="6" fill="#4DA3FF" opacity="0.2"/>
+                 <circle cx="250" cy="220" r="3" fill="#4DA3FF"/>
+                 <text x="250" y="245" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#1A2A4B" opacity="0.7">LDN-01</text>
+
+                 <!-- Node 5 -->
+                 <circle cx="550" cy="60" r="12" fill="#4DA3FF" opacity="0.1"/>
+                 <circle cx="550" cy="60" r="6" fill="#4DA3FF" opacity="0.2"/>
+                 <circle cx="550" cy="60" r="3" fill="#4DA3FF"/>
+                 <text x="550" y="85" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#1A2A4B" opacity="0.7">TKY-01</text>
+               </g>
+             </svg>
+
+             <!-- Floating Stat -->
+             <div class="absolute top-4 right-4 bg-snow shadow-lg rounded-lg p-3 border border-navy/5">
+               <div class="font-mono text-[9px] text-navy/40 uppercase tracking-wider">Throughput</div>
+               <div class="font-display font-bold text-lg text-navy">12.5 <span class="text-accent text-xs">Gbps</span></div>
+             </div>
+          </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="bg-snow border border-navy/5 rounded-2xl p-6 reveal" style="transition-delay: 0.1s;">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <div class="font-mono text-[10px] text-accent uppercase tracking-wider mb-1">System</div>
+              <h2 class="font-display font-bold text-xl text-navy">Live Activity</h2>
+            </div>
+            <button class="text-xs text-navy/50 hover:text-navy transition">View All</button>
+          </div>
+
+          <div class="space-y-5 relative">
+            <!-- Timeline Line -->
+            <div class="absolute left-[15px] top-2 bottom-2 w-px bg-navy/10"></div>
+
+            <!-- Item 1 -->
+            <div class="flex gap-4 relative">
+              <div class="w-8 h-8 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center z-10 flex-shrink-0">
+                <i class="fas fa-check text-green-600 text-xs"></i>
+              </div>
+              <div class="pt-1">
+                <div class="text-sm text-navy font-medium">Deployment Successful</div>
+                <div class="text-xs text-navy/50 mt-0.5">v2.4.1 pushed to production</div>
+                <div class="font-mono text-[10px] text-navy/30 mt-1">2 min ago</div>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="flex gap-4 relative">
+              <div class="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center z-10 flex-shrink-0">
+                <i class="fas fa-server text-accent text-xs"></i>
+              </div>
+              <div class="pt-1">
+                <div class="text-sm text-navy font-medium">Auto-scaling Triggered</div>
+                <div class="text-xs text-navy/50 mt-0.5">Added 3 nodes in APAC region</div>
+                <div class="font-mono text-[10px] text-navy/30 mt-1">14 min ago</div>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="flex gap-4 relative">
+              <div class="w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center z-10 flex-shrink-0">
+                <i class="fas fa-triangle-exclamation text-yellow-600 text-xs"></i>
+              </div>
+              <div class="pt-1">
+                <div class="text-sm text-navy font-medium">Latency Spike Detected</div>
+                <div class="text-xs text-navy/50 mt-0.5">EMEA region · 120ms peak</div>
+                <div class="font-mono text-[10px] text-navy/30 mt-1">32 min ago</div>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="flex gap-4 relative">
+              <div class="w-8 h-8 rounded-full bg-navy/5 border border-navy/10 flex items-center justify-center z-10 flex-shrink-0">
+                <i class="fas fa-user text-navy/60 text-xs"></i>
+              </div>
+              <div class="pt-1">
+                <div class="text-sm text-navy font-medium">New Member Invited</div>
+                <div class="text-xs text-navy/50 mt-0.5">marcus@heliosbank.com</div>
+                <div class="font-mono text-[10px] text-navy/30 mt-1">1 hour ago</div>
+              </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="flex gap-4 relative">
+              <div class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center z-10 flex-shrink-0">
+                <i class="fas fa-shield-halved text-red-600 text-xs"></i>
+              </div>
+              <div class="pt-1">
+                <div class="text-sm text-navy font-medium">Blocked Malicious IP</div>
+                <div class="text-xs text-navy/50 mt-0.5">192.168.x.x attempted DDoS</div>
+                <div class="font-mono text-[10px] text-navy/30 mt-1">2 hours ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Note -->
+      <div class="text-center text-xs text-navy/40 pt-4 pb-2">
+        PT. Reka Mitra Teknologi · Control Plane v2.0 · <span class="font-mono">LAT -6.2088° / LNG 106.8456°</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Simple Reveal on Load
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((el, index) => {
+      setTimeout(() => {
+        el.classList.add('visible');
+      }, 100 + (index * 50));
+    });
+
+    // Simulate Live Data Update (Dummy)
+    const latencyValue = document.querySelector('.card-hover:nth-child(3) .font-display');
+    let latency = 23;
+    setInterval(() => {
+      latency = 20 + Math.floor(Math.random() * 10);
+      if(latencyValue) {
+        latencyValue.innerHTML = `${latency}<span class="text-accent text-lg">ms</span>`;
+      }
+    }, 3000);
+  </script>
+</body>
+</html>

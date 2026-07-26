@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PT. Reka Mitra Teknologi — Engineering Global Digital Infrastructure</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#1A2A4B',
+            'navy-light': '#2A3A5B',
+            silver: '#BCBFC4',
+            snow: '#FEFEFE',
+            accent: '#4DA3FF',
+            'accent-dark': '#2E7DD8',
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FEFEFE;
+      color: #1A2A4B;
+      overflow-x: hidden;
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(26, 42, 75, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 42, 75, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .grid-bg-dark {
+      background-image:
+        linear-gradient(rgba(254, 254, 254, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(254, 254, 254, 0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .dot-pattern {
+      background-image: radial-gradient(circle, rgba(26, 42, 75, 0.12) 1.2px, transparent 1.2px);
+      background-size: 28px 28px;
+    }
+
+    .dot-pattern-light {
+      background-image: radial-gradient(circle, rgba(254, 254, 254, 0.1) 1.2px, transparent 1.2px);
+      background-size: 28px 28px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-reverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    @keyframes scroll-x {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes ping-slow {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -200; }
+    }
+
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-slow { animation: float 8s ease-in-out infinite; animation-delay: 1s; }
+    .animate-spin-slow { animation: spin-slow 40s linear infinite; }
+    .animate-spin-reverse { animation: spin-reverse 30s linear infinite; }
+    .animate-scroll-x { animation: scroll-x 40s linear infinite; }
+    .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+    .animate-ping-slow { animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    .glass {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+    }
+
+    .card-hover {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 60px -15px rgba(26, 42, 75, 0.18);
+    }
+
+    .glow-blue {
+      box-shadow: 0 0 60px rgba(77, 163, 255, 0.4);
+    }
+
+    .marquee-mask {
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #1A2A4B; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #0F1A33; }
+
+    ::selection {
+      background: #1A2A4B;
+      color: #FEFEFE;
+    }
+
+    .number-glow {
+      text-shadow: 0 0 30px rgba(77, 163, 255, 0.25);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .connection-line {
+      stroke-dasharray: 4 4;
+      animation: dash 20s linear infinite;
+    }
+
+    .underline-svg path {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: drawUnderline 2s ease-out 0.8s forwards;
+    }
+
+    @keyframes drawUnderline {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Scroll progress -->
+  <div class="fixed top-0 left-0 right-0 h-0.5 z-[60] bg-transparent pointer-events-none">
+    <div id="scrollProgress" class="h-full bg-accent" style="width: 0%; transition: width 0.1s;"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 glass bg-snow/80 border-b border-navy/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="relative w-11 h-11 bg-navy rounded-xl flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent"></div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="relative">
+              <path d="M4 4L20 20M20 4L4 20" stroke="#FEFEFE" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="3" fill="#4DA3FF"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-display font-bold text-navy leading-none text-lg">Reka Mitra</div>
+            <div class="font-mono text-[10px] tracking-[0.25em] text-navy/60 uppercase mt-1">Teknologi</div>
+          </div>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-1">
+          <a href="#services" class="px-4 py-2 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 rounded-lg transition">Services</a>
+          <a href="#infrastructure" class="px-4 py-2 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 rounded-lg transition">Infrastructure</a>
+          <a href="#solutions" class="px-4 py-2 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 rounded-lg transition">Solutions</a>
+          <a href="#about" class="px-4 py-2 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 rounded-lg transition">About</a>
+          <a href="#contact" class="px-4 py-2 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 rounded-lg transition">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="#" class="hidden md:inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-accent transition">
+            <i class="fas fa-headset text-xs"></i>
+            Client Portal
+          </a>
+          <a href="#contact" class="hidden sm:inline-flex bg-navy text-snow px-5 py-2.5 rounded-full text-sm font-medium hover:bg-navy-light transition items-center gap-2 group">
+            Get Started
+            <i class="fas fa-arrow-right text-xs group-hover:translate-x-0.5 transition-transform"></i>
+          </a>
+          <button id="menuBtn" class="lg:hidden w-10 h-10 flex items-center justify-center text-navy">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-navy/5 bg-snow">
+      <div class="px-6 py-4 space-y-1">
+        <a href="#services" class="block py-2 text-sm font-medium text-navy">Services</a>
+        <a href="#infrastructure" class="block py-2 text-sm font-medium text-navy">Infrastructure</a>
+        <a href="#solutions" class="block py-2 text-sm font-medium text-navy">Solutions</a>
+        <a href="#about" class="block py-2 text-sm font-medium text-navy">About</a>
+        <a href="#contact" class="block py-2 text-sm font-medium text-navy">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-70"></div>
+    <div class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-accent/5 via-transparent to-transparent"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2.5 bg-snow border border-navy/10 rounded-full px-4 py-2 mb-8 shadow-sm reveal">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            </span>
+            <span class="text-xs font-medium text-navy">ISO 27001 & SOC 2 Type II Certified</span>
+            <span class="text-navy/30">|</span>
+            <span class="text-xs text-navy/60">Trusted across 50+ countries</span>
+          </div>
+
+          <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-[5rem] text-navy leading-[1.02] tracking-tight reveal reveal-delay-1">
+            Engineering the<br>
+            <span class="relative inline-block">
+              digital backbone
+              <svg class="absolute -bottom-3 left-0 w-full underline-svg" viewBox="0 0 400 12" fill="none" preserveAspectRatio="none">
+                <path d="M2 9C100 3 300 3 398 9" stroke="#4DA3FF" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </span><br>
+            of <span class="italic font-light text-navy/70">global</span> enterprise.
+          </h1>
+
+          <p class="mt-10 text-lg text-navy/70 max-w-xl leading-relaxed reveal reveal-delay-2">
+            PT. Reka Mitra Teknologi architects end-to-end technology platforms — cloud infrastructure, cybersecurity, and intelligent systems — that power mission-critical operations for enterprises scaling beyond borders.
+          </p>
+
+          <div class="mt-10 flex flex-wrap items-center gap-4 reveal reveal-delay-3">
+            <a href="#contact" class="group bg-navy text-snow px-7 py-4 rounded-full font-medium hover:bg-navy-light transition flex items-center gap-3 shadow-lg shadow-navy/20">
+              Schedule Consultation
+              <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <a href="#services" class="border border-navy/20 text-navy px-7 py-4 rounded-full font-medium hover:bg-navy hover:text-snow transition flex items-center gap-3">
+              <span class="w-6 h-6 rounded-full bg-navy/10 flex items-center justify-center">
+                <i class="fas fa-play text-[10px]"></i>
+              </span>
+              Explore Capabilities
+            </a>
+          </div>
+
+          <div class="mt-14 grid grid-cols-3 gap-6 max-w-lg pt-8 border-t border-navy/10 reveal reveal-delay-4">
+            <div>
+              <div class="font-display font-bold text-3xl lg:text-4xl text-navy number-glow">15<span class="text-accent">+</span></div>
+              <div class="text-[11px] text-navy/50 mt-1 uppercase tracking-[0.15em] font-medium">Years Building</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-3xl lg:text-4xl text-navy number-glow">240<span class="text-accent">+</span></div>
+              <div class="text-[11px] text-navy/50 mt-1 uppercase tracking-[0.15em] font-medium">Enterprise Clients</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-3xl lg:text-4xl text-navy number-glow">99.99<span class="text-accent">%</span></div>
+              <div class="text-[11px] text-navy/50 mt-1 uppercase tracking-[0.15em] font-medium">SLA Uptime</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 relative h-[480px] lg:h-[560px] reveal reveal-delay-2">
+          <div class="absolute inset-0 bg-gradient-to-br from-accent/15 via-navy/5 to-transparent rounded-full blur-3xl"></div>
+
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="absolute -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full border border-accent/15 animate-spin-slow">
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-accent rounded-full glow-blue"></div>
+            </div>
+            <div class="absolute -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full border border-navy/10 animate-spin-reverse">
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-navy rounded-full"></div>
+              <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-accent/60 rounded-full"></div>
+            </div>
+            <div class="absolute -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] rounded-full border border-navy/15"></div>
+          </div>
+
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-36 h-36 bg-navy rounded-3xl flex items-center justify-center shadow-2xl shadow-navy/40">
+            <div class="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent rounded-3xl"></div>
+            <div class="relative text-center">
+              <div class="font-display font-bold text-snow text-3xl tracking-tight">RMT</div>
+              <div class="font-mono text-[9px] text-silver tracking-[0.2em] mt-1 uppercase">v.2025</div>
+            </div>
+            <div class="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full glow-blue"></div>
+            <div class="absolute bottom-2 left-2 w-1.5 h-1.5 bg-silver rounded-full"></div>
+          </div>
+
+          <div class="absolute top-6 left-0 lg:-left-8 bg-snow rounded-2xl shadow-xl p-4 border border-navy/5 animate-float w-44">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-cloud text-accent"></i>
+              </div>
+              <div>
+                <div class="text-[10px] text-navy/50 uppercase tracking-wider font-medium">Cloud Status</div>
+                <div class="font-semibold text-navy text-sm">All Systems Go</div>
+              </div>
+            </div>
+            <div class="mt-3 h-1.5 bg-navy/5 rounded-full overflow-hidden">
+              <div class="h-full w-[97%] bg-gradient-to-r from-accent to-accent-dark rounded-full"></div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-12 right-0 lg:-right-4 bg-snow rounded-2xl shadow-xl p-4 border border-navy/5 animate-float-slow w-48">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-[10px] text-navy/50 uppercase tracking-wider font-medium">Live Deployments</div>
+              <div class="text-[10px] text-accent font-mono">+12%</div>
+            </div>
+            <div class="flex items-end gap-1 h-12">
+              <div class="flex-1 bg-navy/20 rounded-sm" style="height: 30%;"></div>
+              <div class="flex-1 bg-navy/30 rounded-sm" style="height: 55%;"></div>
+              <div class="flex-1 bg-navy/20 rounded-sm" style="height: 40%;"></div>
+              <div class="flex-1 bg-navy/40 rounded-sm" style="height: 65%;"></div>
+              <div class="flex-1 bg-accent rounded-sm" style="height: 90%;"></div>
+              <div class="flex-1 bg-navy/30 rounded-sm" style="height: 50%;"></div>
+              <div class="flex-1 bg-navy/40 rounded-sm" style="height: 70%;"></div>
+            </div>
+            <div class="mt-2 flex justify-between text-[9px] text-navy/40 font-mono">
+              <span>MON</span><span>SUN</span>
+            </div>
+          </div>
+
+          <div class="absolute top-1/2 -right-2 lg:right-0 transform -translate-y-1/2 bg-snow rounded-xl shadow-lg p-3 border border-navy/5 animate-float" style="animation-delay: 2s;">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span class="text-xs font-medium text-navy">24/7 SOC Active</span>
+            </div>
+          </div>
+
+          <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 font-mono text-[10px] text-navy/40 tracking-wider">
+            LAT -6.2088° / LNG 106.8456°
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted by -->
+  <section class="py-12 border-y border-navy/5 bg-navy/[0.02]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center gap-6 mb-8">
+        <div class="h-px flex-1 bg-navy/10"></div>
+        <p class="font-mono text-xs text-navy/50 tracking-[0.2em] uppercase">Trusted by industry leaders</p>
+        <div class="h-px flex-1 bg-navy/10"></div>
+      </div>
+
+      <div class="marquee-mask overflow-hidden">
+        <div class="flex gap-16 animate-scroll-x w-max">
+          <div class="flex gap-16 items-center">
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">NEXTRA</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">QuantumLeap</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">VERTEX</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">Helios Bank</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">AERON</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">Pacifica</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">MERIDIAN</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">NovaSys</div>
+          </div>
+          <div class="flex gap-16 items-center">
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">NEXTRA</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">QuantumLeap</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">VERTEX</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">Helios Bank</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">AERON</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">Pacifica</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">MERIDIAN</div>
+            <div class="font-display font-bold text-2xl text-navy/40 hover:text-navy transition">NovaSys</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-24 lg:py-32 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-8 mb-16 items-end">
+        <div class="lg:col-span-7 reveal">
+          <div class="section-number text-accent mb-4 flex items-center gap-3">
+            <span class="w-8 h-px bg-accent"></span>
+            01 — Capabilities
+          </div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl text-navy leading-[1.05] tracking-tight">
+            Full-spectrum technology<br>services for enterprises<br>operating at scale.
+          </h2>
+        </div>
+        <div class="lg:col-span-5 reveal reveal-delay-1">
+          <p class="text-navy/70 leading-relaxed">
+            From foundational cloud architecture to applied AI, we deliver integrated solutions engineered for performance, security, and measurable business outcomes across every region we operate in.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-snow border border-navy/10 rounded-2xl p-8 relative overflow-hidden reveal">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy rounded-xl flex items-center justify-center mb-6">
+              <i class="fas fa-cloud text-accent text-xl"></i>
+            </div>
+            <div class="font-mono text-[10px] text-navy/40 mb-2 tracking-wider">01 / CLOUD</div>
+            <h3 class="font-display font-bold text-xl text-navy mb-3">Cloud Infrastructure</h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              Multi-cloud and hybrid architectures on AWS, Azure, and GCP. Auto-scaling, IaC, and cost-optimization engineered for resilience.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">AWS</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Azure</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">GCP</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">K8s</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-hover bg-snow border border-navy/10 rounded-2xl p-8 relative overflow-hidden reveal reveal-delay-1">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy rounded-xl flex items-center justify-center mb-6">
+              <i class="fas fa-shield-halved text-accent text-xl"></i>
+            </div>
+            <div class="font-mono text-[10px] text-navy/40 mb-2 tracking-wider">02 / SECURITY</div>
+            <h3 class="font-display font-bold text-xl text-navy mb-3">Cybersecurity</h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              Proactive threat detection, zero-trust architecture, and 24/7 SOC operations. Compliance-ready frameworks for regulated industries.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">SOC 2</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">ISO 27001</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Zero Trust</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-hover bg-snow border border-navy/10 rounded-2xl p-8 relative overflow-hidden reveal reveal-delay-2">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy rounded-xl flex items-center justify-center mb-6">
+              <i class="fas fa-brain text-accent text-xl"></i>
+            </div>
+            <div class="font-mono text-[10px] text-navy/40 mb-2 tracking-wider">03 / INTELLIGENCE</div>
+            <h3 class="font-display font-bold text-xl text-navy mb-3">Data & AI Engineering</h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              Real-time data pipelines, ML model deployment, and applied AI solutions. Turn operational data into predictive business intelligence.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">TensorFlow</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Spark</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">LLM Ops</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-hover bg-snow border border-navy/10 rounded-2xl p-8 relative overflow-hidden reveal">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy rounded-xl flex items-center justify-center mb-6">
+              <i class="fas fa-code text-accent text-xl"></i>
+            </div>
+            <div class="font-mono text-[10px] text-navy/40 mb-2 tracking-wider">04 / SOFTWARE</div>
+            <h3 class="font-display font-bold text-xl text-navy mb-3">Enterprise Software</h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              Custom platforms, microservices architectures, and legacy modernization. Built with engineering rigor for high-throughput environments.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Go</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Rust</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Node.js</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">.NET</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-hover bg-snow border border-navy/10 rounded-2xl p-8 relative overflow-hidden reveal reveal-delay-1">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy rounded-xl flex items-center justify-center mb-6">
+              <i class="fas fa-gears text-accent text-xl"></i>
+            </div>
+            <div class="font-mono text-[10px] text-navy/40 mb-2 tracking-wider">05 / AUTOMATION</div>
+            <h3 class="font-display font-bold text-xl text-navy mb-3">DevOps & Automation</h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              CI/CD pipelines, infrastructure as code, and observability stacks. Ship faster with engineering guardrails that don't compromise stability.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Terraform</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">GitLab</span>
+              <span class="text-[10px] font-mono text-navy/60 bg-navy/5 px-2 py-1 rounded">Prometheus</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-hover bg-navy text-snow rounded-2xl p-8 relative overflow-hidden reveal reveal-delay-2">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full blur-2xl"></div>
+          <div class="absolute inset-0 dot-pattern-light opacity-30"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-6">
+              <i class="fas fa-compass text-navy text-xl"></i>
+            </div>
+            <div class="font-mono text-[10px] text-silver mb-2 tracking-wider">06 / STRATEGY</div>
+            <h3 class="font-display font-bold text-xl text-snow mb-3">Technology Consulting</h3>
+            <p class="text-sm text-silver/80 leading-relaxed mb-6">
+              Architecture reviews, digital transformation roadmaps, and technology due diligence. Strategic guidance from engineers who've built at scale.
+            </p>
+            <a href="#contact" class="inline-flex items-center gap-2 text-sm font-medium text-accent hover:gap-3 transition-all">
+              Start a conversation
+              <i class="fas fa-arrow-right text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Infrastructure -->
+  <section id="infrastructure" class="py-24 lg:py-32 bg-navy relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg-dark opacity-50"></div>
+    <div class="absolute top-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="section-number text-accent mb-4 flex items-center gap-3">
+            <span class="w-8 h-px bg-accent"></span>
+            02 — Global Infrastructure
+          </div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl text-snow leading-[1.05] tracking-tight mb-6">
+            One platform.<br>
+            <span class="text-silver/60 italic font-light">Borderless</span> delivery.
+          </h2>
+          <p class="text-silver/80 leading-relaxed mb-10">
+            Our infrastructure spans 12 regions across APAC, EMEA, and the Americas — backed by 24/7 SOC operations and a globally distributed engineering team.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between py-3 border-b border-snow/10">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-accent rounded-full animate-pulse-soft"></div>
+                <span class="font-mono text-sm text-silver">APAC</span>
+              </div>
+              <span class="text-sm text-snow text-right">Singapore · Jakarta · Tokyo · Sydney</span>
+            </div>
+            <div class="flex items-center justify-between py-3 border-b border-snow/10">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-accent rounded-full animate-pulse-soft" style="animation-delay: 0.5s;"></div>
+                <span class="font-mono text-sm text-silver">EMEA</span>
+              </div>
+              <span class="text-sm text-snow text-right">London · Frankfurt · Dubai</span>
+            </div>
+            <div class="flex items-center justify-between py-3 border-b border-snow/10">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-accent rounded-full animate-pulse-soft" style="animation-delay: 1s;"></div>
+                <span class="font-mono text-sm text-silver">AMERICAS</span>
+              </div>
+              <span class="text-sm text-snow text-right">New York · São Paulo · Toronto</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 reveal reveal-delay-1">
+          <div class="relative aspect-[4/3] bg-navy-light/30 rounded-3xl border border-snow/10 overflow-hidden p-6">
+            <svg viewBox="0 0 800 500" class="w-full h-full">
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(254,254,254,0.04)" stroke-width="1"/>
+                </pattern>
+                <radialGradient id="dotGlow">
+                  <stop offset="0%" stop-color="#4DA3FF" stop-opacity="1"/>
+                  <stop offset="100%" stop-color="#4DA3FF" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="800" height="500" fill="url(#grid)"/>
+
+              <g fill="rgba(188,191,196,0.3)">
+                <circle cx="150" cy="150" r="2"/><circle cx="170" cy="140" r="2"/><circle cx="190" cy="155" r="2"/>
+                <circle cx="160" cy="170" r="2"/><circle cx="180" cy="175" r="2"/><circle cx="200" cy="170" r="2"/>
+                <circle cx="140" cy="180" r="2"/><circle cx="155" cy="195" r="2"/><circle cx="175" cy="200" r="2"/>
+                <circle cx="195" cy="195" r="2"/><circle cx="210" cy="180" r="2"/><circle cx="165" cy="155" r="2"/>
+                <circle cx="185" cy="140" r="2"/><circle cx="205" cy="155" r="2"/><circle cx="145" cy="165" r="2"/>
+                <circle cx="125" cy="170" r="2"/><circle cx="220" cy="165" r="2"/>
+
+                <circle cx="240" cy="290" r="2"/><circle cx="255" cy="305" r="2"/><circle cx="265" cy="325" r="2"/>
+                <circle cx="250" cy="345" r="2"/><circle cx="260" cy="365" r="2"/><circle cx="245" cy="380" r="2"/>
+                <circle cx="255" cy="335" r="2"/><circle cx="270" cy="350" r="2"/>
+
+                <circle cx="400" cy="140" r="2"/><circle cx="420" cy="135" r="2"/><circle cx="415" cy="155" r="2"/>
+                <circle cx="435" cy="150" r="2"/><circle cx="445" cy="165" r="2"/><circle cx="410" cy="170" r="2"/>
+                <circle cx="425" cy="175" r="2"/><circle cx="395" cy="160" r="2"/>
+
+                <circle cx="420" cy="220" r="2"/><circle cx="435" cy="240" r="2"/><circle cx="445" cy="260" r="2"/>
+                <circle cx="430" cy="280" r="2"/><circle cx="440" cy="300" r="2"/><circle cx="450" cy="320" r="2"/>
+                <circle cx="425" cy="270" r="2"/><circle cx="455" cy="280" r="2"/><circle cx="415" cy="250" r="2"/>
+
+                <circle cx="540" cy="160" r="2"/><circle cx="560" cy="150" r="2"/><circle cx="580" cy="155" r="2"/>
+                <circle cx="600" cy="165" r="2"/><circle cx="620" cy="175" r="2"/><circle cx="555" cy="180" r="2"/>
+                <circle cx="575" cy="190" r="2"/><circle cx="595" cy="195" r="2"/><circle cx="615" cy="200" r="2"/>
+                <circle cx="635" cy="190" r="2"/><circle cx="540" cy="200" r="2"/><circle cx="565" cy="210" r="2"/>
+                <circle cx="585" cy="220" r="2"/><circle cx="605" cy="225" r="2"/><circle cx="625" cy="215" r="2"/>
+                <circle cx="645" cy="210" r="2"/><circle cx="555" cy="240" r="2"/><circle cx="580" cy="250" r="2"/>
+                <circle cx="600" cy="255" r="2"/>
+
+                <circle cx="660" cy="320" r="2"/><circle cx="680" cy="325" r="2"/><circle cx="695" cy="335" r="2"/>
+                <circle cx="670" cy="340" r="2"/><circle cx="685" cy="350" r="2"/>
+              </g>
+
+              <g stroke="#4DA3FF" stroke-width="1" fill="none" opacity="0.35">
+                <path d="M 595 265 Q 500 100 410 150" class="connection-line"/>
+                <path d="M 595 265 Q 700 100 640 180" class="connection-line"/>
+                <path d="M 595 265 Q 700 200 685 335" class="connection-line"/>
+                <path d="M 410 150 Q 300 100 215 170" class="connection-line"/>
+                <path d="M 410 150 Q 450 180 490 220" class="connection-line"/>
+                <path d="M 215 170 Q 230 250 255 335" class="connection-line"/>
+                <path d="M 595 265 Q 500 280 490 220" class="connection-line"/>
+                <path d="M 640 180 Q 660 250 685 335" class="connection-line"/>
+              </g>
+
+              <g>
+                <circle cx="595" cy="265" r="22" fill="url(#dotGlow)" opacity="0.5"/>
+                <circle cx="595" cy="265" r="4" fill="#4DA3FF"/>
+                <circle cx="595" cy="265" r="6" fill="none" stroke="#4DA3FF" stroke-width="1" opacity="0.6" class="animate-ping-slow"/>
+
+                <circle cx="585" cy="270" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="585" cy="270" r="3" fill="#4DA3FF"/>
+
+                <circle cx="640" cy="180" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="640" cy="180" r="3" fill="#4DA3FF"/>
+
+                <circle cx="685" cy="335" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="685" cy="335" r="3" fill="#4DA3FF"/>
+
+                <circle cx="410" cy="150" r="20" fill="url(#dotGlow)" opacity="0.5"/>
+                <circle cx="410" cy="150" r="4" fill="#4DA3FF"/>
+                <circle cx="410" cy="150" r="6" fill="none" stroke="#4DA3FF" stroke-width="1" opacity="0.6" class="animate-ping-slow"/>
+
+                <circle cx="425" cy="155" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="425" cy="155" r="3" fill="#4DA3FF"/>
+
+                <circle cx="490" cy="220" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="490" cy="220" r="3" fill="#4DA3FF"/>
+
+                <circle cx="215" cy="170" r="20" fill="url(#dotGlow)" opacity="0.5"/>
+                <circle cx="215" cy="170" r="4" fill="#4DA3FF"/>
+                <circle cx="215" cy="170" r="6" fill="none" stroke="#4DA3FF" stroke-width="1" opacity="0.6" class="animate-ping-slow"/>
+
+                <circle cx="255" cy="335" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="255" cy="335" r="3" fill="#4DA3FF"/>
+
+                <circle cx="200" cy="155" r="14" fill="url(#dotGlow)" opacity="0.4"/>
+                <circle cx="200" cy="155" r="3" fill="#4DA3FF"/>
+              </g>
+            </svg>
+
+            <div class="absolute top-6 left-6">
+              <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-1">NETWORK STATUS</div>
+              <div class="flex items-center gap-2">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                </span>
+                <span class="text-sm font-medium text-snow">All regions operational</span>
+              </div>
+            </div>
+
+            <div class="absolute bottom-6 right-6 text-right">
+              <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-1">AVG. LATENCY</div>
+              <div class="font-display font-bold text-2xl text-snow">23<span class="text-accent text-sm">ms</span></div>
+            </div>
+
+            <div class="absolute bottom-6 left-6">
+              <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-1">DATA CENTERS</div>
+              <div class="font-display font-bold text-2xl text-snow">12<span class="text-accent text-sm"> regions</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats section -->
+  <section class="py-24 lg:py-32 relative">
+    <div class="absolute inset-0 dot-pattern opacity-50"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-12 gap-12 mb-16">
+        <div class="lg:col-span-6 reveal">
+          <div class="section-number text-accent mb-4 flex items-center gap-3">
+            <span class="w-8 h-px bg-accent"></span>
+            03 — Impact
+          </div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl text-navy leading-[1.05] tracking-tight">
+            Measurable outcomes.<br>
+            <span class="text-navy/50 italic font-light">Engineered</span> to last.
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div class="reveal">
+          <div class="font-display font-bold text-5xl lg:text-7xl text-navy tracking-tight">
+            <span class="counter" data-target="240">0</span><span class="text-accent">+</span>
+          </div>
+          <div class="mt-4 pt-4 border-t border-navy/10">
+            <div class="font-medium text-navy">Enterprise Clients</div>
+            <div class="text-sm text-navy/50 mt-1">Across 6 continents</div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <div class="font-display font-bold text-5xl lg:text-7xl text-navy tracking-tight">
+            <span class="counter" data-target="1.2" data-decimals="1">0</span><span class="text-accent">B</span>
+          </div>
+          <div class="mt-4 pt-4 border-t border-navy/10">
+            <div class="font-medium text-navy">API Calls Daily</div>
+            <div class="text-sm text-navy/50 mt-1">Processed across regions</div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <div class="font-display font-bold text-5xl lg:text-7xl text-navy tracking-tight">
+            <span class="counter" data-target="99.99" data-decimals="2">0</span><span class="text-accent">%</span>
+          </div>
+          <div class="mt-4 pt-4 border-t border-navy/10">
+            <div class="font-medium text-navy">SLA Uptime</div>
+            <div class="text-sm text-navy/50 mt-1">Independently audited</div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-3">
+          <div class="font-display font-bold text-5xl lg:text-7xl text-navy tracking-tight">
+            <span class="counter" data-target="450">0</span><span class="text-accent">+</span>
+          </div>
+          <div class="mt-4 pt-4 border-t border-navy/10">
+            <div class="font-medium text-navy">Engineers</div>
+            <div class="text-sm text-navy/50 mt-1">Globally distributed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions / Case studies -->
+  <section id="solutions" class="py-24 lg:py-32 bg-navy/[0.02]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-8 mb-16 items-end">
+        <div class="lg:col-span-7 reveal">
+          <div class="section-number text-accent mb-4 flex items-center gap-3">
+            <span class="w-8 h-px bg-accent"></span>
+            04 — Solutions
+          </div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl text-navy leading-[1.05] tracking-tight">
+            Built for the world's most<br>demanding environments.
+          </h2>
+        </div>
+        <div class="lg:col-span-5 reveal reveal-delay-1 lg:text-right">
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-accent transition group">
+            View all case studies
+            <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div class="bg-navy rounded-3xl p-10 lg:p-12 relative overflow-hidden reveal">
+          <div class="absolute inset-0 dot-pattern-light opacity-20"></div>
+          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between mb-8">
+              <div class="font-mono text-xs text-silver tracking-wider">CASE / FINTECH</div>
+              <div class="font-mono text-xs text-silver/60">2024</div>
+            </div>
+            <h3 class="font-display font-bold text-3xl lg:text-4xl text-snow leading-tight mb-6">
+              Scaling a regional bank's core banking platform to 8M users.
+            </h3>
+            <p class="text-silver/80 leading-relaxed mb-10">
+              Re-architected monolithic systems into microservices, deployed multi-region failover, and cut transaction latency by 73% during peak load.
+            </p>
+            <div class="grid grid-cols-3 gap-6 pt-8 border-t border-snow/10">
+              <div>
+                <div class="font-display font-bold text-3xl text-accent">73%</div>
+                <div class="text-[11px] text-silver/60 uppercase tracking-wider mt-1">Latency Cut</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-3xl text-accent">8M</div>
+                <div class="text-[11px] text-silver/60 uppercase tracking-wider mt-1">Active Users</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-3xl text-accent">0</div>
+                <div class="text-[11px] text-silver/60 uppercase tracking-wider mt-1">Downtime</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div class="bg-snow border border-navy/10 rounded-3xl p-10 reveal reveal-delay-1 card-hover">
+            <div class="flex items-center justify-between mb-6">
+              <div class="font-mono text-xs text-navy/50 tracking-wider">CASE / LOGISTICS</div>
+              <i class="fas fa-truck-fast text-navy/30"></i>
+            </div>
+            <h3 class="font-display font-bold text-2xl text-navy mb-4 leading-tight">
+              Real-time tracking for 50,000+ fleet assets across Southeast Asia.
+            </h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              IoT data pipeline processing 2M events/second with sub-second visualization.
+            </p>
+            <div class="flex gap-6">
+              <div>
+                <div class="font-display font-bold text-2xl text-navy">2M<span class="text-accent text-sm">/s</span></div>
+                <div class="text-[10px] text-navy/50 uppercase tracking-wider mt-1">Events Processed</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-2xl text-navy">99.9<span class="text-accent text-sm">%</span></div>
+                <div class="text-[10px] text-navy/50 uppercase tracking-wider mt-1">Tracking Accuracy</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-snow border border-navy/10 rounded-3xl p-10 reveal reveal-delay-2 card-hover">
+            <div class="flex items-center justify-between mb-6">
+              <div class="font-mono text-xs text-navy/50 tracking-wider">CASE / HEALTHCARE</div>
+              <i class="fas fa-heart-pulse text-navy/30"></i>
+            </div>
+            <h3 class="font-display font-bold text-2xl text-navy mb-4 leading-tight">
+              HIPAA-compliant telemedicine platform serving 1.2M patients.
+            </h3>
+            <p class="text-sm text-navy/60 leading-relaxed mb-6">
+              End-to-end encrypted video consultation with AI-assisted triage.
+            </p>
+            <div class="flex gap-6">
+              <div>
+                <div class="font-display font-bold text-2xl text-navy">1.2<span class="text-accent text-sm">M</span></div>
+                <div class="text-[10px] text-navy/50 uppercase tracking-wider mt-1">Patients Served</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-2xl text-navy">40<span class="text-accent text-sm">%</span></div>
+                <div class="text-[10px] text-navy/50 uppercase tracking-wider mt-1">Triage Efficiency</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process / About -->
+  <section id="about" class="py-24 lg:py-32 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12 mb-20">
+        <div class="lg:col-span-5 reveal">
+          <div class="section-number text-accent mb-4 flex items-center gap-3">
+            <span class="w-8 h-px bg-accent"></span>
+            05 — How we work
+          </div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl text-navy leading-[1.05] tracking-tight mb-8">
+            Engineering discipline, business empathy.
+          </h2>
+          <p class="text-navy/70 leading-relaxed mb-8">
+            We don't just write code — we partner with leadership teams to translate strategic objectives into resilient, scalable technology. Every engagement starts with understanding the business, not the tech stack.
+          </p>
+          <div class="flex items-center gap-6 pt-6 border-t border-navy/10">
+            <div>
+              <div class="font-display font-bold text-2xl text-navy">15+</div>
+              <div class="text-xs text-navy/50">Years operating</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-2xl text-navy">450+</div>
+              <div class="text-xs text-navy/50">Engineers globally</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-2xl text-navy">5</div>
+              <div class="text-xs text-navy/50">Global offices</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 reveal reveal-delay-1">
+          <div class="space-y-2">
+            <div class="group grid grid-cols-12 gap-6 py-8 border-t border-navy/10 hover:bg-navy/[0.02] transition px-2 -mx-2 rounded-lg">
+              <div class="col-span-2 lg:col-span-1">
+                <div class="font-mono text-sm text-accent">01</div>
+              </div>
+              <div class="col-span-7 lg:col-span-8">
+                <h3 class="font-display font-bold text-xl text-navy mb-2">Discover & Architect</h3>
+                <p class="text-sm text-navy/60 leading-relaxed">Deep-dive workshops to map business objectives, technical constraints, and success metrics into a clear architecture blueprint.</p>
+              </div>
+              <div class="col-span-3 lg:col-span-3 text-right">
+                <div class="font-mono text-xs text-navy/40">2-3 weeks</div>
+              </div>
+            </div>
+
+            <div class="group grid grid-cols-12 gap-6 py-8 border-t border-navy/10 hover:bg-navy/[0.02] transition px-2 -mx-2 rounded-lg">
+              <div class="col-span-2 lg:col-span-1">
+                <div class="font-mono text-sm text-accent">02</div>
+              </div>
+              <div class="col-span-7 lg:col-span-8">
+                <h3 class="font-display font-bold text-xl text-navy mb-2">Build & Validate</h3>
+                <p class="text-sm text-navy/60 leading-relaxed">Iterative delivery in 2-week sprints with continuous integration, automated testing, and weekly stakeholder demos.</p>
+              </div>
+              <div class="col-span-3 lg:col-span-3 text-right">
+                <div class="font-mono text-xs text-navy/40">8-16 weeks</div>
+              </div>
+            </div>
+
+            <div class="group grid grid-cols-12 gap-6 py-8 border-t border-navy/10 hover:bg-navy/[0.02] transition px-2 -mx-2 rounded-lg">
+              <div class="col-span-2 lg:col-span-1">
+                <div class="font-mono text-sm text-accent">03</div>
+              </div>
+              <div class="col-span-7 lg:col-span-8">
+                <h3 class="font-display font-bold text-xl text-navy mb-2">Deploy & Harden</h3>
+                <p class="text-sm text-navy/60 leading-relaxed">Phased rollout with observability, chaos testing, and 24/7 SOC monitoring. Performance benchmarks validated against SLA.</p>
+              </div>
+              <div class="col-span-3 lg:col-span-3 text-right">
+                <div class="font-mono text-xs text-navy/40">2-4 weeks</div>
+              </div>
+            </div>
+
+            <div class="group grid grid-cols-12 gap-6 py-8 border-t border-b border-navy/10 hover:bg-navy/[0.02] transition px-2 -mx-2 rounded-lg">
+              <div class="col-span-2 lg:col-span-1">
+                <div class="font-mono text-sm text-accent">04</div>
+              </div>
+              <div class="col-span-7 lg:col-span-8">
+                <h3 class="font-display font-bold text-xl text-navy mb-2">Operate & Evolve</h3>
+                <p class="text-sm text-navy/60 leading-relaxed">Managed operations with quarterly architecture reviews, continuous optimization, and proactive capacity planning.</p>
+              </div>
+              <div class="col-span-3 lg:col-span-3 text-right">
+                <div class="font-mono text-xs text-navy/40">Ongoing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-24 lg:py-32 bg-navy/[0.02]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <div class="section-number text-accent mb-4 flex items-center justify-center gap-3">
+          <span class="w-8 h-px bg-accent"></span>
+          06 — Voices
+          <span class="w-8 h-px bg-accent"></span>
+        </div>
+        <h2 class="font-display font-bold text-4xl lg:text-5xl text-navy leading-[1.05] tracking-tight">
+          What our partners say.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-snow border border-navy/10 rounded-2xl p-8 reveal">
+          <div class="flex gap-1 mb-6 text-accent">
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+          </div>
+          <p class="text-navy/80 leading-relaxed mb-8">
+            "Reka Mitra didn't just deliver a platform — they re-architected our entire approach to scaling. The result speaks for itself: 73% latency reduction and zero downtime in 18 months."
+          </p>
+          <div class="flex items-center gap-4 pt-6 border-t border-navy/10">
+            <div class="w-12 h-12 rounded-full bg-navy/10 flex items-center justify-center font-display font-bold text-navy">SH</div>
+            <div>
+              <div class="font-medium text-navy">Sarah Hartono</div>
+              <div class="text-xs text-navy/50">CTO, Helios Bank</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-snow border border-navy/10 rounded-2xl p-8 reveal reveal-delay-1">
+          <div class="flex gap-1 mb-6 text-accent">
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+          </div>
+          <p class="text-navy/80 leading-relaxed mb-8">
+            "Their global infrastructure team understood our multi-region requirements from day one. The deployment was seamless, the documentation exceptional, and the support outstanding."
+          </p>
+          <div class="flex items-center gap-4 pt-6 border-t border-navy/10">
+            <div class="w-12 h-12 rounded-full bg-navy/10 flex items-center justify-center font-display font-bold text-navy">MC</div>
+            <div>
+              <div class="font-medium text-navy">Marcus Chen</div>
+              <div class="text-xs text-navy/50">VP Engineering, Pacifica</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-snow border border-navy/10 rounded-2xl p-8 reveal reveal-delay-2">
+          <div class="flex gap-1 mb-6 text-accent">
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+            <i class="fas fa-star text-xs"></i>
+          </div>
+          <p class="text-navy/80 leading-relaxed mb-8">
+            "Working with RMT felt like extending our own team. Engineering rigor, business empathy, and an obsessive focus on outcomes. They set a new bar for technology partners."
+          </p>
+          <div class="flex items-center gap-4 pt-6 border-t border-navy/10">
+            <div class="w-12 h-12 rounded-full bg-navy/10 flex items-center justify-center font-display font-bold text-navy">AK</div>
+            <div>
+              <div class="font-medium text-navy">Amelia Kapoor</div>
+              <div class="text-xs text-navy/50">COO, Vertex Logistics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="py-24 lg:py-32 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="bg-navy rounded-3xl p-10 lg:p-20 relative overflow-hidden reveal">
+        <div class="absolute inset-0 grid-bg-dark opacity-50"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+
+        <div class="relative grid lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-7">
+            <div class="section-number text-accent mb-4 flex items-center gap-3">
+              <span class="w-8 h-px bg-accent"></span>
+              07 — Let's build
+            </div>
+            <h2 class="font-display font-bold text-4xl lg:text-6xl text-snow leading-[1.05] tracking-tight mb-6">
+              Ready to engineer<br>what's next?
+            </h2>
+            <p class="text-silver/80 text-lg leading-relaxed max-w-xl mb-10">
+              Schedule a 30-minute consultation with our solutions architects. We'll map your requirements to a clear, actionable technology roadmap — no commitments, no jargon.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#" class="group bg-accent text-navy px-7 py-4 rounded-full font-medium hover:bg-snow transition flex items-center gap-3">
+                Schedule Consultation
+                <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+              </a>
+              <a href="#" class="border border-snow/20 text-snow px-7 py-4 rounded-full font-medium hover:bg-snow/10 transition flex items-center gap-3">
+                <i class="fas fa-envelope text-xs"></i>
+                Email Sales Team
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="bg-snow/5 backdrop-blur border border-snow/10 rounded-2xl p-8">
+              <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-6">DIRECT CONTACT</div>
+              <div class="space-y-5">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-location-dot text-accent text-sm"></i>
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-silver/60 uppercase tracking-wider mb-1">HQ Jakarta</div>
+                    <div class="text-sm text-snow">SCBD Lot 12, Jl. Jend. Sudirman Kav. 52-53<br>Jakarta Selatan, 12190</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-envelope text-accent text-sm"></i>
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-silver/60 uppercase tracking-wider mb-1">Email</div>
+                    <div class="text-sm text-snow">hello@rekamitra.tech</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-phone text-accent text-sm"></i>
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-silver/60 uppercase tracking-wider mb-1">24/7 Support</div>
+                    <div class="text-sm text-snow">+62 21 5000 1234</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-navy text-snow pt-20 pb-8 relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg-dark opacity-30"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-12 gap-12 pb-16 border-b border-snow/10">
+        <div class="lg:col-span-4">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-11 h-11 bg-snow rounded-xl flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M4 4L20 20M20 4L4 20" stroke="#1A2A4B" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="3" fill="#4DA3FF"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-display font-bold text-snow leading-none text-lg">Reka Mitra</div>
+              <div class="font-mono text-[10px] tracking-[0.25em] text-silver/60 uppercase mt-1">Teknologi</div>
+            </div>
+          </div>
+          <p class="text-silver/70 leading-relaxed mb-6 max-w-sm">
+            PT. Reka Mitra Teknologi — Engineering global digital infrastructure since 2010. Trusted by enterprises across 50+ countries.
+          </p>
+          <div class="flex gap-3">
+            <a href="#" class="w-9 h-9 border border-snow/15 rounded-lg flex items-center justify-center hover:bg-accent hover:border-accent hover:text-navy transition">
+              <i class="fab fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 border border-snow/15 rounded-lg flex items-center justify-center hover:bg-accent hover:border-accent hover:text-navy transition">
+              <i class="fab fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 border border-snow/15 rounded-lg flex items-center justify-center hover:bg-accent hover:border-accent hover:text-navy transition">
+              <i class="fab fa-github text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 border border-snow/15 rounded-lg flex items-center justify-center hover:bg-accent hover:border-accent hover:text-navy transition">
+              <i class="fab fa-youtube text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-5">SERVICES</div>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Cloud Infrastructure</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Cybersecurity</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Data & AI</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Enterprise Software</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">DevOps</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-5">COMPANY</div>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">About</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Careers</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Case Studies</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Insights</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Press Kit</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-5">RESOURCES</div>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Documentation</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Status Page</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Security</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Compliance</a></li>
+            <li><a href="#" class="text-silver/80 hover:text-snow transition">Partners</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="font-mono text-[10px] text-silver/60 tracking-wider mb-5">OFFICES</div>
+          <ul class="space-y-3 text-sm">
+            <li class="text-silver/80">Jakarta <span class="text-silver/40">— HQ</span></li>
+            <li class="text-silver/80">Singapore</li>
+            <li class="text-silver/80">London</li>
+            <li class="text-silver/80">New York</li>
+            <li class="text-silver/80">Tokyo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="text-xs text-silver/50">
+          © 2025 PT. Reka Mitra Teknologi. All rights reserved.
+        </div>
+        <div class="flex flex-wrap items-center gap-6 text-xs text-silver/50">
+          <a href="#" class="hover:text-snow transition">Privacy Policy</a>
+          <a href="#" class="hover:text-snow transition">Terms of Service</a>
+          <a href="#" class="hover:text-snow transition">Cookie Settings</a>
+          <div class="flex items-center gap-2 font-mono">
+            <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+            All systems operational
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-xmark');
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    const scrollProgress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.classList.add('shadow-sm', 'bg-snow/95');
+        navbar.classList.remove('bg-snow/80');
+      } else {
+        navbar.classList.remove('shadow-sm', 'bg-snow/95');
+        navbar.classList.add('bg-snow/80');
+      }
+
+      const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      scrollProgress.style.width = scrolled + '%';
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseFloat(el.dataset.target);
+          const decimals = parseInt(el.dataset.decimals || '0');
+          const duration = 2000;
+          const start = performance.now();
+
+          function animate(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const value = target * eased;
+            el.textContent = value.toFixed(decimals);
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              el.textContent = target.toFixed(decimals);
+            }
+          }
+          requestAnimationFrame(animate);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => counterObserver.observe(c));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          mobileMenu?.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
