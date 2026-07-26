@@ -40,7 +40,7 @@
                 />
 
                 @if (Route::has('password.request'))
-                    <flux:link class="absolute top-0 end-0 text-xs text-brand-accent-dark dark:text-brand-accent" :href="route('password.request')" wire:navigate>
+                    <flux:link class="absolute top-0 end-0 text-xs text-brand-accent-dark" :href="route('password.request')" wire:navigate>
                         Forgot your password?
                     </flux:link>
                 @endif

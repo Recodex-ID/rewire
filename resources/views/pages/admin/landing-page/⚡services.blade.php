@@ -68,7 +68,7 @@ new class extends Component
 
         <div class="space-y-4">
             @foreach ($data['items'] as $index => $item)
-                <div wire:key="service-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
+                <div wire:key="service-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4">
                     <div class="flex items-start gap-3">
                         <div class="flex-1 space-y-3">
                             <div class="grid grid-cols-3 gap-3">

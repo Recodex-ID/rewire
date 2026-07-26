@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-zinc-50 dark:bg-zinc-800">
+    <body class="min-h-screen bg-zinc-50">
         {{-- The `dark` class here locks the sidebar to its dark styling regardless of the app-wide
              light/dark toggle -- it's always a navy surface, so its Flux components (item text,
              hover states, brand name, profile card) need to always use their dark-mode colors too,
@@ -61,11 +61,6 @@
 
             <flux:spacer />
 
-            <flux:button x-data variant="outline" square x-on:click="$flux.dark = ! $flux.dark" aria-label="Toggle color scheme">
-                <flux:icon.sun x-show="$flux.dark" variant="micro" />
-                <flux:icon.moon x-show="! $flux.dark" variant="micro" />
-            </flux:button>
-
             <flux:dropdown position="top" align="end">
                 <flux:profile
                     :initials="auth()->user()->initials()"
@@ -116,9 +111,9 @@
         </flux:header>
 
         <!-- Desktop Topbar -->
-        <flux:header sticky class="hidden border-b border-zinc-200 bg-white lg:flex dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:header sticky class="hidden border-b border-zinc-200 bg-white lg:flex">
             <div>
-                <div class="font-mono text-[10px] tracking-wider text-zinc-400 uppercase dark:text-zinc-500">Rewire</div>
+                <div class="font-mono text-[10px] tracking-wider text-zinc-400 uppercase">Rewire</div>
                 <flux:heading size="lg" class="font-display!">{{ $title ?? 'Dashboard' }}</flux:heading>
             </div>
 
@@ -130,17 +125,12 @@
                         <span class="landing-animate-pulse-soft absolute inline-flex size-full rounded-full bg-green-500"></span>
                         <span class="relative inline-flex size-2 rounded-full bg-green-500"></span>
                     </span>
-                    <span class="text-xs font-medium text-green-700 dark:text-green-400">{{ app()->environment('production') ? 'Production' : ucfirst(app()->environment()) }}</span>
+                    <span class="text-xs font-medium text-green-700">{{ app()->environment('production') ? 'Production' : ucfirst(app()->environment()) }}</span>
                 </div>
-
-                <flux:button x-data variant="outline" square x-on:click="$flux.dark = ! $flux.dark" aria-label="Toggle color scheme">
-                    <flux:icon.sun x-show="$flux.dark" variant="micro" />
-                    <flux:icon.moon x-show="! $flux.dark" variant="micro" />
-                </flux:button>
             </div>
         </flux:header>
 
-        <flux:main class="bg-zinc-50 dark:bg-zinc-800">
+        <flux:main class="bg-zinc-50">
             {{ $slot }}
         </flux:main>
 

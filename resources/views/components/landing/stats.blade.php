@@ -1,5 +1,5 @@
 @if ($section?->is_visible)
-    <section class="relative overflow-hidden bg-brand-snow py-24 dark:bg-zinc-900">
+    <section class="relative overflow-hidden bg-brand-snow py-24">
         <div class="landing-dot-pattern absolute inset-0 opacity-50"></div>
 
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -11,10 +11,10 @@
                             {{ $section->content['eyebrow'] ?? '' }}
                         </span>
                     </div>
-                    <h2 class="mt-4 font-display text-4xl font-bold tracking-tight text-brand-navy sm:text-5xl dark:text-brand-snow">
+                    <h2 class="mt-4 font-display text-4xl font-bold tracking-tight text-brand-navy sm:text-5xl">
                         {{ $section->content['heading_line1'] ?? '' }}
                         <br>
-                        <span class="italic font-light text-brand-navy/50 dark:text-brand-silver/60">{{ $section->content['heading_highlight'] ?? '' }}</span>
+                        <span class="italic font-light text-brand-navy/50">{{ $section->content['heading_highlight'] ?? '' }}</span>
                     </h2>
                 </div>
             </div>
@@ -31,12 +31,12 @@
                         'landing-reveal-delay-2' => $loop->iteration === 3,
                         'landing-reveal-delay-3' => $loop->iteration === 4,
                     ])>
-                        <div class="font-display text-5xl font-bold tracking-tight text-brand-navy lg:text-7xl dark:text-brand-snow">
-                            <span class="landing-counter" data-target="{{ $value }}" data-decimals="{{ $decimals }}">0</span><span class="text-brand-accent-dark dark:text-brand-accent">{{ $item['suffix'] ?? '' }}</span>
+                        <div class="font-display text-5xl font-bold tracking-tight text-brand-navy lg:text-7xl">
+                            <span class="landing-counter" data-target="{{ $value }}" data-decimals="{{ $decimals }}">0</span><span class="text-brand-accent-dark">{{ $item['suffix'] ?? '' }}</span>
                         </div>
-                        <div class="mt-4 border-t border-brand-navy/10 pt-4 dark:border-brand-snow/10">
-                            <p class="font-medium text-brand-navy dark:text-brand-snow">{{ $item['label'] ?? '' }}</p>
-                            <p class="mt-1 text-sm text-brand-navy/50 dark:text-brand-silver/60">{{ $item['sublabel'] ?? '' }}</p>
+                        <div class="mt-4 border-t border-brand-navy/10 pt-4">
+                            <p class="font-medium text-brand-navy">{{ $item['label'] ?? '' }}</p>
+                            <p class="mt-1 text-sm text-brand-navy/50">{{ $item['sublabel'] ?? '' }}</p>
                         </div>
                     </div>
                 @endforeach

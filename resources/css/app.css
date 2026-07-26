@@ -22,8 +22,9 @@
     --color-brand-accent-dark: #2e7dd8;
 
     /* Rebase Flux's "zinc" to a custom gray scale tinted with the brand navy's hue (~221deg),
-       instead of Tailwind's generic slate, so dark-mode surfaces (Flux's own cards/inputs/menus
-       included) read as one family with the navy sidebar rather than a borrowed, unrelated gray. */
+       instead of Tailwind's generic slate, so the sidebar -- the only permanently-dark surface
+       in this app (see layouts/app.blade.php) -- and its Flux components read as one family
+       with the navy rather than a borrowed, unrelated gray. */
     --color-zinc-50: hsl(220 45% 97%);
     --color-zinc-100: hsl(220 38% 94%);
     --color-zinc-200: hsl(220 28% 87%);
@@ -42,6 +43,8 @@
 }
 
 @layer theme {
+    /* This app has no light/dark toggle -- .dark only ever matches the sidebar, which
+       layouts/app.blade.php forces permanently dark, so these are its fixed accent colors. */
     .dark {
         --color-accent: var(--color-brand-accent);
         --color-accent-content: var(--color-brand-accent);

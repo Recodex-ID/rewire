@@ -1,5 +1,5 @@
 @if ($section?->is_visible)
-    <section class="bg-brand-snow py-24 dark:bg-zinc-900">
+    <section class="bg-brand-snow py-24">
         <div class="landing-reveal relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-brand-navy px-6 py-16 sm:px-12 lg:px-16">
             <div class="landing-grid-bg-dark absolute inset-0"></div>
 

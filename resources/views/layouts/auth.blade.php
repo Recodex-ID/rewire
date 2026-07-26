@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-brand-snow antialiased dark:bg-zinc-900">
+    <body class="min-h-screen bg-brand-snow antialiased">
         <div class="flex min-h-screen flex-col lg:flex-row">
             {{-- Branding panel --}}
             <div class="relative hidden flex-col justify-between overflow-hidden bg-brand-navy p-12 lg:flex lg:w-1/2 xl:p-16">
@@ -76,14 +76,14 @@
             </div>
 
             {{-- Form panel --}}
-            <div class="relative flex flex-1 flex-col justify-center bg-brand-snow px-6 py-12 sm:px-12 lg:px-16 dark:bg-zinc-900 xl:px-24">
+            <div class="relative flex flex-1 flex-col justify-center bg-brand-snow px-6 py-12 sm:px-12 lg:px-16 xl:px-24">
                 <a href="{{ route('home') }}" class="absolute top-8 left-6 flex items-center gap-3 sm:left-12 lg:hidden" wire:navigate>
                     <span class="flex size-10 items-center justify-center rounded-xl bg-brand-navy">
                         <x-landing.icon name="check" class="size-4 text-brand-accent" />
                     </span>
                     <span class="flex flex-col leading-none">
-                        <span class="font-display font-bold text-brand-navy dark:text-brand-snow">Rewire</span>
-                        <span class="mt-1 font-mono text-[9px] tracking-[0.25em] text-brand-navy/60 uppercase dark:text-brand-silver/60">Starter Kit</span>
+                        <span class="font-display font-bold text-brand-navy">Rewire</span>
+                        <span class="mt-1 font-mono text-[9px] tracking-[0.25em] text-brand-navy/60 uppercase">Starter Kit</span>
                     </span>
                 </a>
 

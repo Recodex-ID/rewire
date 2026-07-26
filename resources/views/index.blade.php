@@ -4,14 +4,6 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <script>
-            (function () {
-                const stored = localStorage.getItem('landing-theme');
-                const isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.classList.toggle('dark', isDark);
-            })();
-        </script>
-
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         @if ($seoDescription)
@@ -37,7 +29,7 @@
             </script>
         @endif
     </head>
-    <body class="min-h-screen bg-brand-snow dark:bg-zinc-900">
+    <body class="min-h-screen bg-brand-snow">
         <x-landing.navbar :section="$sections['navbar'] ?? null" />
         <x-landing.hero :section="$sections['hero'] ?? null" />
         <x-landing.trusted-by :section="$sections['trusted_by'] ?? null" />

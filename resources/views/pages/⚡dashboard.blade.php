@@ -73,49 +73,49 @@ new #[Title('Dashboard')] class extends Component
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
         <flux:card class="space-y-4">
             <div class="flex items-start justify-between">
-                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5 dark:bg-brand-snow/10">
-                    <flux:icon icon="users" class="text-brand-navy dark:text-brand-snow" />
+                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5">
+                    <flux:icon icon="users" class="text-brand-navy" />
                 </div>
             </div>
             <div>
                 <div class="font-display text-3xl font-bold tracking-tight">{{ $totalUsers }}</div>
-                <div class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Total users</div>
+                <div class="mt-1 text-sm text-zinc-500">Total users</div>
             </div>
         </flux:card>
 
         <flux:card class="space-y-4">
             <div class="flex items-start justify-between">
-                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5 dark:bg-brand-snow/10">
-                    <flux:icon icon="shield-check" class="text-brand-navy dark:text-brand-snow" />
+                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5">
+                    <flux:icon icon="shield-check" class="text-brand-navy" />
                 </div>
             </div>
             <div>
                 <div class="font-display text-3xl font-bold tracking-tight">{{ $totalAdmins }}</div>
-                <div class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Admins</div>
+                <div class="mt-1 text-sm text-zinc-500">Admins</div>
             </div>
         </flux:card>
 
         <flux:card class="space-y-4">
             <div class="flex items-start justify-between">
-                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5 dark:bg-brand-snow/10">
-                    <flux:icon icon="rectangle-stack" class="text-brand-navy dark:text-brand-snow" />
+                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5">
+                    <flux:icon icon="rectangle-stack" class="text-brand-navy" />
                 </div>
             </div>
             <div>
                 <div class="font-display text-3xl font-bold tracking-tight">{{ $visibleSections }}<span class="text-lg text-zinc-400">/{{ $totalSections }}</span></div>
-                <div class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Landing sections visible</div>
+                <div class="mt-1 text-sm text-zinc-500">Landing sections visible</div>
             </div>
         </flux:card>
 
         <flux:card class="space-y-4">
             <div class="flex items-start justify-between">
-                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5 dark:bg-brand-snow/10">
-                    <flux:icon icon="arrow-trending-up" class="text-brand-navy dark:text-brand-snow" />
+                <div class="flex size-11 items-center justify-center rounded-xl bg-brand-navy/5">
+                    <flux:icon icon="arrow-trending-up" class="text-brand-navy" />
                 </div>
             </div>
             <div>
                 <div class="font-display text-3xl font-bold tracking-tight">{{ $newUsersThisWeek }}</div>
-                <div class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">New users (7 days)</div>
+                <div class="mt-1 text-sm text-zinc-500">New users (7 days)</div>
             </div>
         </flux:card>
     </div>
@@ -131,7 +131,7 @@ new #[Title('Dashboard')] class extends Component
                     <div class="flex flex-1 flex-col items-center gap-2">
                         <div class="flex h-32 w-full items-end">
                             <div
-                                class="w-full rounded-t bg-brand-navy/20 dark:bg-brand-snow/20 {{ $day['count'] > 0 ? 'bg-brand-accent-dark! dark:bg-brand-accent!' : '' }}"
+                                class="w-full rounded-t bg-brand-navy/20 {{ $day['count'] > 0 ? 'bg-brand-accent-dark!' : '' }}"
                                 style="height: {{ max(4, ($day['count'] / $max) * 100) }}%"
                             ></div>
                         </div>
@@ -168,12 +168,12 @@ new #[Title('Dashboard')] class extends Component
         <div class="mt-6 space-y-5">
             @forelse ($activity as $item)
                 <div class="flex items-start gap-4">
-                    <div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-navy/5 dark:bg-brand-snow/10">
-                        <flux:icon :icon="$item['icon']" variant="micro" class="text-brand-navy dark:text-brand-snow" />
+                    <div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-navy/5">
+                        <flux:icon :icon="$item['icon']" variant="micro" class="text-brand-navy" />
                     </div>
                     <div class="flex-1">
                         <div class="text-sm font-medium">{{ $item['title'] }}</div>
-                        <div class="text-sm text-zinc-500 dark:text-zinc-400">{{ $item['subtitle'] }}</div>
+                        <div class="text-sm text-zinc-500">{{ $item['subtitle'] }}</div>
                     </div>
                     <div class="font-mono text-xs text-zinc-400">{{ $item['at'] }}</div>
                 </div>

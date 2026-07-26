@@ -7,7 +7,7 @@
         />
 
         @if (session('status') == 'verification-link-sent')
-            <flux:text class="font-medium text-green-600 dark:text-green-400">
+            <flux:text class="font-medium text-green-600">
                 A new verification link has been sent to the email address you provided during registration.
             </flux:text>
         @endif

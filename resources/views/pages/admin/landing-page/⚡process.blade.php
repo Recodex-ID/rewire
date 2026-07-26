@@ -81,7 +81,7 @@ new class extends Component
         <div class="space-y-4">
             <flux:heading size="sm">Steps</flux:heading>
             @foreach ($data['steps'] as $index => $step)
-                <div wire:key="process-step-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
+                <div wire:key="process-step-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4">
                     <div class="flex items-start gap-3">
                         <div class="flex-1 space-y-3">
                             <div class="grid grid-cols-3 gap-3">

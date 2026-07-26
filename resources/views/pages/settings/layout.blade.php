@@ -3,7 +3,6 @@
         <flux:navlist aria-label="Settings">
             <flux:navlist.item :href="route('profile.edit')" wire:navigate>Profile</flux:navlist.item>
             <flux:navlist.item :href="route('security.edit')" wire:navigate>Security</flux:navlist.item>
-            <flux:navlist.item :href="route('appearance.edit')" wire:navigate>Appearance</flux:navlist.item>
         </flux:navlist>
     </div>
 

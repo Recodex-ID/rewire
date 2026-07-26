@@ -86,7 +86,7 @@ new class extends Component
         <div class="space-y-4">
             <flux:heading size="sm">Columns</flux:heading>
             @foreach ($data['columns'] as $index => $column)
-                <div wire:key="footer-column-{{ $index }}" class="flex items-start gap-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
+                <div wire:key="footer-column-{{ $index }}" class="flex items-start gap-3 rounded-lg border border-zinc-200 p-4">
                     <div class="flex-1 space-y-3">
                         <flux:input wire:model="data.columns.{{ $index }}.heading" label="Column heading" />
                         <flux:textarea wire:model="data.columns.{{ $index }}.links" label="Links" rows="3" description="One per line, format: Label|URL" />

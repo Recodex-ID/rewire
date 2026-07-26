@@ -104,7 +104,7 @@ new class extends Component
             <flux:heading size="sm">Logos</flux:heading>
             <div class="grid grid-cols-2 gap-3">
                 @foreach ($data['logos'] as $index => $logo)
-                    <div wire:key="logo-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-700">
+                    <div wire:key="logo-{{ $index }}" class="space-y-3 rounded-lg border border-zinc-200 p-4">
                         <div class="flex items-end gap-3">
                             <flux:input wire:model="data.logos.{{ $index }}.name" label="Name" class="flex-1" />
                             <flux:button type="button" variant="danger" size="sm" icon="trash" wire:click="removeLogo({{ $index }})" />

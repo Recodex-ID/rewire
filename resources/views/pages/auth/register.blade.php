@@ -58,15 +58,15 @@
                         if (v.length > 8 && /[A-Z]/.test(v) && /[0-9]/.test(v)) s = 3;
                         if (v.length > 10 && /[^A-Za-z0-9]/.test(v)) s = 4;
                         $refs.strength.querySelectorAll('span').forEach((bar, i) => {
-                            bar.className = 'h-1 flex-1 rounded-full ' + (i >= s ? 'bg-brand-navy/10 dark:bg-brand-snow/10' : s === 1 ? 'bg-red-400' : s === 2 ? 'bg-yellow-400' : s === 3 ? 'bg-brand-accent' : 'bg-green-500');
+                            bar.className = 'h-1 flex-1 rounded-full ' + (i >= s ? 'bg-brand-navy/10' : s === 1 ? 'bg-red-400' : s === 2 ? 'bg-yellow-400' : s === 3 ? 'bg-brand-accent' : 'bg-green-500');
                         });
                     "
                 />
                 <div x-ref="strength" class="mt-2 flex gap-1.5">
-                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10 dark:bg-brand-snow/10"></span>
-                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10 dark:bg-brand-snow/10"></span>
-                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10 dark:bg-brand-snow/10"></span>
-                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10 dark:bg-brand-snow/10"></span>
+                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10"></span>
+                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10"></span>
+                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10"></span>
+                    <span class="h-1 flex-1 rounded-full bg-brand-navy/10"></span>
                 </div>
             </div>
 
