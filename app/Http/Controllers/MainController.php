@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {
@@ -30,5 +33,20 @@ class MainController extends Controller
         return view('pages.main.blog-detail', [
             'post' => $post,
         ]);
+    }
+
+    public function sitemap(): Response
+    {
+        $sitemap = Sitemap::create()
+            ->add(Url::create(route('home')))
+            ->add(Url::create(route('blogs')));
+
+        Post::query()->published()->get()->each(
+            fn (Post $post) => $sitemap->add(
+                Url::create(route('blog.detail', $post->slug))->setLastModificationDate($post->updated_at)
+            )
+        );
+
+        return $sitemap->toResponse(request());
     }
 }
