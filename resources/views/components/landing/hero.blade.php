@@ -12,7 +12,7 @@
     <div class="landing-animate-float absolute -top-24 -left-24 size-72 rounded-full bg-brand-accent/20 blur-3xl"></div>
     <div class="landing-animate-float-slow absolute right-0 -bottom-24 size-72 rounded-full bg-brand-accent/10 blur-3xl"></div>
 
-    <div class="relative mx-auto grid h-full max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
+    <div class="relative mx-auto grid h-full max-w-7xl grid-cols-1 content-center items-center gap-16 px-6 lg:grid-cols-2">
         <div>
             <div class="landing-reveal inline-flex items-center gap-2 rounded-full border border-brand-snow/10 bg-brand-snow/5 px-4 py-1.5 font-mono text-xs text-brand-snow backdrop-blur-sm">
                 <span>Built on Laravel &amp; Livewire</span>
@@ -85,6 +85,18 @@
                     <x-landing.icon name="cloud" class="size-4" />
                 </span>
                 <span class="font-mono text-xs font-medium text-brand-navy">Synced in realtime</span>
+            </div>
+
+            <div class="landing-animate-float absolute top-1/2 -right-2 flex -translate-y-1/2 items-center gap-2 rounded-xl bg-brand-snow p-3 shadow-lg" style="animation-delay: 2s;">
+                <span class="relative flex size-2">
+                    <span class="landing-animate-pulse-soft absolute inline-flex size-full rounded-full bg-green-400"></span>
+                    <span class="relative inline-flex size-2 rounded-full bg-green-500"></span>
+                </span>
+                <span class="font-mono text-xs font-medium text-brand-navy">Tests passing</span>
+            </div>
+
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-wider text-brand-silver/40">
+                MIT LICENSED &middot; OPEN SOURCE
             </div>
         </div>
     </div>
