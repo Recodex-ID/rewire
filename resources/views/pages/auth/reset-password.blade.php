@@ -1,11 +1,14 @@
 <x-layouts::auth :title="__('Reset password')">
-    <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Reset password')" :description="__('Please enter your new password below')" />
+    <div class="flex flex-col gap-8">
+        <x-auth-header
+            :eyebrow="__('Account recovery')"
+            :title="__('Reset password')"
+            :description="__('Please enter your new password below.')"
+        />
 
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+        <x-auth-session-status :status="session('status')" />
 
-        <form method="POST" action="{{ route('password.update') }}" class="flex flex-col gap-6">
+        <form method="POST" action="{{ route('password.update') }}" class="flex flex-col gap-5">
             @csrf
             <!-- Token -->
             <input type="hidden" name="token" value="{{ request()->route('token') }}">
@@ -13,6 +16,7 @@
             <!-- Email Address -->
             <flux:input
                 name="email"
+                icon="envelope"
                 value="{{ request('email') }}"
                 :label="__('Email')"
                 type="email"
@@ -23,6 +27,7 @@
             <!-- Password -->
             <flux:input
                 name="password"
+                icon="lock-closed"
                 :label="__('Password')"
                 type="password"
                 required
@@ -35,6 +40,7 @@
             <!-- Confirm Password -->
             <flux:input
                 name="password_confirmation"
+                icon="lock-closed"
                 :label="__('Confirm password')"
                 type="password"
                 required
@@ -44,11 +50,9 @@
                 viewable
             />
 
-            <div class="flex items-center justify-end">
-                <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">
-                    {{ __('Reset password') }}
-                </flux:button>
-            </div>
+            <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">
+                {{ __('Reset password') }}
+            </flux:button>
         </form>
     </div>
 </x-layouts::auth>
