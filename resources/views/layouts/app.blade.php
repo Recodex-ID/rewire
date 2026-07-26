@@ -30,6 +30,9 @@
                         <flux:sidebar.item icon="pencil-square" :href="route('admin.landing-page.edit')" :current="request()->routeIs('admin.landing-page.edit')" wire:navigate>
                             Landing page
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="cog-6-tooth" :href="route('admin.settings.edit')" :current="request()->routeIs('admin.settings.edit')" wire:navigate>
+                            Settings
+                        </flux:sidebar.item>
                     </flux:sidebar.group>
                 @endrole
             </flux:sidebar.nav>
