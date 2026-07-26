@@ -16,6 +16,14 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
+
+                @role('admin')
+                    <flux:sidebar.group :heading="__('Admin')" class="grid">
+                        <flux:sidebar.item icon="pencil-square" :href="route('admin.landing-page.edit')" :current="request()->routeIs('admin.landing-page.edit')" wire:navigate>
+                            {{ __('Landing page') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @endrole
             </flux:sidebar.nav>
 
             <flux:spacer />
