@@ -3,10 +3,18 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-zinc-50 dark:bg-zinc-800">
+        {{-- The `dark` class here locks the sidebar to its dark styling regardless of the app-wide
+             light/dark toggle -- it's always a navy surface, so its Flux components (item text,
+             hover states, brand name, profile card) need to always use their dark-mode colors too,
+             otherwise they render as if on a light background and become unreadable. --}}
+        <flux:sidebar sticky collapsible="mobile" class="dark border-e border-brand-navy/50 bg-brand-navy">
             <flux:sidebar.header>
-                <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+                <flux:sidebar.brand name="Rewire" :href="route('dashboard')" wire:navigate>
+                    <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-lg bg-brand-snow">
+                        <x-landing.icon name="check" class="size-4 text-brand-navy" />
+                    </x-slot>
+                </flux:sidebar.brand>
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
@@ -46,6 +54,11 @@
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
             <flux:spacer />
+
+            <flux:button x-data variant="outline" square x-on:click="$flux.dark = ! $flux.dark" aria-label="Toggle color scheme">
+                <flux:icon.sun x-show="$flux.dark" variant="micro" />
+                <flux:icon.moon x-show="! $flux.dark" variant="micro" />
+            </flux:button>
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
@@ -96,7 +109,32 @@
             </flux:dropdown>
         </flux:header>
 
-        <flux:main>
+        <!-- Desktop Topbar -->
+        <flux:header sticky class="hidden border-b border-zinc-200 bg-white lg:flex dark:border-zinc-700 dark:bg-zinc-900">
+            <div>
+                <div class="font-mono text-[10px] tracking-wider text-zinc-400 uppercase dark:text-zinc-500">Rewire</div>
+                <flux:heading size="lg" class="font-display!">{{ $title ?? 'Dashboard' }}</flux:heading>
+            </div>
+
+            <flux:spacer />
+
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/10 px-3 py-1.5">
+                    <span class="relative flex size-2">
+                        <span class="landing-animate-pulse-soft absolute inline-flex size-full rounded-full bg-green-500"></span>
+                        <span class="relative inline-flex size-2 rounded-full bg-green-500"></span>
+                    </span>
+                    <span class="text-xs font-medium text-green-700 dark:text-green-400">{{ app()->environment('production') ? 'Production' : ucfirst(app()->environment()) }}</span>
+                </div>
+
+                <flux:button x-data variant="outline" square x-on:click="$flux.dark = ! $flux.dark" aria-label="Toggle color scheme">
+                    <flux:icon.sun x-show="$flux.dark" variant="micro" />
+                    <flux:icon.moon x-show="! $flux.dark" variant="micro" />
+                </flux:button>
+            </div>
+        </flux:header>
+
+        <flux:main class="bg-zinc-50 dark:bg-zinc-800">
             {{ $slot }}
         </flux:main>
 

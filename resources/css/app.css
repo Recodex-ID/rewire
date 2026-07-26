@@ -21,17 +21,20 @@
     --color-brand-accent: #4da3ff;
     --color-brand-accent-dark: #2e7dd8;
 
-    --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-300: #d4d4d4;
-    --color-zinc-400: #a3a3a3;
-    --color-zinc-500: #737373;
-    --color-zinc-600: #525252;
-    --color-zinc-700: #404040;
-    --color-zinc-800: #262626;
-    --color-zinc-900: #171717;
-    --color-zinc-950: #0a0a0a;
+    /* Rebase Flux's "zinc" to a custom gray scale tinted with the brand navy's hue (~221deg),
+       instead of Tailwind's generic slate, so dark-mode surfaces (Flux's own cards/inputs/menus
+       included) read as one family with the navy sidebar rather than a borrowed, unrelated gray. */
+    --color-zinc-50: hsl(220 45% 97%);
+    --color-zinc-100: hsl(220 38% 94%);
+    --color-zinc-200: hsl(220 28% 87%);
+    --color-zinc-300: hsl(220 22% 76%);
+    --color-zinc-400: hsl(220 16% 62%);
+    --color-zinc-500: hsl(220 16% 48%);
+    --color-zinc-600: hsl(221 22% 36%);
+    --color-zinc-700: hsl(221 28% 27%);
+    --color-zinc-800: hsl(221 35% 18%);
+    --color-zinc-900: hsl(222 40% 13%);
+    --color-zinc-950: hsl(224 45% 8%);
 
     --color-accent: var(--color-brand-navy);
     --color-accent-content: var(--color-brand-accent-dark);
