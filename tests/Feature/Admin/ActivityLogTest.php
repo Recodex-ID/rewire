@@ -8,14 +8,14 @@ use Spatie\Permission\Models\Role;
 test('non-admin cannot access the activity log page', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('app.activity.index'))->assertForbidden();
+    $this->actingAs($user)->get(route('admin.activity'))->assertForbidden();
 });
 
 test('admin can view the activity log page', function () {
     $admin = User::factory()->create();
     $admin->syncRoles(Role::findOrCreate('admin'));
 
-    $this->actingAs($admin)->get(route('app.activity.index'))->assertOk();
+    $this->actingAs($admin)->get(route('admin.activity'))->assertOk();
 });
 
 test('creating a user logs activity with the acting admin as causer', function () {
@@ -25,7 +25,7 @@ test('creating a user logs activity with the acting admin as causer', function (
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.users')
+    Livewire::test('pages::app.admin.users')
         ->set('name', 'Jane Doe')
         ->set('email', 'jane@example.com')
         ->set('password', 'password')
@@ -48,7 +48,7 @@ test('changing a role logs activity', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.users')->call('updateRole', $member->id, 'admin');
+    Livewire::test('pages::app.admin.users')->call('updateRole', $member->id, 'admin');
 
     $activity = Activity::query()->latest()->first();
 
@@ -63,7 +63,7 @@ test('deleting a user logs activity', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.users')->call('delete', $member->id);
+    Livewire::test('pages::app.admin.users')->call('delete', $member->id);
 
     $activity = Activity::query()->latest()->first();
 

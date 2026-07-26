@@ -10,7 +10,7 @@
              otherwise they render as if on a light background and become unreadable. --}}
         <flux:sidebar sticky collapsible="mobile" class="dark border-e border-brand-navy/50 bg-brand-navy">
             <flux:sidebar.header>
-                <flux:sidebar.brand name="Rewire" :href="route('dashboard')" wire:navigate>
+                <flux:sidebar.brand name="Rewire Starter Kit" :href="route('dashboard')" wire:navigate>
                     <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-lg bg-brand-snow">
                         <x-landing.icon name="check" class="size-4 text-brand-navy" />
                     </x-slot>
@@ -24,20 +24,20 @@
                 </flux:sidebar.item>
 
                 <flux:sidebar.group heading="Content Management" class="grid">
-                    <flux:sidebar.item icon="newspaper" :href="route('app.blog.index')" :current="request()->routeIs('app.blog.*')" wire:navigate>
-                        Blog
+                    <flux:sidebar.item icon="newspaper" :href="route('content-management.blogs')" :current="request()->routeIs('content-management.blogs')" wire:navigate>
+                        Blogs
                     </flux:sidebar.item>
                 </flux:sidebar.group>
 
                 @role('admin')
                     <flux:sidebar.group heading="Admin" class="grid">
-                        <flux:sidebar.item icon="users" :href="route('app.users.index')" :current="request()->routeIs('app.users.index')" wire:navigate>
+                        <flux:sidebar.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>
                             Users
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="clock" :href="route('app.activity.index')" :current="request()->routeIs('app.activity.index')" wire:navigate>
+                        <flux:sidebar.item icon="clock" :href="route('admin.activity')" :current="request()->routeIs('admin.activity')" wire:navigate>
                             Activity log
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="cog-6-tooth" :href="route('app.settings.edit')" :current="request()->routeIs('app.settings.edit')" wire:navigate>
+                        <flux:sidebar.item icon="cog-6-tooth" :href="route('admin.settings')" :current="request()->routeIs('admin.settings')" wire:navigate>
                             Settings
                         </flux:sidebar.item>
                     </flux:sidebar.group>
@@ -47,7 +47,7 @@
             <flux:spacer />
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/Recodex-ID/rewire.git" target="_blank">
+                <flux:sidebar.item icon="folder-git-2" href="https://github.com/Recodex-ID/rewire" target="_blank">
                     Repository
                 </flux:sidebar.item>
 

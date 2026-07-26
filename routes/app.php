@@ -2,28 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('dashboard', 'pages::app.dashboard')->name('dashboard');
     Route::livewire('docs', 'pages::app.docs')->name('docs');
 
+    Route::prefix('content-management')->name('content-management.')->group(function () {
+        Route::livewire('blogs', 'pages::app.content-management.blogs')->name('blogs');
+    });
+
+    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::livewire('settings', 'pages::app.admin.settings')->name('settings');
+        Route::livewire('users', 'pages::app.admin.users')->name('users');
+        Route::livewire('activity', 'pages::app.admin.activity')->name('activity');
+    });
+
     Route::redirect('settings', 'settings/profile');
-
     Route::livewire('settings/profile', 'pages::app.settings.profile')->name('profile.edit');
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('settings/security', 'pages::app.settings.security')
         ->middleware([
             'password.confirm',
         ])
         ->name('security.edit');
-});
-
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::livewire('app/settings', 'pages::app.settings')->name('app.settings.edit');
-    Route::livewire('app/users', 'pages::app.users')->name('app.users.index');
-    Route::livewire('app/activity', 'pages::app.activity')->name('app.activity.index');
-    Route::livewire('app/blog', 'pages::app.blog')->name('app.blog.index');
-    Route::livewire('app/blog/create', 'pages::app.blog.form')->name('app.blog.create');
-    Route::livewire('app/blog/{post}/edit', 'pages::app.blog.form')->name('app.blog.edit');
 });

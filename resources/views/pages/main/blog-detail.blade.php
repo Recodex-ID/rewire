@@ -1,7 +1,7 @@
 <x-layouts::main :title="$post->title">
     <article class="pt-32 pb-24 sm:pt-40 sm:pb-32">
         <div class="mx-auto max-w-3xl px-6 lg:px-8">
-            <a href="{{ route('blog.index') }}" class="landing-reveal text-sm font-medium text-brand-accent-dark hover:text-brand-navy">
+            <a href="{{ route('blogs') }}" class="landing-reveal text-sm font-medium text-brand-accent-dark hover:text-brand-navy">
                 &larr; Back to blog
             </a>
 

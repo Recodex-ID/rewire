@@ -14,7 +14,7 @@ test('404 page renders the branded error page', function () {
 test('403 page renders the branded error page for a non-admin user', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->get(route('app.users.index'));
+    $response = $this->actingAs($user)->get(route('admin.users'));
 
     $response->assertForbidden();
     $response->assertSee('Back to home');

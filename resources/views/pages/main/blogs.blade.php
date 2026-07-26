@@ -21,7 +21,7 @@
                 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($posts as $post)
                         <a
-                            href="{{ route('blog.show', $post->slug) }}"
+                            href="{{ route('blog.detail', $post->slug) }}"
                             class="landing-reveal landing-card-hover landing-reveal-delay-{{ min($loop->iteration, 4) }} flex flex-col overflow-hidden rounded-3xl border border-brand-navy/10 bg-brand-snow"
                         >
                             @if ($post->featured_image)

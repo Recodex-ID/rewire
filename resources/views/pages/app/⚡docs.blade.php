@@ -53,9 +53,10 @@ new #[Title('Documentation')] class extends Component
         </div>
         <flux:text>
             The public landing page lives at <flux:link :href="route('home')">/</flux:link>, the blog at
-            <flux:link :href="route('blog.index')">/blog</flux:link>, and this dashboard at
-            <flux:link :href="route('dashboard')">/dashboard</flux:link> (signed in as an admin unlocks the
-            "Admin" section in the sidebar: Settings, Users, Activity log, and Blog).
+            <flux:link :href="route('blogs')">/blog</flux:link>, and this dashboard at
+            <flux:link :href="route('dashboard')">/dashboard</flux:link>. Any signed-in, verified user sees the
+            "Content Management" section in the sidebar (Blog); signing in as an admin additionally unlocks the
+            "Admin" section (Settings, Users, Activity log).
         </flux:text>
     </section>
 
@@ -101,18 +102,19 @@ new #[Title('Documentation')] class extends Component
         <flux:heading size="lg">Blog</flux:heading>
         <flux:text>
             The public blog (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\Post</code>) is the one
-            piece of content that stays admin-editable without a redeploy: title, slug, excerpt, body, a featured image,
-            and a published toggle. Slugs come from
-            <flux:link href="https://github.com/spatie/laravel-sluggable" target="_blank">spatie/laravel-sluggable</flux:link> —
-            generated from the title on create, never silently regenerated on update, so published URLs stay stable.
+            piece of content that stays admin-editable without a redeploy: title, excerpt, body, a featured image,
+            and a published toggle. The slug isn't a form field at all —
+            <flux:link href="https://github.com/spatie/laravel-sluggable" target="_blank">spatie/laravel-sluggable</flux:link>
+            generates it from the title on create and never silently regenerates it on update, so published URLs stay stable.
         </flux:text>
         <flux:text>
-            Admins manage posts from <flux:link :href="route('app.blog.index')">/app/blog</flux:link>
-            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/⚡blog.blade.php</code> for the
-            list, <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/app/blog/⚡form.blade.php</code> shared by
-            create and edit). The public pages
-            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/main/blog-index.blade.php</code> and
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">blog-show.blade.php</code>) are plain Tailwind, no Flux,
+            Any signed-in, verified user manages posts from <flux:link :href="route('content-management.blogs')">/content-management/blogs</flux:link>
+            (not admin-gated — see <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/app.php</code>) — one Livewire
+            component (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/content-management/⚡blogs.blade.php</code>)
+            handles the list, and a single Flux modal shared by both create and edit (an <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">editingPost</code>
+            property tells the form which mode it's in). The public pages
+            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/main/blogs.blade.php</code> and
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">blog-detail.blade.php</code>) are plain Tailwind, no Flux,
             same as the rest of the public site — both share
             <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/layouts/main.blade.php</code> for the
             navbar/footer/head boilerplate.
@@ -128,7 +130,7 @@ new #[Title('Documentation')] class extends Component
             <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/components/landing/*</code> — edit those
             files and redeploy. The handful of values that are genuinely per-deployment config live in the
             <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\Setting</code> key-value store instead, editable
-            from <flux:link :href="route('app.settings.edit')">/app/settings</flux:link>: SEO meta description, a Google
+            from <flux:link :href="route('admin.settings')">/admin/settings</flux:link>: SEO meta description, a Google
             Analytics ID, social links, and the contact address/email/phone shown on the landing page's call-to-action.
         </flux:text>
     </section>

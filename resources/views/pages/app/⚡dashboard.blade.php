@@ -148,7 +148,7 @@ new #[Title('Dashboard')] class extends Component
                     Documentation
                 </flux:button>
                 @role('admin')
-                    <flux:button as="a" :href="route('app.blog.index')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
+                    <flux:button as="a" :href="route('content-management.blogs')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
                         Manage blog
                     </flux:button>
                 @endrole

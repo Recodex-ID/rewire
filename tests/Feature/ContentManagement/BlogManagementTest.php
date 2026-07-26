@@ -6,10 +6,10 @@ use Livewire\Livewire;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 
-test('non-admin cannot access the blog list page', function () {
+test('any verified member can access the blog list page', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('app.blog.index'))->assertForbidden();
+    $this->actingAs($user)->get(route('content-management.blogs'))->assertOk();
 });
 
 test('admin can view the blog list', function () {
@@ -19,7 +19,7 @@ test('admin can view the blog list', function () {
     $post = Post::factory()->create(['title' => 'Seeded Post']);
 
     $this->actingAs($admin)
-        ->get(route('app.blog.index'))
+        ->get(route('content-management.blogs'))
         ->assertOk()
         ->assertSee($post->title);
 });
@@ -30,9 +30,9 @@ test('admin can create a post', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.blog.form')
+    Livewire::test('pages::app.content-management.blogs')
+        ->call('create')
         ->set('title', 'My New Post')
-        ->set('slug', 'my-new-post')
         ->set('excerpt', 'An excerpt.')
         ->set('body', 'The body.')
         ->call('save')
@@ -53,7 +53,8 @@ test('admin can edit an existing post', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.blog.form', ['post' => $post])
+    Livewire::test('pages::app.content-management.blogs')
+        ->call('edit', $post->id)
         ->set('title', 'Updated Title')
         ->call('save')
         ->assertHasNoErrors();
@@ -69,7 +70,7 @@ test('admin can delete a post', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.blog')->call('delete', $post->id);
+    Livewire::test('pages::app.content-management.blogs')->call('delete', $post->id);
 
     $this->assertDatabaseMissing('posts', ['id' => $post->id]);
 });
@@ -116,7 +117,8 @@ test('editing a post logs activity', function () {
 
     $countBeforeEdit = Activity::count();
 
-    Livewire::test('pages::app.blog.form', ['post' => $post])
+    Livewire::test('pages::app.content-management.blogs')
+        ->call('edit', $post->id)
         ->set('isPublished', true)
         ->call('save')
         ->assertHasNoErrors();

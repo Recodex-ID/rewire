@@ -16,18 +16,18 @@ class MainController extends Controller
         ]);
     }
 
-    public function blogIndex(): View
+    public function blogs(): View
     {
-        return view('pages.main.blog-index', [
+        return view('pages.main.blogs', [
             'posts' => Post::query()->published()->with('author')->latest()->paginate(9),
         ]);
     }
 
-    public function blogShow(string $slug): View
+    public function blogDetail(string $slug): View
     {
         $post = Post::query()->where('slug', $slug)->published()->with('author')->firstOrFail();
 
-        return view('pages.main.blog-show', [
+        return view('pages.main.blog-detail', [
             'post' => $post,
         ]);
     }
