@@ -9,8 +9,8 @@
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div class="landing-reveal lg:col-span-4">
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-9 rounded-lg border border-brand-navy bg-brand-snow p-1.5">
-                    <span class="font-display text-lg font-semibold text-brand-snow">{{ config('app.name') }}</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="Rewire Starter Kit" class="size-9 rounded-lg border border-brand-navy bg-brand-snow p-1.5">
+                    <span class="font-display text-lg font-semibold text-brand-snow">Rewire Starter Kit</span>
                 </a>
                 <p class="mt-5 max-w-sm text-sm text-brand-silver/80">
                     A reusable Laravel starter kit for internal and client projects — authentication, roles, a blog, and a back office, ready to go.
@@ -75,7 +75,7 @@
 
         <div class="mt-16 flex flex-col gap-6 border-t border-brand-snow/10 pt-8 lg:flex-row lg:items-center lg:justify-between">
             <p class="text-sm text-brand-silver/60">
-                &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+                &copy; {{ date('Y') }} Rewire Starter Kit. All rights reserved.
             </p>
             <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a href="#" class="text-sm text-brand-silver/60 transition hover:text-brand-snow">Privacy Policy</a>

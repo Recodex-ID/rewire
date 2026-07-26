@@ -10,13 +10,13 @@
              otherwise they render as if on a light background and become unreadable. --}}
         <flux:sidebar sticky collapsible="mobile" class="dark border-e border-brand-navy/50 bg-brand-navy">
             <flux:sidebar.header>
-                <a href="{{ route('dashboard') }}" wire:navigate class="flex h-10 min-w-0 flex-1 items-center gap-2 px-2">
+                <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 flex-1 items-center gap-3 px-2 py-1">
                     <img
                         src="{{ asset('images/logo.png') }}"
-                        alt="{{ config('app.name') }}"
-                        class="size-6 shrink-0 rounded-sm border border-brand-navy bg-brand-snow object-contain p-0.5"
+                        alt="Rewire Starter Kit"
+                        class="size-11 shrink-0 rounded-xl border border-brand-navy bg-brand-snow object-contain p-1.5"
                     >
-                    <span class="min-w-0 truncate text-sm font-medium text-white">{{ config('app.name') }}</span>
+                    <span class="min-w-0 truncate text-lg font-bold text-white">Rewire Starter Kit</span>
                 </a>
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>

@@ -7,7 +7,7 @@
                     Insights &amp; updates
                 </h1>
                 <p class="mt-4 text-lg leading-relaxed text-brand-silver/80">
-                    News, guides, and updates from the {{ config('app.name') }} team.
+                    News, guides, and updates from the Rewire Starter Kit team.
                 </p>
             </div>
         </div>
@@ -40,7 +40,7 @@
                                     <p class="mt-3 flex-1 text-sm leading-relaxed text-brand-navy/70">{{ $post->excerpt }}</p>
                                 @endif
                                 <div class="mt-6 flex items-center gap-2 text-xs text-brand-navy/50">
-                                    <span>{{ $post->author?->name ?? config('app.name') }}</span>
+                                    <span>{{ $post->author?->name ?? 'Rewire Starter Kit' }}</span>
                                     <span>&middot;</span>
                                     <span>{{ $post->created_at->translatedFormat('l, j F Y') }}</span>
                                 </div>

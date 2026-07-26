@@ -10,5 +10,5 @@ test('mail notifications render with the brand color and app name', function () 
 
     expect($html)
         ->toContain('#1a2a4b')
-        ->toContain(config('app.name'));
+        ->toContain('Rewire Starter Kit');
 });

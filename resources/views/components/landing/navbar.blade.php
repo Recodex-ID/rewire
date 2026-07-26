@@ -7,7 +7,7 @@
     <div class="mx-auto max-w-7xl px-6">
         <div class="flex h-16 items-center justify-between lg:h-20">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="size-10 shrink-0 rounded-xl border border-brand-navy bg-brand-snow p-1.5">
+                <img src="{{ asset('images/logo.png') }}" alt="Rewire Starter Kit" class="size-10 shrink-0 rounded-xl border border-brand-navy bg-brand-snow p-1.5">
                 <span class="flex flex-col leading-none">
                     <span class="font-display text-lg font-bold text-brand-navy">
                         Rewire

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
+        <title>@yield('title') - Rewire Starter Kit</title>
 
         {{-- Deliberately self-contained: no @vite/@fonts/Livewire here. Error pages must still
              render correctly even if the asset build is the thing that's broken. --}}
