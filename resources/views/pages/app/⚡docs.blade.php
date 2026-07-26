@@ -53,7 +53,7 @@ new #[Title('Documentation')] class extends Component
         <flux:text>
             The public landing page lives at <flux:link :href="route('home')">/</flux:link>, this dashboard at
             <flux:link :href="route('dashboard')">/dashboard</flux:link>, and the admin-only landing page editor at
-            <flux:link :href="route('admin.landing-page.edit')">/admin/landing-page</flux:link> (visible in the sidebar once you're
+            <flux:link :href="route('app.landing-page.edit')">/app/landing-page</flux:link> (visible in the sidebar once you're
             signed in as an admin).
         </flux:text>
     </section>
@@ -90,7 +90,7 @@ new #[Title('Documentation')] class extends Component
         <flux:text>
             Gate a route to admins with the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:admin</code>
             middleware (alias registered in <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">bootstrap/app.php</code>),
-            as <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/admin.php</code> already does.
+            as <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/app.php</code> already does.
         </flux:text>
     </section>
 
@@ -112,16 +112,16 @@ new #[Title('Documentation')] class extends Component
             @endforeach
         </div>
         <flux:text>
-            Admins edit all of it from <flux:link :href="route('admin.landing-page.edit')">/admin/landing-page</flux:link>. That page
-            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/admin/⚡landing-page.blade.php</code>)
+            Admins edit all of it from <flux:link :href="route('app.landing-page.edit')">/app/landing-page</flux:link>. That page
+            (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/⚡landing-page.blade.php</code>)
             is just a tab switcher — each section is its own Livewire component under
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/admin/landing-page/</code>
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/landing-page/</code>
             (e.g. <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">⚡hero.blade.php</code>), embedded with
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">&lt;livewire:pages::admin.landing-page.hero&gt;</code>.
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">&lt;livewire:pages::app.landing-page.hero&gt;</code>.
             The public page is rendered by <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Http\Controllers\MainController</code>
             through the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/components/landing/*</code> Blade
             components. To add a twelfth section: seed a new row with a unique key, add a matching editor component under
-            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/admin/landing-page/</code>, wire it into the
+            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/app/landing-page/</code>, wire it into the
             tab switcher, and add a matching <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">&lt;x-landing.your-section&gt;</code>
             component to <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/index.blade.php</code>.
         </flux:text>

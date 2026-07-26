@@ -10,14 +10,14 @@ use Spatie\Permission\Models\Role;
 test('non-admin cannot access the landing page editor', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('admin.landing-page.edit'))->assertForbidden();
+    $this->actingAs($user)->get(route('app.landing-page.edit'))->assertForbidden();
 });
 
 test('admin can view the landing page editor', function () {
     $admin = User::factory()->create();
     $admin->assignRole(Role::findOrCreate('admin'));
 
-    $this->actingAs($admin)->get(route('admin.landing-page.edit'))->assertOk();
+    $this->actingAs($admin)->get(route('app.landing-page.edit'))->assertOk();
 });
 
 test('admin can update the hero section', function () {
@@ -36,7 +36,7 @@ test('admin can update the hero section', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page.hero')
+    Livewire::test('pages::app.landing-page.hero')
         ->set('data.heading_line1', 'New heading')
         ->call('save')
         ->assertHasNoErrors();
@@ -56,7 +56,7 @@ test('admin can add and save a service item', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page.services')
+    Livewire::test('pages::app.landing-page.services')
         ->call('addItem')
         ->set('data.items.0.number', '01')
         ->set('data.items.0.category', 'Cat')
@@ -84,7 +84,7 @@ test('admin can save a footer column with links', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page.footer')
+    Livewire::test('pages::app.landing-page.footer')
         ->call('addColumn')
         ->set('data.columns.0.heading', 'Product')
         ->set('data.columns.0.links', "Services|#services\nAbout|#about")
@@ -120,7 +120,7 @@ test('admin can upload a hero background image', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page.hero')
+    Livewire::test('pages::app.landing-page.hero')
         ->set('backgroundImageUpload', UploadedFile::fake()->image('hero.jpg'))
         ->call('save')
         ->assertHasNoErrors();
@@ -145,7 +145,7 @@ test('admin can upload a trusted-by logo image', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.landing-page.trusted-by')
+    Livewire::test('pages::app.landing-page.trusted-by')
         ->call('addLogo')
         ->set('data.logos.0.name', 'Acme')
         ->set('data.logos.0.upload', UploadedFile::fake()->image('logo.png'))

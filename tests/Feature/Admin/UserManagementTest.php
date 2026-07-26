@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role;
 test('non-admin cannot access the users page', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('admin.users.index'))->assertForbidden();
+    $this->actingAs($user)->get(route('app.users.index'))->assertForbidden();
 });
 
 test('admin can view the users list', function () {
@@ -17,7 +17,7 @@ test('admin can view the users list', function () {
     $other = User::factory()->create(['name' => 'Jane Doe']);
 
     $this->actingAs($admin)
-        ->get(route('admin.users.index'))
+        ->get(route('app.users.index'))
         ->assertOk()
         ->assertSee('Jane Doe');
 });
@@ -30,7 +30,7 @@ test('admin can change another user\'s role', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')->call('updateRole', $member->id, 'admin');
+    Livewire::test('pages::app.users')->call('updateRole', $member->id, 'admin');
 
     expect($member->fresh()->hasRole('admin'))->toBeTrue();
     expect($member->fresh()->hasRole('member'))->toBeFalse();
@@ -44,7 +44,7 @@ test('changing a role to one that does not exist is rejected', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')->call('updateRole', $member->id, 'superuser');
+    Livewire::test('pages::app.users')->call('updateRole', $member->id, 'superuser');
 
     expect($member->fresh()->hasRole('member'))->toBeTrue();
     expect($member->fresh()->hasRole('superuser'))->toBeFalse();
@@ -56,7 +56,7 @@ test('admin cannot remove their own admin role', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')->call('updateRole', $admin->id, 'member');
+    Livewire::test('pages::app.users')->call('updateRole', $admin->id, 'member');
 
     expect($admin->fresh()->hasRole('admin'))->toBeTrue();
 });
@@ -69,7 +69,7 @@ test('admin can delete another user', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')->call('delete', $member->id);
+    Livewire::test('pages::app.users')->call('delete', $member->id);
 
     $this->assertDatabaseMissing('users', ['id' => $member->id]);
 });
@@ -80,7 +80,7 @@ test('admin cannot delete their own account', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')->call('delete', $admin->id);
+    Livewire::test('pages::app.users')->call('delete', $admin->id);
 
     $this->assertDatabaseHas('users', ['id' => $admin->id]);
 });
@@ -92,7 +92,7 @@ test('admin can create a new user with a chosen role', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')
+    Livewire::test('pages::app.users')
         ->set('name', 'Jane Doe')
         ->set('email', 'jane@example.com')
         ->set('password', 'password')
@@ -118,7 +118,7 @@ test('creating a user with an already taken email fails validation', function ()
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')
+    Livewire::test('pages::app.users')
         ->set('name', 'Jane Doe')
         ->set('email', $existing->email)
         ->set('password', 'password')
@@ -134,7 +134,7 @@ test('creating a user with a mismatched password confirmation fails validation',
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::admin.users')
+    Livewire::test('pages::app.users')
         ->set('name', 'Jane Doe')
         ->set('email', 'jane@example.com')
         ->set('password', 'password')

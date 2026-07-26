@@ -149,7 +149,7 @@ new #[Title('Dashboard')] class extends Component
                     Documentation
                 </flux:button>
                 @role('admin')
-                    <flux:button as="a" :href="route('admin.landing-page.edit')" wire:navigate variant="outline" icon="pencil-square" class="w-full justify-start">
+                    <flux:button as="a" :href="route('app.landing-page.edit')" wire:navigate variant="outline" icon="pencil-square" class="w-full justify-start">
                         Edit landing page
                     </flux:button>
                 @endrole

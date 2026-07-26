@@ -27,13 +27,13 @@
 
                 @role('admin')
                     <flux:sidebar.group heading="Admin" class="grid">
-                        <flux:sidebar.item icon="pencil-square" :href="route('admin.landing-page.edit')" :current="request()->routeIs('admin.landing-page.edit')" wire:navigate>
+                        <flux:sidebar.item icon="pencil-square" :href="route('app.landing-page.edit')" :current="request()->routeIs('app.landing-page.edit')" wire:navigate>
                             Landing page
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="cog-6-tooth" :href="route('admin.settings.edit')" :current="request()->routeIs('admin.settings.edit')" wire:navigate>
+                        <flux:sidebar.item icon="cog-6-tooth" :href="route('app.settings.edit')" :current="request()->routeIs('app.settings.edit')" wire:navigate>
                             Settings
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="users" :href="route('admin.users.index')" :current="request()->routeIs('admin.users.index')" wire:navigate>
+                        <flux:sidebar.item icon="users" :href="route('app.users.index')" :current="request()->routeIs('app.users.index')" wire:navigate>
                             Users
                         </flux:sidebar.item>
                     </flux:sidebar.group>

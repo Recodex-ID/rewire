@@ -52,26 +52,26 @@ new #[Title('Landing page')] class extends Component
     </div>
 
     @if ($activeTab === 'navbar')
-        <livewire:pages::admin.landing-page.navbar key="landing-panel-navbar" />
+        <livewire:pages::app.landing-page.navbar key="landing-panel-navbar" />
     @elseif ($activeTab === 'hero')
-        <livewire:pages::admin.landing-page.hero key="landing-panel-hero" />
+        <livewire:pages::app.landing-page.hero key="landing-panel-hero" />
     @elseif ($activeTab === 'trusted-by')
-        <livewire:pages::admin.landing-page.trusted-by key="landing-panel-trusted-by" />
+        <livewire:pages::app.landing-page.trusted-by key="landing-panel-trusted-by" />
     @elseif ($activeTab === 'services')
-        <livewire:pages::admin.landing-page.services key="landing-panel-services" />
+        <livewire:pages::app.landing-page.services key="landing-panel-services" />
     @elseif ($activeTab === 'infrastructure')
-        <livewire:pages::admin.landing-page.infrastructure key="landing-panel-infrastructure" />
+        <livewire:pages::app.landing-page.infrastructure key="landing-panel-infrastructure" />
     @elseif ($activeTab === 'stats')
-        <livewire:pages::admin.landing-page.stats key="landing-panel-stats" />
+        <livewire:pages::app.landing-page.stats key="landing-panel-stats" />
     @elseif ($activeTab === 'case-studies')
-        <livewire:pages::admin.landing-page.case-studies key="landing-panel-case-studies" />
+        <livewire:pages::app.landing-page.case-studies key="landing-panel-case-studies" />
     @elseif ($activeTab === 'process')
-        <livewire:pages::admin.landing-page.process key="landing-panel-process" />
+        <livewire:pages::app.landing-page.process key="landing-panel-process" />
     @elseif ($activeTab === 'testimonials')
-        <livewire:pages::admin.landing-page.testimonials key="landing-panel-testimonials" />
+        <livewire:pages::app.landing-page.testimonials key="landing-panel-testimonials" />
     @elseif ($activeTab === 'cta')
-        <livewire:pages::admin.landing-page.cta key="landing-panel-cta" />
+        <livewire:pages::app.landing-page.cta key="landing-panel-cta" />
     @elseif ($activeTab === 'footer')
-        <livewire:pages::admin.landing-page.footer key="landing-panel-footer" />
+        <livewire:pages::app.landing-page.footer key="landing-panel-footer" />
     @endif
 </div>

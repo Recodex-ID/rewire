@@ -85,7 +85,7 @@ new #[Title('Profile settings')] class extends Component {
 
     <flux:heading class="sr-only">Profile settings</flux:heading>
 
-    <x-pages::settings.layout heading="Profile" subheading="Update your name and email address">
+    <x-pages::app.settings.layout heading="Profile" subheading="Update your name and email address">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" label="Name" type="text" required autofocus autocomplete="name" />
 
@@ -126,9 +126,9 @@ new #[Title('Profile settings')] class extends Component {
         {{-- @chisel-email-verification --}}
         @if ($this->showDeleteUser)
         {{-- @end-chisel-email-verification --}}
-            <livewire:pages::settings.delete-user-form />
+            <livewire:pages::app.settings.delete-user-form />
         {{-- @chisel-email-verification --}}
         @endif
         {{-- @end-chisel-email-verification --}}
-    </x-pages::settings.layout>
+    </x-pages::app.settings.layout>
 </section>

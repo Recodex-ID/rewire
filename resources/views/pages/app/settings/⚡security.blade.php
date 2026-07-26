@@ -45,7 +45,7 @@ new #[Title('Security settings')] class extends Component {
 
     <flux:heading class="sr-only">Security settings</flux:heading>
 
-    <x-pages::settings.layout heading="Update password" subheading="Ensure your account is using a long, random password to stay secure">
+    <x-pages::app.settings.layout heading="Update password" subheading="Ensure your account is using a long, random password to stay secure">
         <form method="POST" wire:submit="updatePassword" class="mt-6 space-y-6">
             <flux:input
                 wire:model="current_password"
@@ -80,5 +80,5 @@ new #[Title('Security settings')] class extends Component {
                 </flux:button>
             </div>
         </form>
-    </x-pages::settings.layout>
+    </x-pages::app.settings.layout>
 </section>
