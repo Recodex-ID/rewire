@@ -1,11 +1,12 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/livewire-starter-kit",
+    "name": "recodex-id/rewire",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "A reusable Laravel starter kit for internal and client projects -- authentication, roles, and a CMS-managed landing page.",
     "keywords": [
         "laravel",
-        "framework"
+        "livewire",
+        "starter-kit"
     ],
     "license": "MIT",
     "require": {
