@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 /**
  * @property int $id
@@ -12,6 +14,8 @@ use Illuminate\Support\Facades\Cache;
  */
 class Setting extends Model
 {
+    use LogsActivity;
+
     protected $fillable = ['key', 'value'];
 
     public static function get(string $key, ?string $default = null): ?string
@@ -37,5 +41,15 @@ class Setting extends Model
     private static function cached(): array
     {
         return Cache::rememberForever('settings', fn () => static::query()->pluck('value', 'key')->all());
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['key', 'value'])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->useLogName('settings')
+            ->setDescriptionForEvent(fn (string $eventName) => "Setting \"{$this->key}\" was {$eventName}");
     }
 }

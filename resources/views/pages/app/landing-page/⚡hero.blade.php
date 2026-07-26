@@ -62,7 +62,7 @@ new class extends Component
             $this->backgroundImageUpload = null;
         }
 
-        LandingPageSection::query()->where('key', 'hero')->update([
+        LandingPageSection::query()->where('key', 'hero')->firstOrFail()->update([
             'content' => $content,
             'is_visible' => $isVisible,
         ]);

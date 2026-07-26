@@ -36,6 +36,9 @@
                         <flux:sidebar.item icon="users" :href="route('app.users.index')" :current="request()->routeIs('app.users.index')" wire:navigate>
                             Users
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="clock" :href="route('app.activity.index')" :current="request()->routeIs('app.activity.index')" wire:navigate>
+                            Activity log
+                        </flux:sidebar.item>
                     </flux:sidebar.group>
                 @endrole
             </flux:sidebar.nav>

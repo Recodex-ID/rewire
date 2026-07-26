@@ -64,7 +64,7 @@ new class extends Component
             return $column;
         }, $content['columns']);
 
-        LandingPageSection::query()->where('key', 'footer')->update([
+        LandingPageSection::query()->where('key', 'footer')->firstOrFail()->update([
             'content' => $content,
             'is_visible' => $isVisible,
         ]);

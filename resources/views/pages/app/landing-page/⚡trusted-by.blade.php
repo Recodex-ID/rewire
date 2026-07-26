@@ -79,7 +79,7 @@ new class extends Component
             return $logo;
         }, $content['logos']);
 
-        LandingPageSection::query()->where('key', 'trusted_by')->update([
+        LandingPageSection::query()->where('key', 'trusted_by')->firstOrFail()->update([
             'content' => $content,
             'is_visible' => $isVisible,
         ]);

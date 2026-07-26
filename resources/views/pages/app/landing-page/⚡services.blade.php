@@ -45,7 +45,7 @@ new class extends Component
             $content['items']
         );
 
-        LandingPageSection::query()->where('key', 'services')->update([
+        LandingPageSection::query()->where('key', 'services')->firstOrFail()->update([
             'content' => $content,
             'is_visible' => $isVisible,
         ]);

@@ -53,7 +53,7 @@ new class extends Component
             return $item;
         }, $content['items']);
 
-        LandingPageSection::query()->where('key', 'case_studies')->update([
+        LandingPageSection::query()->where('key', 'case_studies')->firstOrFail()->update([
             'content' => $content,
             'is_visible' => $isVisible,
         ]);

@@ -51,6 +51,8 @@ new #[Title('Users')] class extends Component
 
         $user->syncRoles([$this->role]);
 
+        activity('users')->performedOn($user)->withProperties(['role' => $this->role])->log("{$user->name} was created with the {$this->role} role");
+
         Flux::toast(variant: 'success', text: "{$user->name} was created.");
 
         $this->reset('name', 'email', 'password', 'password_confirmation');
@@ -77,6 +79,8 @@ new #[Title('Users')] class extends Component
 
         $user->syncRoles([$role]);
 
+        activity('users')->performedOn($user)->withProperties(['role' => $role])->log("{$user->name}'s role was changed to {$role}");
+
         Flux::toast(variant: 'success', text: "{$user->name}'s role was updated.");
     }
 
@@ -89,6 +93,8 @@ new #[Title('Users')] class extends Component
 
             return;
         }
+
+        activity('users')->performedOn($user)->log("{$user->name} ({$user->email}) was deleted");
 
         $user->delete();
 

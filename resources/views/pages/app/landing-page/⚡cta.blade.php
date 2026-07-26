@@ -23,7 +23,7 @@ new class extends Component
         $content = $this->data;
         unset($content['is_visible']);
 
-        LandingPageSection::query()->where('key', 'cta')->update([
+        LandingPageSection::query()->where('key', 'cta')->firstOrFail()->update([
             'content' => $content,
             'is_visible' => $isVisible,
         ]);
