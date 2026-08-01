@@ -36,7 +36,7 @@ test('admin can change another user\'s role', function () {
         ->call('updateRole');
 
     expect($member->fresh()->hasRole('admin'))->toBeTrue();
-    expect($member->fresh()->hasRole('member'))->toBeFalse();
+    expect($member->fresh()->hasRole('staff'))->toBeFalse();
 });
 
 test('changing a role to one that does not exist is rejected', function () {
@@ -53,7 +53,7 @@ test('changing a role to one that does not exist is rejected', function () {
         ->call('updateRole')
         ->assertHasErrors(['editingRole']);
 
-    expect($member->fresh()->hasRole('member'))->toBeTrue();
+    expect($member->fresh()->hasRole('staff'))->toBeTrue();
     expect($member->fresh()->hasRole('superuser'))->toBeFalse();
 });
 
@@ -65,7 +65,7 @@ test('admin cannot remove their own admin role', function () {
 
     Livewire::test('pages::app.system.users')
         ->call('edit', $admin->id)
-        ->set('editingRole', 'member')
+        ->set('editingRole', 'staff')
         ->call('updateRole');
 
     expect($admin->fresh()->hasRole('admin'))->toBeTrue();
@@ -177,7 +177,7 @@ test('admin can create a new user with a chosen role', function () {
     $user = User::query()->where('email', 'jane@example.com')->firstOrFail();
 
     expect($user->hasRole('editor'))->toBeTrue();
-    expect($user->hasRole('member'))->toBeFalse();
+    expect($user->hasRole('staff'))->toBeFalse();
     expect($user->email_verified_at)->not->toBeNull();
 });
 
@@ -194,7 +194,7 @@ test('creating a user with an already taken email fails validation', function ()
         ->set('email', $existing->email)
         ->set('password', 'password')
         ->set('password_confirmation', 'password')
-        ->set('role', 'member')
+        ->set('role', 'staff')
         ->call('createUser')
         ->assertHasErrors(['email']);
 });
@@ -210,7 +210,7 @@ test('creating a user with a mismatched password confirmation fails validation',
         ->set('email', 'jane@example.com')
         ->set('password', 'password')
         ->set('password_confirmation', 'different')
-        ->set('role', 'member')
+        ->set('role', 'staff')
         ->call('createUser')
         ->assertHasErrors(['password']);
 });

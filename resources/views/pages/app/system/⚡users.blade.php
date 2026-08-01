@@ -26,11 +26,11 @@ new #[Title('Users')] class extends Component
 
     public string $password_confirmation = '';
 
-    public string $role = 'member';
+    public string $role = 'staff';
 
     public ?int $editingUserId = null;
 
-    public string $editingRole = 'member';
+    public string $editingRole = 'staff';
 
     public function updatingSearch(): void
     {
@@ -61,7 +61,7 @@ new #[Title('Users')] class extends Component
         Flux::toast(variant: 'success', text: "{$user->name} was created.");
 
         $this->reset('name', 'email', 'password', 'password_confirmation');
-        $this->role = 'member';
+        $this->role = 'staff';
 
         Flux::modal('create-user')->close();
     }
@@ -71,7 +71,7 @@ new #[Title('Users')] class extends Component
         $user = User::query()->with('roles')->findOrFail($userId);
 
         $this->editingUserId = $user->id;
-        $this->editingRole = $user->roles->first()?->name ?? 'member';
+        $this->editingRole = $user->roles->first()?->name ?? 'staff';
 
         Flux::modal('edit-user')->show();
     }
@@ -185,7 +185,7 @@ new #[Title('Users')] class extends Component
                         <flux:table.cell class="whitespace-nowrap">{{ $user->email }}</flux:table.cell>
                         <flux:table.cell>
                             <flux:badge size="sm" :color="$user->hasRole('super-admin') ? 'amber' : ($user->hasRole('admin') ? 'indigo' : 'zinc')">
-                                {{ Str::headline($user->roles->first()?->name ?? 'member') }}
+                                {{ Str::headline($user->roles->first()?->name ?? 'staff') }}
                             </flux:badge>
                         </flux:table.cell>
                         <flux:table.cell class="whitespace-nowrap">{{ $user->created_at->translatedFormat('l, j F Y') }}</flux:table.cell>

@@ -80,7 +80,7 @@ new #[Title('Access Control')] class extends Component
     {
         $role = Role::query()->findOrFail($roleId);
 
-        if (in_array($role->name, ['super-admin', 'admin', 'member'], true)) {
+        if (in_array($role->name, ['super-admin', 'admin', 'staff'], true)) {
             Flux::toast(variant: 'danger', text: "The \"{$role->name}\" role cannot be deleted.");
 
             return;
@@ -155,7 +155,7 @@ new #[Title('Access Control')] class extends Component
                                 <flux:button type="button" variant="outline" size="sm" icon="pencil" wire:click="editPermissions({{ $role->id }})" />
 
                                 <flux:modal.trigger name="delete-role-{{ $role->id }}">
-                                    <flux:button type="button" variant="danger" size="sm" icon="trash" :disabled="in_array($role->name, ['super-admin', 'admin', 'member'])" />
+                                    <flux:button type="button" variant="danger" size="sm" icon="trash" :disabled="in_array($role->name, ['super-admin', 'admin', 'staff'])" />
                                 </flux:modal.trigger>
                             </div>
 

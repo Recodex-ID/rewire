@@ -62,7 +62,7 @@ new #[Title('Documentation')] class extends Component
                     </div>
                     <flux:text>
                         Running <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">php artisan migrate --seed</code>
-                        creates two accounts, both with the password <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">password</code>:
+                        creates three accounts, all with the password <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">password</code>:
                     </flux:text>
                     <div class="overflow-hidden rounded-lg border border-zinc-200">
                         <table class="w-full text-sm">
@@ -74,12 +74,16 @@ new #[Title('Documentation')] class extends Component
                             </thead>
                             <tbody class="divide-y divide-zinc-200">
                                 <tr>
+                                    <td class="px-4 py-2 font-mono">super-admin@mail.test</td>
+                                    <td class="px-4 py-2"><flux:badge size="sm" color="amber">super-admin</flux:badge></td>
+                                </tr>
+                                <tr>
                                     <td class="px-4 py-2 font-mono">admin@mail.test</td>
                                     <td class="px-4 py-2"><flux:badge size="sm">admin</flux:badge></td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-2 font-mono">member@mail.test</td>
-                                    <td class="px-4 py-2"><flux:badge size="sm" color="zinc">member</flux:badge></td>
+                                    <td class="px-4 py-2 font-mono">staff@mail.test</td>
+                                    <td class="px-4 py-2"><flux:badge size="sm" color="zinc">staff</flux:badge></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -87,9 +91,16 @@ new #[Title('Documentation')] class extends Component
                     <flux:text>
                         The public landing page lives at <flux:link :href="route('home')">/</flux:link>, the blog at
                         <flux:link :href="route('blogs')">/blog</flux:link>, and this dashboard at
-                        <flux:link :href="route('dashboard')">/dashboard</flux:link>. Any signed-in, verified user sees the
-                        "Content Management" section in the sidebar (Blog); signing in as an admin additionally unlocks the
-                        "Admin" section (Users, Activity log, Sitemap, Settings).
+                        <flux:link :href="route('dashboard')">/dashboard</flux:link>. Every signed-in, verified user sees the
+                        "Content Management" section in the sidebar (Blog); admin and super-admin additionally unlock the
+                        "System" section (Users, Sitemap, Settings); super-admin alone also gets a "Super Admin" section
+                        (Access Control, Activity log). The dashboard itself is a thin shell
+                        (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/app/⚡dashboard.blade.php</code>) that dispatches
+                        to one of three self-contained Livewire components under
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/livewire/dashboard/</code> based on the
+                        signed-in user's role (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">⚡super-admin</code>,
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">⚡admin</code>,
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">⚡staff</code>).
                     </flux:text>
                 </flux:card>
             </section>
@@ -104,7 +115,9 @@ new #[Title('Documentation')] class extends Component
                         Auth runs on <flux:link href="https://laravel.com/docs/fortify" target="_blank">Laravel Fortify</flux:link>: login,
                         registration, password reset, and email verification are all wired up under
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">app/Actions/Fortify</code> and
-                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">app/Providers/FortifyServiceProvider.php</code>.
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">app/Providers/FortifyServiceProvider.php</code>, which also
+                        binds a custom <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">LogoutResponse</code> so logging out lands
+                        back on the login page instead of Fortify's default (the marketing home page).
                     </flux:text>
                     <flux:callout variant="secondary">
                         <flux:callout.heading icon="information-circle">Two-factor auth &amp; passkeys were removed by default</flux:callout.heading>
@@ -126,20 +139,32 @@ new #[Title('Documentation')] class extends Component
                     </div>
                     <flux:text>
                         Built on <flux:link href="https://spatie.be/docs/laravel-permission" target="_blank">spatie/laravel-permission</flux:link>.
-                        Every new user is assigned the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">member</code> role
+                        Every new user is assigned the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">staff</code> role
                         automatically (see <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\User::booted()</code>).
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">super-admin</code> and
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">admin</code> are seeded separately and never
+                        auto-assigned.
                     </flux:text>
                     <flux:callout variant="secondary">
-                        <flux:callout.heading icon="information-circle">No permissions table yet</flux:callout.heading>
+                        <flux:callout.heading icon="information-circle">Roles and permissions are managed at runtime</flux:callout.heading>
                         <flux:callout.text>
-                            There is no separate <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">permissions</code> table in
-                            use yet — start with roles, add granular permissions only once a project actually needs them.
+                            Super admins can create roles and permissions and assign permissions to roles from
+                            <flux:link :href="route('super-admin.access-control')">/super-admin/access-control</flux:link> — no
+                            migration needed to add a new role. The <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">super-admin</code>,
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">admin</code>, and
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">staff</code> roles are protected from deletion there.
                         </flux:callout.text>
                     </flux:callout>
                     <flux:text>
-                        Gate a route to admins with the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:admin</code>
-                        middleware (alias registered in <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">bootstrap/app.php</code>),
-                        as <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/app.php</code> already does.
+                        Gate a route to a role with the <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:</code>
+                        middleware (alias registered in <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">bootstrap/app.php</code>).
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/app.php</code> uses
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:super-admin|admin</code> for the System section, and
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/super-admin.php</code> uses
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:super-admin</code> for Access Control and the
+                        activity log. Regular admins can't see or edit super-admin accounts from
+                        <flux:link :href="route('system.users')">/system/users</flux:link> — those rows are filtered out of the
+                        query entirely, not just hidden in the UI.
                     </flux:text>
                 </flux:card>
             </section>

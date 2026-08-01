@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     protected static function booted(): void
     {
-        static::created(fn (User $user) => $user->assignRole(Role::findOrCreate('member')));
+        static::created(fn (User $user) => $user->assignRole(Role::findOrCreate('staff')));
     }
 
     /**
