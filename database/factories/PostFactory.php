@@ -26,7 +26,6 @@ class PostFactory extends Factory
             'slug' => Str::slug($title).'-'.fake()->unique()->numberBetween(1000, 9999),
             'excerpt' => fake()->sentence(20),
             'body' => fake()->paragraphs(5, true),
-            'featured_image' => null,
             'is_published' => true,
         ];
     }

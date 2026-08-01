@@ -183,6 +183,19 @@ new #[Title('Documentation')] class extends Component
                         generates it from the title on create and never silently regenerates it on update, so published URLs stay stable.
                     </flux:text>
                     <flux:text>
+                        The featured image is handled by
+                        <flux:link href="https://github.com/spatie/laravel-medialibrary" target="_blank">spatie/laravel-medialibrary</flux:link>
+                        instead of a plain file path column: <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">Post</code> implements
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">HasMedia</code> with a single-file
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">featured_image</code> collection, so uploading a replacement
+                        automatically removes the old file. Three queued conversions (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">thumb</code>,
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">card</code>, <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">hero</code>)
+                        are generated so the admin list, public blog cards, and the blog detail hero each load an appropriately
+                        sized image instead of the original upload. The upload widget itself
+                        (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">x-media-upload</code>) is a generic Blade component, ready to reuse
+                        on any other model that implements <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">HasMedia</code>.
+                    </flux:text>
+                    <flux:text>
                         Any signed-in, verified user manages posts from <flux:link :href="route('content-management.blogs')">/content-management/blogs</flux:link>
                         (not admin-gated — see <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/app.php</code>) — one Livewire
                         component (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/app/content-management/⚡blogs.blade.php</code>)
@@ -264,6 +277,10 @@ new #[Title('Documentation')] class extends Component
                         <div class="space-y-1.5">
                             <flux:text size="sm" class="text-zinc-500">Roles</flux:text>
                             <div><flux:badge color="emerald">Spatie Permission</flux:badge></div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <flux:text size="sm" class="text-zinc-500">Media</flux:text>
+                            <div><flux:badge color="violet">Spatie Media Library</flux:badge></div>
                         </div>
                     </div>
                 </flux:card>

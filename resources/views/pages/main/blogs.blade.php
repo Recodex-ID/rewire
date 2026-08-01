@@ -24,9 +24,9 @@
                             href="{{ route('blog.detail', $post->slug) }}"
                             class="landing-reveal landing-card-hover landing-reveal-delay-{{ min($loop->iteration, 4) }} flex flex-col overflow-hidden rounded-3xl border border-brand-navy/10 bg-brand-snow"
                         >
-                            @if ($post->featured_image)
+                            @if ($post->getFirstMediaUrl('featured_image', 'card'))
                                 <img
-                                    src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image) }}"
+                                    src="{{ $post->getFirstMediaUrl('featured_image', 'card') }}"
                                     alt="{{ $post->title }}"
                                     class="h-48 w-full object-cover"
                                 >

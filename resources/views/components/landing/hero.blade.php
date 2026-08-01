@@ -1,6 +1,6 @@
 @php
     $stats = [
-        ['value' => '11', 'suffix' => '', 'label' => 'Packages included'],
+        ['value' => '12', 'suffix' => '', 'label' => 'Packages included'],
         ['value' => '3', 'suffix' => '', 'label' => 'Roles built in'],
         ['value' => '8', 'suffix' => '', 'label' => 'Landing page sections'],
     ];

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
@@ -12,11 +13,10 @@ use Spatie\Activitylog\Support\LogOptions;
  * @property string $key
  * @property string|null $value
  */
+#[Fillable(['key', 'value'])]
 class Setting extends Model
 {
     use LogsActivity;
-
-    protected $fillable = ['key', 'value'];
 
     public static function get(string $key, ?string $default = null): ?string
     {

@@ -15,9 +15,9 @@
                 <span>{{ $post->created_at->translatedFormat('l, j F Y') }}</span>
             </div>
 
-            @if ($post->featured_image)
+            @if ($post->getFirstMediaUrl('featured_image', 'hero'))
                 <img
-                    src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image) }}"
+                    src="{{ $post->getFirstMediaUrl('featured_image', 'hero') }}"
                     alt="{{ $post->title }}"
                     class="landing-reveal mt-10 w-full rounded-3xl object-cover"
                 >

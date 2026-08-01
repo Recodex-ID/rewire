@@ -12,13 +12,14 @@ A reusable Laravel starter kit for internal and client projects — authenticati
 | Frontend | Livewire 4 + Flux UI |
 | Styling | Tailwind CSS v4 |
 | Roles | Spatie Permission |
+| Media | Spatie Media Library |
 | Quality | Pest 4, Pint, Larastan |
 
 ## Features
 
 - **Authentication** — login, registration, password reset out of the box; logging out always lands back on the login page.
 - **Roles & permissions** — every new user gets `staff` automatically; `admin` and `super-admin` unlock more of the back office. Roles and permissions are managed at runtime from a Super Admin-only Access Control page, no migration required to add a role.
-- **Blog** — the one piece of public content that's editable without a redeploy: title, excerpt, body, featured image, publish toggle, auto-generated slugs that never change on edit.
+- **Blog** — the one piece of public content that's editable without a redeploy: title, excerpt, body, featured image, publish toggle, auto-generated slugs that never change on edit. The featured image runs on Spatie Media Library, with `thumb`/`card`/`hero` conversions generated automatically and a reusable `<x-media-upload>` component ready for other models.
 - **System panel** (`admin`/`super-admin`) — user management (list, create, change role, delete), a sitemap viewer, and site settings (SEO description, Google Analytics, social links, contact info). Super admins alone additionally get Access Control and the audit trail of admin actions.
 - **Per-role dashboard** — a thin dashboard shell dispatches to a self-contained Livewire component per role (super-admin, admin, staff), each showing the stats relevant to that role.
 - **Branded system pages** — error pages (404, 500, ...) and transactional emails match the app's look, not the framework defaults.

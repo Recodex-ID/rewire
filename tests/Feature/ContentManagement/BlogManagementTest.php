@@ -2,6 +2,8 @@
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
@@ -105,6 +107,89 @@ test('updating a post\'s title does not change its existing slug', function () {
     $post->update(['title' => 'A Completely Different Title']);
 
     expect($post->fresh()->slug)->toBe('original-title');
+});
+
+test('uploading a featured image creates media with thumb, card, and hero conversions', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::app.content-management.blogs')
+        ->call('create')
+        ->set('title', 'Post with image')
+        ->set('body', 'Body.')
+        ->set('featuredImageUpload', UploadedFile::fake()->image('photo.jpg', 1200, 800))
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $post = Post::query()->where('title', 'Post with image')->firstOrFail();
+
+    expect($post->getFirstMedia('featured_image'))->not->toBeNull();
+    expect($post->getFirstMediaUrl('featured_image', 'thumb'))->not->toBe('');
+    expect($post->getFirstMediaUrl('featured_image', 'card'))->not->toBe('');
+    expect($post->getFirstMediaUrl('featured_image', 'hero'))->not->toBe('');
+});
+
+test('uploading a new featured image replaces the old one', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    $post = Post::factory()->create();
+    $post->addMedia(UploadedFile::fake()->image('first.jpg'))->toMediaCollection('featured_image');
+    $firstMediaId = $post->getFirstMedia('featured_image')->id;
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::app.content-management.blogs')
+        ->call('edit', $post->id)
+        ->set('featuredImageUpload', UploadedFile::fake()->image('second.jpg'))
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $post->refresh();
+
+    expect($post->getMedia('featured_image'))->toHaveCount(1);
+    expect($post->getFirstMedia('featured_image')->id)->not->toBe($firstMediaId);
+});
+
+test('removing a featured image clears the media collection', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    $post = Post::factory()->create();
+    $post->addMedia(UploadedFile::fake()->image('photo.jpg'))->toMediaCollection('featured_image');
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::app.content-management.blogs')
+        ->call('edit', $post->id)
+        ->call('removeFeaturedImage');
+
+    expect($post->fresh()->getFirstMedia('featured_image'))->toBeNull();
+});
+
+test('deleting a post also deletes its featured image media', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    $post = Post::factory()->create();
+    $post->addMedia(UploadedFile::fake()->image('photo.jpg'))->toMediaCollection('featured_image');
+    $mediaId = $post->getFirstMedia('featured_image')->id;
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::app.content-management.blogs')->call('delete', $post->id);
+
+    $this->assertDatabaseMissing('media', ['id' => $mediaId]);
 });
 
 test('editing a post logs activity', function () {

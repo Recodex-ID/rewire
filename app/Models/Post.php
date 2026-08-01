@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -20,17 +25,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string|null $excerpt
  * @property string $body
- * @property string|null $featured_image
  * @property bool $is_published
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-class Post extends Model
+#[Fillable(['author_id', 'title', 'slug', 'excerpt', 'body', 'is_published'])]
+class Post extends Model implements HasMedia
 {
     /** @use HasFactory<PostFactory> */
-    use HasFactory, HasSlug, LogsActivity;
-
-    protected $fillable = ['author_id', 'title', 'slug', 'excerpt', 'body', 'featured_image', 'is_published'];
+    use HasFactory, HasSlug, InteractsWithMedia, LogsActivity;
 
     /**
      * @return array<string, string>
@@ -57,6 +60,20 @@ class Post extends Model
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('is_published', true);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('featured_image')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit(Fit::Crop, 160, 100);
+        $this->addMediaConversion('card')->fit(Fit::Crop, 800, 400);
+        $this->addMediaConversion('hero')->fit(Fit::Max, 1600, 1600);
     }
 
     public function getSlugOptions(): SlugOptions

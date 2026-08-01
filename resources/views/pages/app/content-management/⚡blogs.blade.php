@@ -3,7 +3,6 @@
 use App\Models\Post;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -56,10 +55,7 @@ new #[Title('Blog')] class extends Component
 
     public function removeFeaturedImage(): void
     {
-        if ($this->editingPost?->featured_image) {
-            Storage::disk('public')->delete($this->editingPost->featured_image);
-            $this->editingPost->update(['featured_image' => null]);
-        }
+        $this->editingPost?->clearMediaCollection('featured_image');
     }
 
     public function save(): void
@@ -78,20 +74,17 @@ new #[Title('Blog')] class extends Component
             'is_published' => $this->isPublished,
         ];
 
-        if ($this->featuredImageUpload) {
-            if ($this->editingPost?->featured_image) {
-                Storage::disk('public')->delete($this->editingPost->featured_image);
-            }
-
-            $data['featured_image'] = $this->featuredImageUpload->store('blog', 'public');
-        }
-
         if ($this->editingPost === null) {
             $data['author_id'] = Auth::id();
 
-            Post::create($data);
+            $post = Post::create($data);
         } else {
-            $this->editingPost->update($data);
+            $post = $this->editingPost;
+            $post->update($data);
+        }
+
+        if ($this->featuredImageUpload) {
+            $post->addMedia($this->featuredImageUpload)->toMediaCollection('featured_image');
         }
 
         Flux::toast(variant: 'success', text: 'Post saved.');
@@ -109,10 +102,6 @@ new #[Title('Blog')] class extends Component
     public function delete(int $postId): void
     {
         $post = Post::query()->findOrFail($postId);
-
-        if ($post->featured_image) {
-            Storage::disk('public')->delete($post->featured_image);
-        }
 
         $title = $post->title;
 
@@ -159,8 +148,8 @@ new #[Title('Blog')] class extends Component
                 @foreach ($this->posts as $post)
                     <flux:table.row :key="$post->id">
                         <flux:table.cell class="py-2">
-                            @if ($post->featured_image)
-                                <img src="{{ Storage::disk('public')->url($post->featured_image) }}" alt="" class="h-10 w-16 rounded-lg object-cover">
+                            @if ($post->getFirstMediaUrl('featured_image', 'thumb'))
+                                <img src="{{ $post->getFirstMediaUrl('featured_image', 'thumb') }}" alt="" class="h-10 w-16 rounded-lg object-cover">
                             @else
                                 <div class="flex h-10 w-16 items-center justify-center rounded-lg bg-zinc-100 text-zinc-400">
                                     <flux:icon icon="photo" variant="micro" />
@@ -221,19 +210,13 @@ new #[Title('Blog')] class extends Component
 
             <flux:textarea wire:model="body" label="Body" rows="10" />
 
-            <div class="space-y-3">
-                <flux:heading size="sm">Featured image</flux:heading>
-                @if ($editingPost?->featured_image)
-                    <div class="flex items-center gap-4">
-                        <img src="{{ Storage::disk('public')->url($editingPost->featured_image) }}" class="h-20 w-32 rounded-lg object-cover" alt="">
-                        <flux:button type="button" variant="danger" size="sm" wire:click="removeFeaturedImage">Remove</flux:button>
-                    </div>
-                @endif
-                <flux:input type="file" wire:model="featuredImageUpload" label="{{ $editingPost?->featured_image ? 'Replace image' : 'Upload image' }}" accept="image/*" />
-                @if ($featuredImageUpload)
-                    <img src="{{ $featuredImageUpload->temporaryUrl() }}" class="h-20 w-32 rounded-lg object-cover" alt="">
-                @endif
-            </div>
+            <x-media-upload
+                wire:model="featuredImageUpload"
+                label="Featured image"
+                :current-url="$editingPost?->getFirstMediaUrl('featured_image')"
+                :new-upload="$featuredImageUpload"
+                remove-action="removeFeaturedImage"
+            />
 
             <flux:switch wire:model="isPublished" label="Published" />
 
