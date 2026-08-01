@@ -145,6 +145,8 @@ new #[Title('Users')] class extends Component
             ->when($this->search, fn ($query) => $query
                 ->where('name', 'like', "%{$this->search}%")
                 ->orWhere('email', 'like', "%{$this->search}%"))
+            ->when(! Auth::user()->hasRole('super-admin'), fn ($query) => $query
+                ->whereDoesntHave('roles', fn ($query) => $query->where('name', 'super-admin')))
             ->with('roles')
             ->orderBy('name')
             ->paginate(10);

@@ -71,6 +71,32 @@ test('admin cannot remove their own admin role', function () {
     expect($admin->fresh()->hasRole('admin'))->toBeTrue();
 });
 
+test('admin does not see super admin accounts in the users list', function () {
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    $superAdmin = User::factory()->create(['name' => 'Secret Admin']);
+    $superAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
+    $this->actingAs($admin)
+        ->get(route('system.users'))
+        ->assertOk()
+        ->assertDontSee('Secret Admin');
+});
+
+test('super admin sees super admin accounts in the users list', function () {
+    $actingSuperAdmin = User::factory()->create();
+    $actingSuperAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
+    $superAdmin = User::factory()->create(['name' => 'Secret Admin']);
+    $superAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
+    $this->actingAs($actingSuperAdmin)
+        ->get(route('system.users'))
+        ->assertOk()
+        ->assertSee('Secret Admin');
+});
+
 test('admin cannot change a super admin\'s role', function () {
     $admin = User::factory()->create();
     $admin->syncRoles(Role::findOrCreate('admin'));
