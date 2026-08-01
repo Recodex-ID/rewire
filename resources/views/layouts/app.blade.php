@@ -58,9 +58,6 @@
             @role('super-admin')
                 <flux:sidebar.nav>
                     <flux:sidebar.group heading="Super Admin" class="grid">
-                        <flux:sidebar.item icon="home" :href="route('super-admin.dashboard')" :current="request()->routeIs('super-admin.dashboard')" wire:navigate>
-                            Dashboard
-                        </flux:sidebar.item>
                         <flux:sidebar.item icon="key" :href="route('super-admin.access-control')" :current="request()->routeIs('super-admin.access-control')" wire:navigate>
                             Access Control
                         </flux:sidebar.item>

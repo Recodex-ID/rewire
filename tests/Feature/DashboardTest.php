@@ -25,15 +25,25 @@ test('non-admins do not see the audit log stat or admin activity feed', function
     $response->assertDontSee('Audit log entries');
 });
 
-test('admins see the audit log stat and real activity log entries', function () {
+test('admins do not see the audit log stat or admin activity feed', function () {
     $admin = User::factory()->create();
     $admin->assignRole(Role::findOrCreate('admin'));
     $this->actingAs($admin);
 
-    activity('users')->performedOn($admin)->log("{$admin->name} was created with the admin role");
+    $response = $this->get(route('dashboard'));
+    $response->assertOk();
+    $response->assertDontSee('Audit log entries');
+});
+
+test('super admins see the audit log stat and real activity log entries', function () {
+    $superAdmin = User::factory()->create();
+    $superAdmin->assignRole(Role::findOrCreate('super-admin'));
+    $this->actingAs($superAdmin);
+
+    activity('users')->performedOn($superAdmin)->log("{$superAdmin->name} was created with the super-admin role");
 
     $response = $this->get(route('dashboard'));
     $response->assertOk();
     $response->assertSee('Audit log entries');
-    $response->assertSee("{$admin->name} was created with the admin role");
+    $response->assertSee("{$superAdmin->name} was created with the super-admin role");
 });

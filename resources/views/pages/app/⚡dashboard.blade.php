@@ -31,7 +31,7 @@ new #[Title('Dashboard')] class extends Component
 
     public function mount(): void
     {
-        $this->isAdmin = Auth::user()->hasRole('admin');
+        $this->isAdmin = Auth::user()->hasRole('super-admin');
 
         $this->totalUsers = User::query()->count();
         $this->totalAdmins = User::query()->whereHas('roles', fn ($query) => $query->where('name', 'admin'))->count();
@@ -55,7 +55,7 @@ new #[Title('Dashboard')] class extends Component
             ->all();
 
         if ($this->isAdmin) {
-            // Admins get the real audit trail (same data as /admin/activity) instead of the lightweight feed below.
+            // Super admins get the real audit trail (same data as /super-admin/activity) instead of the lightweight feed below.
             $this->activity = Activity::query()
                 ->with('causer')
                 ->latest()
@@ -212,7 +212,7 @@ new #[Title('Dashboard')] class extends Component
             </div>
 
             @if ($isAdmin)
-                <flux:button as="a" :href="route('admin.activity')" wire:navigate variant="ghost" size="sm">
+                <flux:button as="a" :href="route('super-admin.activity')" wire:navigate variant="ghost" size="sm">
                     View all
                 </flux:button>
             @endif

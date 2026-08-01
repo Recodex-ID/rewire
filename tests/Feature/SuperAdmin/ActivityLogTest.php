@@ -8,14 +8,21 @@ use Spatie\Permission\Models\Role;
 test('non-admin cannot access the activity log page', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('admin.activity'))->assertForbidden();
+    $this->actingAs($user)->get(route('super-admin.activity'))->assertForbidden();
 });
 
-test('admin can view the activity log page', function () {
+test('regular admin cannot access the activity log page', function () {
     $admin = User::factory()->create();
     $admin->syncRoles(Role::findOrCreate('admin'));
 
-    $this->actingAs($admin)->get(route('admin.activity'))->assertOk();
+    $this->actingAs($admin)->get(route('super-admin.activity'))->assertForbidden();
+});
+
+test('super admin can view the activity log page', function () {
+    $superAdmin = User::factory()->create();
+    $superAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
+    $this->actingAs($superAdmin)->get(route('super-admin.activity'))->assertOk();
 });
 
 test('creating a user logs activity with the acting admin as causer', function () {
