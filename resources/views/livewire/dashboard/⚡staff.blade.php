@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -11,56 +10,34 @@ new class extends Component
 
     public int $myTotalPosts = 0;
 
-    /** @var array<int, array{label: string, count: int}> */
-    public array $registrationsPerDay = [];
+    public int $totalPublishedPosts = 0;
 
-    /** @var array<int, array{type: string, icon: string, title: string, subtitle: string, at: string}> */
+    /** @var array<int, array{icon: string, title: string, subtitle: string, at: string}> */
     public array $activity = [];
 
     public function mount(): void
     {
         $this->myTotalPosts = Post::query()->where('author_id', Auth::id())->count();
         $this->myPublishedPosts = Post::query()->where('author_id', Auth::id())->published()->count();
+        $this->totalPublishedPosts = Post::query()->published()->count();
 
-        $this->registrationsPerDay = collect(range(6, 0))
-            ->map(function (int $daysAgo) {
-                $date = now()->subDays($daysAgo);
-
-                return [
-                    'label' => $date->format('D'),
-                    'count' => User::query()->whereDate('created_at', $date->toDateString())->count(),
-                ];
-            })
-            ->all();
-
-        $recentUsers = User::query()->latest()->take(5)->get()->map(fn (User $user) => [
-            'type' => 'user',
-            'icon' => 'user-plus',
-            'title' => 'New user registered',
-            'subtitle' => $user->name,
-            'at' => $user->created_at,
-        ]);
-
-        $recentPosts = Post::query()->latest('updated_at')->take(5)->get()->map(fn (Post $post) => [
-            'type' => 'post',
-            'icon' => 'newspaper',
-            'title' => 'Blog post updated',
-            'subtitle' => $post->title,
-            'at' => $post->updated_at,
-        ]);
-
-        $this->activity = $recentUsers->concat($recentPosts)
-            ->sortByDesc('at')
+        $this->activity = Post::query()
+            ->latest('updated_at')
             ->take(6)
-            ->map(fn (array $item) => [...$item, 'at' => $item['at']->diffForHumans()])
-            ->values()
+            ->get()
+            ->map(fn (Post $post) => [
+                'icon' => 'newspaper',
+                'title' => 'Blog post updated',
+                'subtitle' => $post->title,
+                'at' => $post->updated_at->diffForHumans(),
+            ])
             ->all();
     }
 };
 ?>
 
 <div class="space-y-6">
-    <div class="grid grid-cols-1">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <flux:card class="space-y-4">
             <div class="flex size-11 items-center justify-center rounded-xl bg-violet-500/10">
                 <flux:icon icon="pencil-square" class="text-violet-600" />
@@ -70,51 +47,39 @@ new class extends Component
                 <div class="mt-1 text-sm text-zinc-500">Your posts published</div>
             </div>
         </flux:card>
-    </div>
-
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <flux:card class="lg:col-span-2">
-            <flux:heading size="lg" class="font-display!">Registrations, last 7 days</flux:heading>
-            <flux:subheading>New user sign-ups per day</flux:subheading>
-
-            <div class="mt-8 flex h-40 items-end gap-3">
-                @php $max = max(1, collect($registrationsPerDay)->max('count')); @endphp
-                @foreach ($registrationsPerDay as $day)
-                    <div class="flex flex-1 flex-col items-center gap-2">
-                        <div class="flex h-32 w-full items-end">
-                            <div
-                                class="w-full rounded-t bg-brand-navy/20 {{ $day['count'] > 0 ? 'bg-brand-accent-dark!' : '' }}"
-                                style="height: {{ max(4, ($day['count'] / $max) * 100) }}%"
-                            ></div>
-                        </div>
-                        <div class="font-mono text-[10px] text-zinc-400 uppercase">{{ $day['label'] }}</div>
-                    </div>
-                @endforeach
-            </div>
-        </flux:card>
 
         <flux:card class="space-y-4">
-            <flux:heading size="lg" class="font-display!">Quick links</flux:heading>
-
-            <div class="space-y-2">
-                <flux:button as="a" :href="route('other.docs')" wire:navigate variant="outline" icon="book-open-text" class="w-full justify-start">
-                    Documentation
-                </flux:button>
-                <flux:button as="a" :href="route('content-management.blogs')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
-                    Manage blog
-                </flux:button>
-                <flux:button as="a" :href="route('profile.edit')" wire:navigate variant="outline" icon="cog" class="w-full justify-start">
-                    Account settings
-                </flux:button>
+            <div class="flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
+                <flux:icon icon="newspaper" class="text-emerald-600" />
+            </div>
+            <div>
+                <div class="font-display text-3xl font-bold tracking-tight">{{ $totalPublishedPosts }}</div>
+                <div class="mt-1 text-sm text-zinc-500">Blog posts published (all authors)</div>
             </div>
         </flux:card>
     </div>
+
+    <flux:card class="space-y-4">
+        <flux:heading size="lg" class="font-display!">Quick links</flux:heading>
+
+        <div class="space-y-2">
+            <flux:button as="a" :href="route('content-management.blogs')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
+                Manage blog
+            </flux:button>
+            <flux:button as="a" :href="route('other.docs')" wire:navigate variant="outline" icon="book-open-text" class="w-full justify-start">
+                Documentation
+            </flux:button>
+            <flux:button as="a" :href="route('profile.edit')" wire:navigate variant="outline" icon="cog" class="w-full justify-start">
+                Account settings
+            </flux:button>
+        </div>
+    </flux:card>
 
     <flux:card>
         <div class="flex items-start justify-between gap-4">
             <div>
-                <flux:heading size="lg" class="font-display!">Recent activity</flux:heading>
-                <flux:subheading>Latest sign-ups and blog updates.</flux:subheading>
+                <flux:heading size="lg" class="font-display!">Recent blog activity</flux:heading>
+                <flux:subheading>Latest posts created or updated.</flux:subheading>
             </div>
         </div>
 
