@@ -10,4 +10,5 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/sitemap.xml', 'sitemap')->name('sitemap');
 });
 
+require __DIR__.'/super-admin.php';
 require __DIR__.'/app.php';

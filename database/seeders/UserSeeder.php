@@ -17,6 +17,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $superAdmin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'super-admin@mail.test',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+        $superAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
         $admin = User::create([
             'name' => 'Admin',
             'email' => 'admin@mail.test',

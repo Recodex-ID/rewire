@@ -42,7 +42,7 @@ new #[Title('Users')] class extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => $this->passwordRules(),
-            'role' => ['required', 'string', Rule::in(Role::query()->pluck('name'))],
+            'role' => ['required', 'string', Rule::in($this->roles)],
         ]);
 
         $user = User::create([
@@ -78,7 +78,7 @@ new #[Title('Users')] class extends Component
     public function updateRole(): void
     {
         $this->validate([
-            'editingRole' => ['required', 'string', Rule::in(Role::query()->pluck('name'))],
+            'editingRole' => ['required', 'string', Rule::in($this->roles)],
         ]);
 
         $user = User::query()->findOrFail($this->editingUserId);
@@ -121,7 +121,9 @@ new #[Title('Users')] class extends Component
     #[Computed]
     public function roles()
     {
-        return Role::query()->pluck('name');
+        return Role::query()
+            ->when(! Auth::user()->hasRole('super-admin'), fn ($query) => $query->where('name', '!=', 'super-admin'))
+            ->pluck('name');
     }
 
     #[Computed]

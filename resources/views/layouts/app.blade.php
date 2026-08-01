@@ -4,10 +4,7 @@
         @include('partials.head')
     </head>
     <body class="min-h-screen bg-zinc-50">
-        {{-- The `dark` class here locks the sidebar to its dark styling regardless of the app-wide
-             light/dark toggle -- it's always a navy surface, so its Flux components (item text,
-             hover states, brand name, profile card) need to always use their dark-mode colors too,
-             otherwise they render as if on a light background and become unreadable. --}}
+
         <flux:sidebar sticky collapsible="mobile" class="dark border-e border-brand-navy/50 bg-brand-navy">
             <flux:sidebar.header>
                 <a href="{{ route('dashboard') }}" wire:navigate class="flex min-w-0 flex-1 items-center gap-3 px-2 py-1">
@@ -33,12 +30,9 @@
                 </flux:sidebar.group>
 
                 @role('admin')
-                    <flux:sidebar.group heading="Admin" class="grid">
+                    <flux:sidebar.group heading="System" class="grid">
                         <flux:sidebar.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>
                             Users
-                        </flux:sidebar.item>
-                        <flux:sidebar.item icon="clock" :href="route('admin.activity')" :current="request()->routeIs('admin.activity')" wire:navigate>
-                            Activity log
                         </flux:sidebar.item>
                         <flux:sidebar.item icon="map" :href="route('admin.sitemap')" :current="request()->routeIs('admin.sitemap')" wire:navigate>
                             Sitemap
@@ -48,19 +42,34 @@
                         </flux:sidebar.item>
                     </flux:sidebar.group>
                 @endrole
+
+                <flux:sidebar.group heading="Other" class="grid">
+                    <flux:sidebar.item icon="folder-git-2" href="https://github.com/Recodex-ID/rewire" target="_blank">
+                        Repository
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="book-open-text" :href="route('other.docs')" :current="request()->routeIs('other.docs')" wire:navigate>
+                        Documentation
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />
 
-            <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/Recodex-ID/rewire" target="_blank">
-                    Repository
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" :href="route('docs')" :current="request()->routeIs('docs')" wire:navigate>
-                    Documentation
-                </flux:sidebar.item>
-            </flux:sidebar.nav>
+            @role('super-admin')
+                <flux:sidebar.nav>
+                    <flux:sidebar.group heading="Super Admin" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('super-admin.dashboard')" :current="request()->routeIs('super-admin.dashboard')" wire:navigate>
+                            Dashboard
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="key" :href="route('super-admin.access-control')" :current="request()->routeIs('super-admin.access-control')" wire:navigate>
+                            Access Control
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="clock" :href="route('super-admin.activity')" :current="request()->routeIs('super-admin.activity')" wire:navigate>
+                            Activity log
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                </flux:sidebar.nav>
+            @endrole
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
