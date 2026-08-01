@@ -60,7 +60,7 @@ new class extends Component
 ?>
 
 <div class="space-y-6">
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <div class="grid grid-cols-1">
         <flux:card class="space-y-4">
             <div class="flex size-11 items-center justify-center rounded-xl bg-violet-500/10">
                 <flux:icon icon="pencil-square" class="text-violet-600" />

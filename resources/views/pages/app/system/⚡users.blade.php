@@ -89,6 +89,12 @@ new #[Title('Users')] class extends Component
             return;
         }
 
+        if ($user->hasRole('super-admin') && ! Auth::user()->hasRole('super-admin')) {
+            Flux::toast(variant: 'danger', text: "You cannot change a super admin's role.");
+
+            return;
+        }
+
         $user->syncRoles([$this->editingRole]);
 
         activity('users')->performedOn($user)->withProperties(['role' => $this->editingRole])->log("{$user->name}'s role was changed to {$this->editingRole}");
@@ -175,14 +181,21 @@ new #[Title('Users')] class extends Component
                         <flux:table.cell variant="strong">{{ $user->name }}</flux:table.cell>
                         <flux:table.cell class="whitespace-nowrap">{{ $user->email }}</flux:table.cell>
                         <flux:table.cell>
-                            <flux:badge size="sm" :color="$user->hasRole('admin') ? 'indigo' : 'zinc'">
+                            <flux:badge size="sm" :color="$user->hasRole('super-admin') ? 'amber' : ($user->hasRole('admin') ? 'indigo' : 'zinc')">
                                 {{ ucfirst($user->roles->first()?->name ?? 'member') }}
                             </flux:badge>
                         </flux:table.cell>
                         <flux:table.cell class="whitespace-nowrap">{{ $user->created_at->translatedFormat('l, j F Y') }}</flux:table.cell>
                         <flux:table.cell class="py-0">
                             <div class="flex items-center gap-1">
-                                <flux:button type="button" variant="outline" size="sm" icon="pencil" wire:click="edit({{ $user->id }})" />
+                                <flux:button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    icon="pencil"
+                                    wire:click="edit({{ $user->id }})"
+                                    :disabled="$user->hasRole('super-admin') && ! Auth::user()->hasRole('super-admin')"
+                                />
 
                                 <flux:modal.trigger name="delete-user-{{ $user->id }}">
                                     <flux:button type="button" variant="danger" size="sm" icon="trash" :disabled="$user->is(Auth::user())" />

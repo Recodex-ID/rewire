@@ -71,6 +71,41 @@ test('admin cannot remove their own admin role', function () {
     expect($admin->fresh()->hasRole('admin'))->toBeTrue();
 });
 
+test('admin cannot change a super admin\'s role', function () {
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    $superAdmin = User::factory()->create();
+    $superAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::app.system.users')
+        ->call('edit', $superAdmin->id)
+        ->set('editingRole', 'admin')
+        ->call('updateRole');
+
+    expect($superAdmin->fresh()->hasRole('super-admin'))->toBeTrue();
+});
+
+test('super admin can change another super admin\'s role', function () {
+    $actingSuperAdmin = User::factory()->create();
+    $actingSuperAdmin->syncRoles(Role::findOrCreate('super-admin'));
+
+    $superAdmin = User::factory()->create();
+    $superAdmin->syncRoles(Role::findOrCreate('super-admin'));
+    Role::findOrCreate('admin');
+
+    $this->actingAs($actingSuperAdmin);
+
+    Livewire::test('pages::app.system.users')
+        ->call('edit', $superAdmin->id)
+        ->set('editingRole', 'admin')
+        ->call('updateRole');
+
+    expect($superAdmin->fresh()->hasRole('admin'))->toBeTrue();
+});
+
 test('admin can delete another user', function () {
     $admin = User::factory()->create();
     $admin->syncRoles(Role::findOrCreate('admin'));
