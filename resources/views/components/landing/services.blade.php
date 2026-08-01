@@ -13,7 +13,7 @@
             'category' => 'Access',
             'icon' => 'shield',
             'title' => 'Roles & Permissions',
-            'description' => 'Every user gets a role automatically. Admins get a gated back office.',
+            'description' => 'Every user gets a role automatically. Admins and super admins get a gated back office, with roles and permissions managed at runtime.',
             'tags' => ['Spatie', 'Roles'],
         ],
         [

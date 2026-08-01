@@ -16,13 +16,13 @@ A reusable Laravel starter kit for internal and client projects — authenticati
 
 ## Features
 
-- **Authentication** — login, registration, password reset out of the box.
-- **Roles & permissions** — every new user gets `member` automatically; `admin` unlocks a gated back office.
+- **Authentication** — login, registration, password reset out of the box; logging out always lands back on the login page.
+- **Roles & permissions** — every new user gets `staff` automatically; `admin` and `super-admin` unlock more of the back office. Roles and permissions are managed at runtime from a Super Admin-only Access Control page, no migration required to add a role.
 - **Blog** — the one piece of public content that's editable without a redeploy: title, excerpt, body, featured image, publish toggle, auto-generated slugs that never change on edit.
-- **Admin panel** — user management (list, create, change role, delete), an audit trail of admin actions, a sitemap viewer, and site settings (SEO description, Google Analytics, social links, contact info).
+- **System panel** (`admin`/`super-admin`) — user management (list, create, change role, delete), a sitemap viewer, and site settings (SEO description, Google Analytics, social links, contact info). Super admins alone additionally get Access Control and the audit trail of admin actions.
+- **Per-role dashboard** — a thin dashboard shell dispatches to a self-contained Livewire component per role (super-admin, admin, staff), each showing the stats relevant to that role.
 - **Branded system pages** — error pages (404, 500, ...) and transactional emails match the app's look, not the framework defaults.
-- **Dashboard** — real usage stats, not placeholder data.
-- **In-app docs** — a `/docs` page inside the app with project-specific setup and architecture notes.
+- **In-app docs** — a docs page inside the app with project-specific setup and architecture notes.
 - **Tests from day one** — Pest feature tests, Pint formatting, and Larastan static analysis wired into CI.
 
 ## Getting started
@@ -54,12 +54,13 @@ Visit `http://localhost:8000`. `composer run dev` runs the app server, queue lis
 
 ### Default accounts
 
-Seeded by `database/seeders/DatabaseSeeder.php`, password `password` for both:
+Seeded by `database/seeders/DatabaseSeeder.php`, password `password` for all three:
 
 | Email | Role |
 |---|---|
+| `super-admin@mail.test` | super-admin |
 | `admin@mail.test` | admin |
-| `member@mail.test` | member |
+| `staff@mail.test` | staff |
 
 ## Quality checks
 

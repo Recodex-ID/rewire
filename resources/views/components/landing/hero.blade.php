@@ -1,8 +1,8 @@
 @php
     $stats = [
-        ['value' => '15', 'suffix' => '+', 'label' => 'Reusable modules'],
-        ['value' => '2', 'suffix' => '', 'label' => 'Roles built in'],
-        ['value' => '9', 'suffix' => '', 'label' => 'Landing page sections'],
+        ['value' => '11', 'suffix' => '', 'label' => 'Packages included'],
+        ['value' => '3', 'suffix' => '', 'label' => 'Roles built in'],
+        ['value' => '8', 'suffix' => '', 'label' => 'Landing page sections'],
     ];
 @endphp
 
@@ -84,7 +84,7 @@
                 <span class="flex size-8 items-center justify-center rounded-full bg-brand-navy/10 text-brand-navy">
                     <x-landing.icon name="cloud" class="size-4" />
                 </span>
-                <span class="font-mono text-xs font-medium text-brand-navy">Synced in realtime</span>
+                <span class="font-mono text-xs font-medium text-brand-navy">No page reloads</span>
             </div>
 
             <div class="landing-animate-float absolute top-1/2 -right-2 flex -translate-y-1/2 items-center gap-2 rounded-xl bg-brand-snow p-3 shadow-lg" style="animation-delay: 2s;">

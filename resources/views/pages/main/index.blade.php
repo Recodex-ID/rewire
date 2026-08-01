@@ -6,6 +6,5 @@
     <x-landing.stats />
     <x-landing.case-studies />
     <x-landing.process />
-    <x-landing.testimonials />
     <x-landing.cta />
 </x-layouts::main>

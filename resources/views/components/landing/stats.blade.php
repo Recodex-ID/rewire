@@ -1,8 +1,8 @@
 @php
     $items = [
         ['value' => '90', 'suffix' => '%', 'label' => 'Less boilerplate', 'sublabel' => 'per new project'],
-        ['value' => '2', 'suffix' => '', 'label' => 'Roles ready', 'sublabel' => 'admin & member'],
-        ['value' => '100', 'suffix' => '%', 'label' => 'Test coverage', 'sublabel' => 'on core features'],
+        ['value' => '3', 'suffix' => '', 'label' => 'Roles ready', 'sublabel' => 'super-admin, admin & staff'],
+        ['value' => '102', 'suffix' => '', 'label' => 'Tests passing', 'sublabel' => 'on every push'],
         ['value' => '1', 'suffix' => ' day', 'label' => 'To first deploy', 'sublabel' => 'from clone to live'],
     ];
 @endphp

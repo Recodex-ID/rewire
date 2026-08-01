@@ -42,22 +42,22 @@
                     <div class="relative flex items-center gap-2">
                         <span class="landing-animate-pulse-soft size-2 rounded-full bg-green-400"></span>
                         <span class="font-mono text-xs uppercase tracking-widest text-brand-silver">
-                            Network Status &middot; All checks passing
+                            Test Suite &middot; All checks passing
                         </span>
                     </div>
 
                     <div class="relative mt-24 grid grid-cols-2 gap-8 sm:mt-40">
                         <div>
                             <p class="font-display text-4xl font-bold text-brand-snow sm:text-5xl">
-                                35<span class="text-xl text-brand-accent">ms</span>
+                                102
                             </p>
-                            <p class="mt-2 font-mono text-xs uppercase tracking-widest text-brand-silver">Avg. Latency</p>
+                            <p class="mt-2 font-mono text-xs uppercase tracking-widest text-brand-silver">Tests Passing</p>
                         </div>
                         <div>
                             <p class="font-display text-4xl font-bold text-brand-snow sm:text-5xl">
-                                2
+                                3
                             </p>
-                            <p class="mt-2 font-mono text-xs uppercase tracking-widest text-brand-silver">Data Centers</p>
+                            <p class="mt-2 font-mono text-xs uppercase tracking-widest text-brand-silver">Roles Built In</p>
                         </div>
                     </div>
                 </div>

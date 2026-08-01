@@ -14,7 +14,7 @@
             'category' => 'Client site',
             'year' => '2026',
             'title' => 'Give your client a blog they can run themselves.',
-            'description' => 'Every post — title, images, publish state — is managed from the admin panel, so content updates never need a developer.',
+            'description' => 'Every post — title, images, publish state — is managed from the dashboard by any signed-in team member, so content updates never need a developer.',
             'metrics' => [
                 ['value' => '1', 'label' => 'Blog, ready to go'],
                 ['value' => '0', 'label' => 'Redeploys needed'],
