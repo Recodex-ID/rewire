@@ -129,8 +129,10 @@
         <!-- Desktop Topbar -->
         @php
             $breadcrumbGroup = match (true) {
-                str_starts_with(request()->route()?->getName() ?? '', 'admin.') => 'Admin',
+                str_starts_with(request()->route()?->getName() ?? '', 'system.') => 'System',
+                str_starts_with(request()->route()?->getName() ?? '', 'super-admin.') => 'Super Admin',
                 str_starts_with(request()->route()?->getName() ?? '', 'content-management.') => 'Content Management',
+                str_starts_with(request()->route()?->getName() ?? '', 'other.') => 'Other',
                 default => null,
             };
         @endphp
