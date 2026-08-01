@@ -13,10 +13,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::livewire('blogs', 'pages::app.content-management.blogs')->name('blogs');
     });
 
-    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
-        Route::livewire('settings', 'pages::app.admin.settings')->name('settings');
-        Route::livewire('users', 'pages::app.admin.users')->name('users');
-        Route::livewire('sitemap', 'pages::app.admin.sitemap')->name('sitemap');
+    Route::middleware(['role:super-admin|admin'])->prefix('system')->name('system.')->group(function () {
+        Route::livewire('settings', 'pages::app.system.settings')->name('settings');
+        Route::livewire('users', 'pages::app.system.users')->name('users');
+        Route::livewire('sitemap', 'pages::app.system.sitemap')->name('sitemap');
     });
 
     Route::redirect('settings', 'settings/profile');

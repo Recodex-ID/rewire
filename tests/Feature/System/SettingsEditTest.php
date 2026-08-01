@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role;
 test('non-admin cannot access the settings page', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('admin.settings'))->assertForbidden();
+    $this->actingAs($user)->get(route('system.settings'))->assertForbidden();
 });
 
 test('admin can view and save settings', function () {
@@ -17,9 +17,9 @@ test('admin can view and save settings', function () {
 
     $this->actingAs($admin);
 
-    $this->get(route('admin.settings'))->assertOk();
+    $this->get(route('system.settings'))->assertOk();
 
-    Livewire::test('pages::app.admin.settings')
+    Livewire::test('pages::app.system.settings')
         ->set('seoDescription', 'A starter kit for client projects.')
         ->set('analyticsId', 'G-ABC1234567')
         ->call('save')

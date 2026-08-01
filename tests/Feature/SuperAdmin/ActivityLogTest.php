@@ -32,7 +32,7 @@ test('creating a user logs activity with the acting admin as causer', function (
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')
+    Livewire::test('pages::app.system.users')
         ->set('name', 'Jane Doe')
         ->set('email', 'jane@example.com')
         ->set('password', 'password')
@@ -55,7 +55,7 @@ test('changing a role logs activity', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')
+    Livewire::test('pages::app.system.users')
         ->call('edit', $member->id)
         ->set('editingRole', 'admin')
         ->call('updateRole');
@@ -73,7 +73,7 @@ test('deleting a user logs activity', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')->call('delete', $member->id);
+    Livewire::test('pages::app.system.users')->call('delete', $member->id);
 
     $activity = Activity::query()->latest()->first();
 

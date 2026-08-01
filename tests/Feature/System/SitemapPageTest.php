@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role;
 test('non-admin cannot access the sitemap page', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get(route('admin.sitemap'))->assertForbidden();
+    $this->actingAs($user)->get(route('system.sitemap'))->assertForbidden();
 });
 
 test('admin can view the sitemap page and only sees published posts', function () {
@@ -17,7 +17,7 @@ test('admin can view the sitemap page and only sees published posts', function (
     $published = Post::factory()->create(['is_published' => true]);
     $draft = Post::factory()->create(['is_published' => false]);
 
-    $this->actingAs($admin)->get(route('admin.sitemap'))
+    $this->actingAs($admin)->get(route('system.sitemap'))
         ->assertOk()
         ->assertSee(route('blog.detail', $published->slug))
         ->assertDontSee(route('blog.detail', $draft->slug));

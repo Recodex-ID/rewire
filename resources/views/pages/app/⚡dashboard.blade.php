@@ -5,23 +5,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Spatie\Activitylog\Models\Activity;
 
 new #[Title('Dashboard')] class extends Component
 {
-    public bool $isAdmin = false;
-
     public int $totalUsers = 0;
-
-    public int $totalAdmins = 0;
 
     public int $publishedPosts = 0;
 
     public int $totalPosts = 0;
 
     public int $newUsersThisWeek = 0;
-
-    public int $totalActivityEntries = 0;
 
     /** @var array<int, array{label: string, count: int}> */
     public array $registrationsPerDay = [];
@@ -31,17 +24,10 @@ new #[Title('Dashboard')] class extends Component
 
     public function mount(): void
     {
-        $this->isAdmin = Auth::user()->hasRole('super-admin');
-
         $this->totalUsers = User::query()->count();
-        $this->totalAdmins = User::query()->whereHas('roles', fn ($query) => $query->where('name', 'admin'))->count();
         $this->publishedPosts = Post::query()->where('is_published', true)->count();
         $this->totalPosts = Post::query()->count();
         $this->newUsersThisWeek = User::query()->where('created_at', '>=', now()->subDays(7))->count();
-
-        if ($this->isAdmin) {
-            $this->totalActivityEntries = Activity::query()->count();
-        }
 
         $this->registrationsPerDay = collect(range(6, 0))
             ->map(function (int $daysAgo) {
@@ -54,22 +40,8 @@ new #[Title('Dashboard')] class extends Component
             })
             ->all();
 
-        if ($this->isAdmin) {
-            // Super admins get the real audit trail (same data as /super-admin/activity) instead of the lightweight feed below.
-            $this->activity = Activity::query()
-                ->with('causer')
-                ->latest()
-                ->take(6)
-                ->get()
-                ->map(fn (Activity $log) => [
-                    'type' => 'audit',
-                    'icon' => 'shield-check',
-                    'title' => $log->description,
-                    'subtitle' => 'by '.($log->causer?->name ?? 'System'),
-                    'at' => $log->created_at->diffForHumans(),
-                ])
-                ->all();
-        } else {
+        // Super admins get the real audit trail instead, rendered by dashboard::super-admin below.
+        if (! Auth::user()->hasRole('super-admin')) {
             $recentUsers = User::query()->latest()->take(5)->get()->map(fn (User $user) => [
                 'type' => 'user',
                 'icon' => 'user-plus',
@@ -103,7 +75,7 @@ new #[Title('Dashboard')] class extends Component
         <flux:subheading>{{ now()->translatedFormat('l, j F Y') }} — here's what's happening with Rewire today.</flux:subheading>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 {{ $isAdmin ? 'xl:grid-cols-5' : 'xl:grid-cols-4' }}">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         <flux:card class="space-y-4">
             <div class="flex size-11 items-center justify-center rounded-xl bg-indigo-500/10">
                 <flux:icon icon="users" class="text-indigo-600" />
@@ -111,16 +83,6 @@ new #[Title('Dashboard')] class extends Component
             <div>
                 <div class="font-display text-3xl font-bold tracking-tight">{{ $totalUsers }}</div>
                 <div class="mt-1 text-sm text-zinc-500">Total users</div>
-            </div>
-        </flux:card>
-
-        <flux:card class="space-y-4">
-            <div class="flex size-11 items-center justify-center rounded-xl bg-amber-500/10">
-                <flux:icon icon="shield-check" class="text-amber-600" />
-            </div>
-            <div>
-                <div class="font-display text-3xl font-bold tracking-tight">{{ $totalAdmins }}</div>
-                <div class="mt-1 text-sm text-zinc-500">Admins</div>
             </div>
         </flux:card>
 
@@ -144,17 +106,11 @@ new #[Title('Dashboard')] class extends Component
             </div>
         </flux:card>
 
-        @if ($isAdmin)
-            <flux:card class="space-y-4">
-                <div class="flex size-11 items-center justify-center rounded-xl bg-sky-500/10">
-                    <flux:icon icon="clipboard-document-list" class="text-sky-600" />
-                </div>
-                <div>
-                    <div class="font-display text-3xl font-bold tracking-tight">{{ $totalActivityEntries }}</div>
-                    <div class="mt-1 text-sm text-zinc-500">Audit log entries</div>
-                </div>
-            </flux:card>
-        @endif
+        @role('super-admin|admin')
+            <livewire:dashboard.admin />
+        @else
+            <livewire:dashboard.staff />
+        @endrole
     </div>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -188,7 +144,7 @@ new #[Title('Dashboard')] class extends Component
                 <flux:button as="a" :href="route('content-management.blogs')" wire:navigate variant="outline" icon="newspaper" class="w-full justify-start">
                     Manage blog
                 </flux:button>
-                <flux:button as="a" :href="route('admin.sitemap')" wire:navigate variant="outline" icon="map" class="w-full justify-start">
+                <flux:button as="a" :href="route('system.sitemap')" wire:navigate variant="outline" icon="map" class="w-full justify-start">
                     View sitemap
                 </flux:button>
                 <flux:button as="a" :href="route('profile.edit')" wire:navigate variant="outline" icon="cog" class="w-full justify-start">
@@ -198,46 +154,38 @@ new #[Title('Dashboard')] class extends Component
         </flux:card>
     </div>
 
-    <flux:card>
-        <div class="flex items-start justify-between gap-4">
-            <div>
-                <flux:heading size="lg" class="font-display!">Recent activity</flux:heading>
-                <flux:subheading>
-                    @if ($isAdmin)
-                        Latest actions from the admin audit log.
-                    @else
-                        Latest sign-ups and blog updates.
-                    @endif
-                </flux:subheading>
+    @role('super-admin')
+        <livewire:dashboard.super-admin />
+    @else
+        <flux:card>
+            <div class="flex items-start justify-between gap-4">
+                <div>
+                    <flux:heading size="lg" class="font-display!">Recent activity</flux:heading>
+                    <flux:subheading>Latest sign-ups and blog updates.</flux:subheading>
+                </div>
             </div>
 
-            @if ($isAdmin)
-                <flux:button as="a" :href="route('super-admin.activity')" wire:navigate variant="ghost" size="sm">
-                    View all
-                </flux:button>
-            @endif
-        </div>
-
-        <div class="mt-6 space-y-5">
-            @forelse ($activity as $item)
-                <div class="flex items-start gap-4">
-                    <div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-navy/5">
-                        <flux:icon :icon="$item['icon']" variant="micro" class="text-brand-navy" />
+            <div class="mt-6 space-y-5">
+                @forelse ($activity as $item)
+                    <div class="flex items-start gap-4">
+                        <div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-navy/5">
+                            <flux:icon :icon="$item['icon']" variant="micro" class="text-brand-navy" />
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm font-medium">{{ $item['title'] }}</div>
+                            <div class="text-sm text-zinc-500">{{ $item['subtitle'] }}</div>
+                        </div>
+                        <div class="font-mono text-xs text-zinc-400">{{ $item['at'] }}</div>
                     </div>
-                    <div class="flex-1">
-                        <div class="text-sm font-medium">{{ $item['title'] }}</div>
-                        <div class="text-sm text-zinc-500">{{ $item['subtitle'] }}</div>
+                @empty
+                    <div class="flex flex-col items-center gap-3 py-8 text-center">
+                        <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
+                            <flux:icon icon="inbox" variant="micro" />
+                        </div>
+                        <flux:text>No recent activity yet.</flux:text>
                     </div>
-                    <div class="font-mono text-xs text-zinc-400">{{ $item['at'] }}</div>
-                </div>
-            @empty
-                <div class="flex flex-col items-center gap-3 py-8 text-center">
-                    <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
-                        <flux:icon icon="inbox" variant="micro" />
-                    </div>
-                    <flux:text>No recent activity yet.</flux:text>
-                </div>
-            @endforelse
-        </div>
-    </flux:card>
+                @endforelse
+            </div>
+        </flux:card>
+    @endrole
 </div>

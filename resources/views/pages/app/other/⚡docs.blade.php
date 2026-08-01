@@ -183,7 +183,7 @@ new #[Title('Documentation')] class extends Component
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/components/landing/*</code> — edit those
                         files and redeploy. The handful of values that are genuinely per-deployment config live in the
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\Setting</code> key-value store instead, editable
-                        from <flux:link :href="route('admin.settings')">/admin/settings</flux:link>: SEO meta description, a Google
+                        from <flux:link :href="route('system.settings')">/system/settings</flux:link>: SEO meta description, a Google
                         Analytics ID, social links, and the contact address/email/phone shown on the landing page's call-to-action.
                     </flux:text>
                 </flux:card>
@@ -204,7 +204,7 @@ new #[Title('Documentation')] class extends Component
                     </flux:text>
                     <flux:text>
                         Admins can review the same list in a friendlier table at
-                        <flux:link :href="route('admin.sitemap')">/admin/sitemap</flux:link>, with a link out to the raw XML.
+                        <flux:link :href="route('system.sitemap')">/system/sitemap</flux:link>, with a link out to the raw XML.
                     </flux:text>
                 </flux:card>
             </section>

@@ -29,15 +29,15 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
 
-                @role('admin')
+                @role('super-admin|admin')
                     <flux:sidebar.group heading="System" class="grid">
-                        <flux:sidebar.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>
+                        <flux:sidebar.item icon="users" :href="route('system.users')" :current="request()->routeIs('system.users')" wire:navigate>
                             Users
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="map" :href="route('admin.sitemap')" :current="request()->routeIs('admin.sitemap')" wire:navigate>
+                        <flux:sidebar.item icon="map" :href="route('system.sitemap')" :current="request()->routeIs('system.sitemap')" wire:navigate>
                             Sitemap
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="cog-6-tooth" :href="route('admin.settings')" :current="request()->routeIs('admin.settings')" wire:navigate>
+                        <flux:sidebar.item icon="cog-6-tooth" :href="route('system.settings')" :current="request()->routeIs('system.settings')" wire:navigate>
                             Settings
                         </flux:sidebar.item>
                     </flux:sidebar.group>

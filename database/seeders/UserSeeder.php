@@ -34,11 +34,11 @@ class UserSeeder extends Seeder
         $admin->syncRoles(Role::findOrCreate('admin'));
 
         $member = User::create([
-            'name' => 'Member',
-            'email' => 'member@mail.test',
+            'name' => 'Staff',
+            'email' => 'staff@mail.test',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
-        $member->assignRole(Role::findOrCreate('member'));
+        $member->assignRole(Role::findOrCreate('staff'));
     }
 }

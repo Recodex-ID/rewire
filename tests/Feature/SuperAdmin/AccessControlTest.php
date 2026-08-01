@@ -106,7 +106,7 @@ test('regular admin cannot assign the super-admin role to a user', function () {
 
     $this->actingAs($admin);
 
-    Livewire::test('pages::app.admin.users')
+    Livewire::test('pages::app.system.users')
         ->call('edit', $member->id)
         ->set('editingRole', 'super-admin')
         ->call('updateRole')
