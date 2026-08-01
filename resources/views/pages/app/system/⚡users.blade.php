@@ -4,6 +4,7 @@ use App\Concerns\PasswordValidationRules;
 use App\Models\User;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
@@ -184,7 +185,7 @@ new #[Title('Users')] class extends Component
                         <flux:table.cell class="whitespace-nowrap">{{ $user->email }}</flux:table.cell>
                         <flux:table.cell>
                             <flux:badge size="sm" :color="$user->hasRole('super-admin') ? 'amber' : ($user->hasRole('admin') ? 'indigo' : 'zinc')">
-                                {{ ucfirst($user->roles->first()?->name ?? 'member') }}
+                                {{ Str::headline($user->roles->first()?->name ?? 'member') }}
                             </flux:badge>
                         </flux:table.cell>
                         <flux:table.cell class="whitespace-nowrap">{{ $user->created_at->translatedFormat('l, j F Y') }}</flux:table.cell>
@@ -243,7 +244,7 @@ new #[Title('Users')] class extends Component
 
             <flux:select wire:model="role" label="Role">
                 @foreach ($this->roles as $role)
-                    <flux:select.option value="{{ $role }}">{{ ucfirst($role) }}</flux:select.option>
+                    <flux:select.option value="{{ $role }}">{{ Str::headline($role) }}</flux:select.option>
                 @endforeach
             </flux:select>
 
@@ -266,7 +267,7 @@ new #[Title('Users')] class extends Component
 
             <flux:select wire:model="editingRole" label="Role">
                 @foreach ($this->roles as $role)
-                    <flux:select.option value="{{ $role }}">{{ ucfirst($role) }}</flux:select.option>
+                    <flux:select.option value="{{ $role }}">{{ Str::headline($role) }}</flux:select.option>
                 @endforeach
             </flux:select>
 
