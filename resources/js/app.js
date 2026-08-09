@@ -1,3 +1,7 @@
+import Chart from 'chart.js/auto';
+
+window.Chart = Chart;
+
 const revealEls = document.querySelectorAll('.landing-reveal');
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {

@@ -106,19 +106,33 @@ new class extends Component
             <flux:heading size="lg" class="font-display!">Registrations, last 7 days</flux:heading>
             <flux:subheading>New user sign-ups per day</flux:subheading>
 
-            <div class="mt-8 flex h-40 items-end gap-3">
-                @php $max = max(1, collect($registrationsPerDay)->max('count')); @endphp
-                @foreach ($registrationsPerDay as $day)
-                    <div class="flex flex-1 flex-col items-center gap-2">
-                        <div class="flex h-32 w-full items-end">
-                            <div
-                                class="w-full rounded-t bg-brand-navy/20 {{ $day['count'] > 0 ? 'bg-brand-accent-dark!' : '' }}"
-                                style="height: {{ max(4, ($day['count'] / $max) * 100) }}%"
-                            ></div>
-                        </div>
-                        <div class="font-mono text-[10px] text-zinc-400 uppercase">{{ $day['label'] }}</div>
-                    </div>
-                @endforeach
+            <div
+                wire:ignore
+                class="mt-8 h-40"
+                x-data="{
+                    init() {
+                        new Chart(this.$refs.canvas, {
+                            type: 'bar',
+                            data: {
+                                labels: @js(collect($registrationsPerDay)->pluck('label')),
+                                datasets: [{
+                                    data: @js(collect($registrationsPerDay)->pluck('count')),
+                                    backgroundColor: '#0f172a33',
+                                    borderRadius: 4,
+                                }],
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false } },
+                                scales: {
+                                    y: { beginAtZero: true, ticks: { precision: 0 } },
+                                },
+                            },
+                        });
+                    },
+                }"
+            >
+                <canvas x-ref="canvas"></canvas>
             </div>
         </flux:card>
 

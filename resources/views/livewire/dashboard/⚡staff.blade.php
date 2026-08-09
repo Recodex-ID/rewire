@@ -60,6 +60,37 @@ new class extends Component
     </div>
 
     <flux:card class="space-y-4">
+        <flux:heading size="lg" class="font-display!">Your posts</flux:heading>
+        <flux:subheading>Published vs. draft</flux:subheading>
+
+        <div
+            wire:ignore
+            class="mx-auto h-40 w-40"
+            x-data="{
+                init() {
+                    new Chart(this.$refs.canvas, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Published', 'Draft'],
+                            datasets: [{
+                                data: @js([$myPublishedPosts, max(0, $myTotalPosts - $myPublishedPosts)]),
+                                backgroundColor: ['#0f172a', '#0f172a33'],
+                                borderWidth: 0,
+                            }],
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            plugins: { legend: { position: 'bottom' } },
+                        },
+                    });
+                },
+            }"
+        >
+            <canvas x-ref="canvas"></canvas>
+        </div>
+    </flux:card>
+
+    <flux:card class="space-y-4">
         <flux:heading size="lg" class="font-display!">Quick links</flux:heading>
 
         <div class="space-y-2">
