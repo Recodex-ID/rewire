@@ -82,6 +82,10 @@ Or `composer test`, which runs formatting, static analysis, and the full suite t
 
 More detail — architecture notes, where each feature lives, how to extend the landing page — is in the in-app docs at `/docs` once you're logged in.
 
+## Contributing
+
+Commits to `main` must follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, ...) — [release-please](https://github.com/googleapis/release-please) reads them to version and publish [GitHub Releases](https://github.com/Recodex-ID/rewire/releases) automatically, so every merge shows up in a changelog users can actually read. `feat:` bumps a minor version, `fix:` a patch, and `feat!:`/a `BREAKING CHANGE:` footer bumps major.
+
 ## License
 
 MIT.
