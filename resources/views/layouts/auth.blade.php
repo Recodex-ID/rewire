@@ -24,9 +24,7 @@
 
                         <div class="absolute top-1/2 left-1/2 flex size-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-3xl border border-brand-snow/10 bg-brand-navy-light shadow-2xl backdrop-blur-sm">
                             <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-accent/20 to-transparent"></div>
-                            <svg class="relative size-9 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m5 12 5 5L20 7" />
-                            </svg>
+                            <x-heroicon-o-check class="relative size-9 text-brand-accent" />
                         </div>
                     </div>
                 </div>
