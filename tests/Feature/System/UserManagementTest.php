@@ -214,3 +214,21 @@ test('creating a user with a mismatched password confirmation fails validation',
         ->call('createUser')
         ->assertHasErrors(['password']);
 });
+
+test('regular admin cannot assign the super-admin role to a user', function () {
+    $admin = User::factory()->create();
+    $admin->syncRoles(Role::findOrCreate('admin'));
+
+    Role::findOrCreate('super-admin');
+    $member = User::factory()->create();
+
+    $this->actingAs($admin);
+
+    Livewire::test('pages::app.system.users')
+        ->call('edit', $member->id)
+        ->set('editingRole', 'super-admin')
+        ->call('updateRole')
+        ->assertHasErrors(['editingRole']);
+
+    expect($member->fresh()->hasRole('super-admin'))->toBeFalse();
+});

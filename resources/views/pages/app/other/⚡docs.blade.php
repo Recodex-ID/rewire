@@ -94,7 +94,7 @@ new #[Title('Documentation')] class extends Component
                         <flux:link :href="route('dashboard')">/dashboard</flux:link>. Every signed-in, verified user sees the
                         "Content Management" section in the sidebar (Blog); admin and super-admin additionally unlock the
                         "System" section (Users, Sitemap, Settings); super-admin alone also gets a "Super Admin" section
-                        (Access Control, Activity log). The dashboard itself is a thin shell
+                        (Activity log). The dashboard itself is a thin shell
                         (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">pages/app/⚡dashboard.blade.php</code>) that dispatches
                         to one of three self-contained Livewire components under
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/livewire/dashboard/</code> based on the
@@ -146,13 +146,14 @@ new #[Title('Documentation')] class extends Component
                         auto-assigned.
                     </flux:text>
                     <flux:callout variant="secondary">
-                        <flux:callout.heading icon="information-circle">Roles and permissions are managed at runtime</flux:callout.heading>
+                        <flux:callout.heading icon="information-circle">Roles and permissions have no admin UI</flux:callout.heading>
                         <flux:callout.text>
-                            Super admins can create roles and permissions and assign permissions to roles from
-                            <flux:link :href="route('super-admin.access-control')">/super-admin/access-control</flux:link> — no
-                            migration needed to add a new role. The <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">super-admin</code>,
+                            There's no in-app screen to create roles or permissions — use
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">Role::findOrCreate()</code> /
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">Permission::findOrCreate()</code> via tinker or a
+                            seeder. The <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">super-admin</code>,
                             <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">admin</code>, and
-                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">staff</code> roles are protected from deletion there.
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">staff</code> roles ship with the app.
                         </flux:callout.text>
                     </flux:callout>
                     <flux:text>
@@ -161,7 +162,7 @@ new #[Title('Documentation')] class extends Component
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/app.php</code> uses
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:super-admin|admin</code> for the System section, and
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">routes/super-admin.php</code> uses
-                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:super-admin</code> for Access Control and the
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">role:super-admin</code> for the
                         activity log. Regular admins can't see or edit super-admin accounts from
                         <flux:link :href="route('system.users')">/system/users</flux:link> — those rows are filtered out of the
                         query entirely, not just hidden in the UI.

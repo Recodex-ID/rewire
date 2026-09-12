@@ -31,7 +31,7 @@
             </p>
 
             <div class="landing-reveal landing-reveal-delay-3 mt-10 flex flex-wrap items-center gap-4">
-                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-accent-dark">
+                <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-accent-dark">
                     Get started
                     <x-landing.icon name="arrow-right" class="size-4" />
                 </a>
