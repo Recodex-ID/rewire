@@ -37,6 +37,9 @@
                         <flux:sidebar.item icon="map" :href="route('system.sitemap')" :current="request()->routeIs('system.sitemap')" wire:navigate>
                             Sitemap
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="photo" :href="route('system.media-library')" :current="request()->routeIs('system.media-library')" wire:navigate>
+                            Media Library
+                        </flux:sidebar.item>
                         <flux:sidebar.item icon="cog-6-tooth" :href="route('system.settings')" :current="request()->routeIs('system.settings')" wire:navigate>
                             Settings
                         </flux:sidebar.item>

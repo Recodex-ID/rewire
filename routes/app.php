@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::livewire('settings', 'pages::app.system.settings')->name('settings');
         Route::livewire('users', 'pages::app.system.users')->name('users');
         Route::livewire('sitemap', 'pages::app.system.sitemap')->name('sitemap');
+        Route::livewire('media-library', 'pages::app.system.media-library')->name('media-library');
     });
 
     Route::redirect('settings', 'settings/profile');

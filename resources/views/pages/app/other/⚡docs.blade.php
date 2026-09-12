@@ -194,7 +194,9 @@ new #[Title('Documentation')] class extends Component
                         are generated so the admin list, public blog cards, and the blog detail hero each load an appropriately
                         sized image instead of the original upload. The upload widget itself
                         (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">x-media-upload</code>) is a generic Blade component, ready to reuse
-                        on any other model that implements <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">HasMedia</code>.
+                        on any other model that implements <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">HasMedia</code>. Admins and
+                        super-admins can browse every uploaded file across all models — with previews, the owning model, and a
+                        delete action — from <flux:link :href="route('system.media-library')">/system/media-library</flux:link>.
                     </flux:text>
                     <flux:text>
                         Any signed-in, verified user manages posts from <flux:link :href="route('content-management.blogs')">/content-management/blogs</flux:link>
