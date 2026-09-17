@@ -8,23 +8,20 @@
             {{-- Branding panel --}}
             <div class="relative hidden flex-col justify-between overflow-hidden bg-brand-navy p-12 lg:flex lg:w-1/2 xl:p-16">
                 <div class="landing-grid-bg-dark absolute inset-0 opacity-50"></div>
-                <div class="absolute top-0 right-0 size-96 rounded-full bg-brand-accent/10 blur-3xl"></div>
-                <div class="absolute bottom-0 left-0 size-96 rounded-full bg-brand-accent/5 blur-3xl"></div>
 
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <div class="relative size-[420px]">
-                        <div class="landing-animate-spin-slow absolute inset-0 rounded-full border border-brand-accent/15">
-                            <div class="absolute top-0 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent shadow-[0_0_60px_rgba(77,163,255,0.4)]"></div>
+                        <div class="absolute inset-0 rounded-full border border-brand-accent/15">
+                            <div class="absolute top-0 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent"></div>
                         </div>
-                        <div class="landing-animate-spin-reverse absolute inset-[50px] rounded-full border border-brand-snow/10">
+                        <div class="absolute inset-[50px] rounded-full border border-brand-snow/10">
                             <div class="absolute top-0 left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-snow"></div>
                             <div class="absolute bottom-0 left-1/2 size-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-brand-accent/60"></div>
                         </div>
                         <div class="absolute inset-[100px] rounded-full border border-brand-snow/15"></div>
 
-                        <div class="absolute top-1/2 left-1/2 flex size-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-3xl border border-brand-snow/10 bg-brand-navy-light shadow-2xl backdrop-blur-sm">
-                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-accent/20 to-transparent"></div>
-                            <x-heroicon-o-check class="relative size-9 text-brand-accent" />
+                        <div class="absolute top-1/2 left-1/2 flex size-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-3xl border border-brand-snow/10 bg-brand-navy-light">
+                            <x-heroicon-o-check class="size-9 text-brand-accent" />
                         </div>
                     </div>
                 </div>
@@ -38,14 +35,6 @@
                 </a>
 
                 <div class="relative z-10 max-w-md">
-                    <div class="mb-8 inline-flex items-center gap-2.5 rounded-full border border-brand-snow/10 bg-brand-snow/5 px-4 py-2 backdrop-blur-sm">
-                        <span class="relative flex size-2">
-                            <span class="landing-animate-pulse-soft absolute inline-flex size-full rounded-full bg-brand-accent"></span>
-                            <span class="relative inline-flex size-2 rounded-full bg-brand-accent"></span>
-                        </span>
-                        <span class="text-xs font-medium text-brand-snow">All systems operational</span>
-                    </div>
-
                     <h1 class="mb-6 font-display text-4xl leading-[1.1] font-bold tracking-tight text-brand-snow xl:text-5xl">
                         Ship your next<br>
                         <span class="text-brand-accent">client project</span><br>

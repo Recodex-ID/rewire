@@ -333,3 +333,14 @@ Key config options in `config/activitylog.php`:
 - `actions.clean_log`: Action class for cleaning old activities
 
 </laravel-boost-guidelines>
+
+<!-- antislop:start -->
+## antislop
+For UI, copy, people, mobile layout, or code comments work, invoke the `antislop` skill (core filter) and then the skill for the task, via the Skill tool (installed as user-level skills, not project files):
+- UI / visual: `antislop-ui`
+- Copy & text: `antislop-copywriting`
+- People: `antislop-human`
+- Mobile / responsive: `antislop-layoutmobile`
+- Code comments: `antislop-code`
+Read `DESIGN.md` (project root) for this project's visual direction before applying antislop-ui — it holds the palette, typography, motif, and ENERGY/RHYTHM/MOTION dials. Mode: DURING (apply while building, not as a post-hoc audit) unless the user asks for an AFTER audit instead.
+<!-- antislop:end -->

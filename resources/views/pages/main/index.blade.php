@@ -74,20 +74,20 @@
         ];
 
         $features = [
-            ['title' => 'Authentication', 'description' => 'Login, registration, password reset, and email verification — built on Laravel Fortify.'],
-            ['title' => 'Roles & permissions', 'description' => '3 roles (super-admin, admin, staff) via Spatie Permission. New roles are created with tinker or a seeder — no admin UI, by design.'],
+            ['title' => 'Authentication', 'description' => 'Login, registration, password reset, and email verification, built on Laravel Fortify.'],
+            ['title' => 'Roles & permissions', 'description' => '3 roles (super-admin, admin, staff) via Spatie Permission. New roles are created with tinker or a seeder: no admin UI, by design.'],
             ['title' => 'Blog CMS', 'description' => 'Title, excerpt, body, featured image, and a publish toggle, with stable slugs via Spatie Sluggable.'],
             ['title' => 'Media Library', 'description' => 'Browse and delete every uploaded file across every model from one System panel page.'],
             ['title' => 'Per-role dashboards', 'description' => 'Each role (super-admin, admin, staff) gets its own Livewire dashboard with Chart.js charts.'],
-            ['title' => 'System panel', 'description' => 'Users, Sitemap, Settings, and Media Library — gated to admin and super-admin.'],
+            ['title' => 'System panel', 'description' => 'Users, Sitemap, Settings, and Media Library, gated to admin and super-admin.'],
             ['title' => 'Activity log', 'description' => 'Every admin action is audited via Spatie Activitylog, visible to super-admins.'],
             ['title' => 'Tests from day one', 'description' => '101 Pest tests, Pint formatting, and Larastan static analysis, wired into CI.'],
             ['title' => 'Automated releases', 'description' => 'release-please publishes a GitHub Release with a real changelog from Conventional Commits.'],
         ];
 
         $whyStack = [
-            ['title' => 'Why Livewire', 'description' => 'Server-driven UI — no separate API layer or SPA build to maintain alongside the backend.'],
-            ['title' => 'Why Spatie packages', 'description' => 'Battle-tested roles, media, slugs, activity logging, and sitemaps — nothing reinvented.'],
+            ['title' => 'Why Livewire', 'description' => 'Server-driven UI: no separate API layer or SPA build to maintain alongside the backend.'],
+            ['title' => 'Why Spatie packages', 'description' => 'Battle-tested roles, media, slugs, activity logging, and sitemaps: nothing reinvented.'],
             ['title' => 'Why Pest', 'description' => 'Readable test syntax, and a real safety net: 101 tests covering every role boundary in this repo.'],
         ];
 
@@ -116,12 +116,12 @@
                 </h1>
 
                 <p class="mt-6 max-w-xl text-lg text-brand-navy/70">
-                    A reusable Laravel starter kit with authentication, roles, and a blog ready to publish — so every new project starts from a working foundation, not a blank repo.
+                    A reusable Laravel starter kit with authentication, roles, and a blog ready to publish, so every new project starts from a working foundation, not a blank repo.
                 </p>
 
                 <div class="mt-8 flex flex-wrap items-center gap-4">
                     <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light">
-                        Get started
+                        Sign in to the dashboard
                         <x-heroicon-o-arrow-right class="size-4" />
                     </a>
                     <a href="https://github.com/Recodex-ID/rewire" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-brand-navy/20 px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-navy/5">
@@ -145,7 +145,7 @@
                     <span class="size-2.5 rounded-full bg-red-400/70"></span>
                     <span class="size-2.5 rounded-full bg-yellow-400/70"></span>
                     <span class="size-2.5 rounded-full bg-green-400/70"></span>
-                    <span class="ml-2 font-mono text-xs text-brand-silver/60">{{ $codeTabs['auth']['file'] }}</span>
+                    <span class="ml-2 font-mono text-xs text-brand-silver/80">{{ $codeTabs['auth']['file'] }}</span>
                 </div>
                 <pre class="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-brand-silver"><code>{{ $codeTabs['auth']['code'] }}</code></pre>
             </div>
@@ -156,7 +156,7 @@
     <section class="border-y border-brand-navy/10 bg-brand-snow py-8">
         <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6 lg:px-8">
             @foreach ($trustedByLogos as $name)
-                <span class="font-display text-sm font-semibold tracking-tight text-brand-navy/40">{{ $name }}</span>
+                <span class="font-display text-sm font-semibold tracking-tight text-brand-navy/70">{{ $name }}</span>
             @endforeach
         </div>
     </section>
@@ -177,7 +177,7 @@
                         <button
                             type="button"
                             x-on:click="tab = '{{ $key }}'"
-                            :class="tab === '{{ $key }}' ? 'text-brand-snow border-brand-accent' : 'text-brand-silver/60 border-transparent'"
+                            :class="tab === '{{ $key }}' ? 'text-brand-snow border-brand-accent' : 'text-brand-silver/80 border-transparent'"
                             class="shrink-0 border-b-2 px-4 py-3 font-mono text-sm transition"
                         >
                             {{ $tab['label'] }}
@@ -187,7 +187,7 @@
 
                 @foreach ($codeTabs as $key => $tab)
                     <div x-show="tab === '{{ $key }}'" x-cloak>
-                        <div class="border-b border-white/10 px-5 py-2 font-mono text-xs text-brand-silver/50">{{ $tab['file'] }}</div>
+                        <div class="border-b border-white/10 px-5 py-2 font-mono text-xs text-brand-silver/80">{{ $tab['file'] }}</div>
                         <pre class="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-brand-silver"><code>{{ $tab['code'] }}</code></pre>
                     </div>
                 @endforeach
@@ -210,7 +210,7 @@
                         </span>
                         <div>
                             <h3 class="font-medium text-brand-navy">{{ $feature['title'] }}</h3>
-                            <p class="mt-1 text-sm text-brand-navy/60">{{ $feature['description'] }}</p>
+                            <p class="mt-1 text-sm text-brand-navy/70">{{ $feature['description'] }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -242,7 +242,7 @@
             @foreach ($statsStrip as $stat)
                 <div class="text-center">
                     <div class="font-display text-4xl font-bold text-brand-snow">{{ $stat['value'] }}</div>
-                    <div class="mt-1 text-xs tracking-wide text-brand-silver/60 uppercase">{{ $stat['label'] }}</div>
+                    <div class="mt-1 text-xs tracking-wide text-brand-silver/80 uppercase">{{ $stat['label'] }}</div>
                 </div>
             @endforeach
         </div>
@@ -252,9 +252,6 @@
     <section id="contact" class="scroll-mt-24 bg-brand-snow py-24">
         <div class="landing-reveal relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-brand-navy px-6 py-16 sm:px-12 lg:px-16">
             <div class="landing-grid-bg-dark absolute inset-0"></div>
-
-            <div class="landing-animate-float absolute -top-24 -left-24 size-72 rounded-full bg-brand-accent/20 blur-3xl"></div>
-            <div class="landing-animate-float-slow absolute -bottom-24 -right-24 size-72 rounded-full bg-brand-accent/20 blur-3xl"></div>
 
             <div class="relative grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
                 <div class="lg:col-span-7">

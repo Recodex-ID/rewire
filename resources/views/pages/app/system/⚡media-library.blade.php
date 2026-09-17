@@ -40,7 +40,7 @@ new #[Title('Media Library')] class extends Component
             <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
                 <flux:icon icon="photo" variant="micro" />
             </div>
-            <flux:text>No media files yet.</flux:text>
+            <flux:text>No media files yet. Upload a featured image on a blog post to see it here.</flux:text>
         </flux:card>
     @else
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -98,11 +98,11 @@ new #[Title('Media Library')] class extends Component
                         <flux:link :href="$item->getUrl()" target="_blank" class="block truncate text-sm font-medium!">
                             {{ $item->file_name }}
                         </flux:link>
-                        <div class="flex items-center justify-between text-xs text-zinc-400">
+                        <div class="flex items-center justify-between text-xs text-zinc-500">
                             <span class="truncate">{{ class_basename($item->model_type) }} #{{ $item->model_id }}</span>
                             <span class="shrink-0">{{ $item->human_readable_size }}</span>
                         </div>
-                        <div class="text-xs text-zinc-400">{{ $item->created_at->diffForHumans() }}</div>
+                        <div class="text-xs text-zinc-500">{{ $item->created_at->diffForHumans() }}</div>
                     </div>
                 </div>
             @endforeach

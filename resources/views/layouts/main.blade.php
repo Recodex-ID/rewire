@@ -87,7 +87,7 @@
                             <span class="font-display text-lg font-bold text-brand-navy">
                                 Rewire
                             </span>
-                            <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-brand-navy/50">
+                            <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-brand-navy/70">
                                 Starter Kit
                             </span>
                         </span>
@@ -110,7 +110,7 @@
                             wire:navigate
                             class="hidden items-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light lg:inline-flex"
                         >
-                            Get started
+                            Sign in
                         </a>
 
                         <button
@@ -142,7 +142,7 @@
                         wire:navigate
                         class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-medium text-brand-snow transition hover:bg-brand-navy-light"
                     >
-                        Get started
+                        Sign in
                     </a>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                             <span class="font-display text-lg font-semibold text-brand-snow">Rewire Starter Kit</span>
                         </a>
                         <p class="mt-5 max-w-sm text-sm text-brand-silver/80">
-                            A reusable Laravel starter kit for internal and client projects — authentication, roles, a blog, and a back office, ready to go.
+                            A reusable Laravel starter kit for internal and client projects: authentication, roles, a blog, and a back office, ready to go.
                         </p>
                         @if ($footerSocialLinks->isNotEmpty())
                             <div class="mt-6 flex items-center gap-3">
@@ -187,7 +187,7 @@
 
                     @foreach ($footerColumns as $column)
                         <div class="landing-reveal landing-reveal-delay-{{ min($loop->iteration, 4) }} lg:col-span-2">
-                            <p class="font-mono text-xs font-medium uppercase tracking-widest text-brand-silver/60">
+                            <p class="font-mono text-xs font-medium uppercase tracking-widest text-brand-silver/80">
                                 {{ $column['heading'] }}
                             </p>
                             <ul class="mt-5 space-y-3">
@@ -203,18 +203,10 @@
                     @endforeach
                 </div>
 
-                <div class="mt-16 flex flex-col gap-6 border-t border-brand-snow/10 pt-8 lg:flex-row lg:items-center lg:justify-between">
-                    <p class="text-sm text-brand-silver/60">
+                <div class="mt-16 border-t border-brand-snow/10 pt-8">
+                    <p class="text-sm text-brand-silver/80">
                         &copy; {{ date('Y') }} Rewire Starter Kit. All rights reserved.
                     </p>
-                    <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
-                        <a href="#" class="text-sm text-brand-silver/60 transition hover:text-brand-snow">Privacy Policy</a>
-                        <a href="#" class="text-sm text-brand-silver/60 transition hover:text-brand-snow">Terms</a>
-                        <span class="flex items-center gap-2 text-sm text-brand-silver/60">
-                            <span class="landing-animate-pulse-soft size-2 rounded-full bg-emerald-400"></span>
-                            All systems operational
-                        </span>
-                    </div>
                 </div>
             </div>
         </footer>
