@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Recodex-ID/rewire/compare/v1.2.1...v1.3.0) (2026-09-19)
+
+
+### Features
+
+* add legal pages, cookie consent, SEO meta, spam protection, and production hardening ([e3ebb3b](https://github.com/Recodex-ID/rewire/commit/e3ebb3b6fe4cbea9e79fabc4fc8114472d26c0d8))
+
 ## [1.2.1](https://github.com/Recodex-ID/rewire/compare/v1.2.0...v1.2.1) (2026-09-17)
 
 
