@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\EnforceHttps;
+use App\Http\Middleware\RejectSpamSubmissions;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Global, so 404s and other routeless responses are covered too. Appended, so they
+        // run after the framework's own TrustProxies middleware (configured in
+        // config/trustedproxy.php), which the https redirect needs to see the original scheme.
+        $middleware->append([EnforceHttps::class, AddSecurityHeaders::class]);
+        $middleware->web(append: [RejectSpamSubmissions::class]);
+
         $middleware->alias([
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,

@@ -71,9 +71,10 @@ class Post extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit(Fit::Crop, 160, 100);
-        $this->addMediaConversion('card')->fit(Fit::Crop, 800, 400);
-        $this->addMediaConversion('hero')->fit(Fit::Max, 1600, 1600);
+        // WebP at quality 80 is noticeably smaller than the library's default JPG for the same picture.
+        $this->addMediaConversion('thumb')->fit(Fit::Crop, 160, 100)->format('webp')->quality(80);
+        $this->addMediaConversion('card')->fit(Fit::Crop, 800, 400)->format('webp')->quality(80);
+        $this->addMediaConversion('hero')->fit(Fit::Max, 1600, 1600)->format('webp')->quality(80);
     }
 
     public function getSlugOptions(): SlugOptions

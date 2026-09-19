@@ -24,6 +24,7 @@ A reusable Laravel starter kit for internal and client projects — authenticati
 - **Per-role dashboard** — a thin dashboard shell dispatches to a self-contained Livewire component per role (super-admin, admin, staff), each showing the stats relevant to that role.
 - **Branded system pages** — error pages (404, 500, ...) and transactional emails match the app's look, not the framework defaults.
 - **In-app docs** — a docs page inside the app with project-specific setup and architecture notes.
+- **Launch checklist built in** — Privacy Policy and Terms of Service pages (`/privacy`, `/terms`), a cookie consent banner that keeps Google Analytics off until the visitor accepts, per-page meta titles and descriptions with canonical URLs and Open Graph/X preview tags (a default 1200×630 preview image ships in `public/images/og-default.png`), a sitemap and a dynamic `robots.txt`, `noindex` on every signed-in and auth screen, honeypot plus rate limiting on the register and forgot-password forms, baseline security headers, and HTTPS enforcement in production. Chart.js loads only on the dashboards, and blog images are converted to WebP.
 - **Tests from day one** — Pest feature tests, Pint formatting, and Larastan static analysis wired into CI.
 
 ## Getting started
@@ -76,9 +77,23 @@ Or `composer test`, which runs formatting, static analysis, and the full suite t
 ## Reusing this for a new project
 
 1. Update `APP_NAME` and other `.env` values for the new project.
-2. Swap the brand palette in `resources/css/app.css` (`--color-brand-*`) and the logo mark in `public/images/logo.png`.
-3. Replace the seeded accounts (`database/seeders/UserSeeder.php`) and the landing page copy, which is hardcoded directly in `resources/views/components/landing/*`.
-4. Update `composer.json`'s `name`/`description` if the repo is being renamed too.
+2. Swap the brand palette in `resources/css/app.css` (`--color-brand-*`) and the logo mark in `public/images/logo.png` (256×256 is plenty; it is shown at 36 to 44 px). Regenerate `public/images/og-default.png` (1200×630) and the `public/favicon*` files to match.
+3. Replace the seeded accounts (`database/seeders/UserSeeder.php`) and the landing page copy, which lives directly in `resources/views/pages/main/index.blade.php` and `resources/views/layouts/main.blade.php` (no separate landing components).
+4. **Rewrite the legal pages for your own business.** `resources/views/pages/main/privacy.blade.php` and `terms.blade.php` describe this deployment, name PT Reka Mitra Teknologi as the responsible party, and carry the date they were last reviewed. Change the company details, check every statement against what your fork actually collects, and have a lawyer review them (add a governing-law clause if you need one). The footer credit line ("Built by Recodex ID") is in `layouts/main.blade.php`.
+5. Update `composer.json`'s `name`/`description` if the repo is being renamed too.
+
+### Going to production
+
+| Setting | What it does |
+|---|---|
+| `APP_ENV=production`, `APP_DEBUG=false` | Turns on HTTPS enforcement and keeps stack traces off the public site. |
+| `FORCE_HTTPS` | Defaults to `true` in production. Redirects http to https, generates https URLs, sends the HSTS header and marks the session cookie secure. The `/up` health check is exempt. |
+| `TRUSTED_PROXIES` | Set to your load balancer's IPs (comma separated), or `*` if a proxy you control terminates TLS. Without it, the redirect cannot see the original scheme behind a proxy. |
+| Scheduler | Add `* * * * * php /path/to/artisan schedule:run` to cron. It runs `activitylog:clean` daily, which enforces the 365 day audit-log retention the privacy policy promises. |
+| Contact details | Fill in the contact address, email and phone in **System → Settings**. Empty fields are hidden on the site instead of showing placeholders. |
+| Google Analytics | Optional. Enter a `G-XXXXXXXXXX` measurement ID in **System → Settings**. The script only loads after a visitor accepts the cookie banner. |
+
+Nothing sensitive reaches the browser: the only `VITE_` variable is the app name, and the GA measurement ID is public by design. The security headers do not include a `Content-Security-Policy`, because Livewire, Alpine and the analytics snippet use inline scripts, so write one for your own deployment if you need it. Also remember that the `WebP` conversions only apply to images uploaded after this change; run `php artisan media-library:regenerate` to convert older ones.
 
 More detail — architecture notes, where each feature lives, how to extend the landing page — is in the in-app docs at `/docs` once you're logged in.
 

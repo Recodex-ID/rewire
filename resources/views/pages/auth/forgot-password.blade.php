@@ -10,6 +10,7 @@
 
         <form method="POST" action="{{ route('password.email') }}" class="flex flex-col gap-5">
             @csrf
+            <x-honeypot />
 
             <!-- Email Address -->
             <flux:input
@@ -27,7 +28,7 @@
             </flux:button>
         </form>
 
-        <div class="space-x-1 text-center text-sm text-zinc-400 rtl:space-x-reverse">
+        <div class="space-x-1 text-center text-sm text-zinc-500 rtl:space-x-reverse">
             <span>Or, return to</span>
             <flux:link :href="route('login')" wire:navigate>log in</flux:link>
         </div>

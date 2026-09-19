@@ -37,7 +37,7 @@ new #[Title('Media Library')] class extends Component
 
     @if ($this->media->isEmpty())
         <flux:card class="flex flex-col items-center gap-3 py-16 text-center">
-            <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
+            <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-500">
                 <flux:icon icon="photo" variant="micro" />
             </div>
             <flux:text>No media files yet. Upload a featured image on a blog post to see it here.</flux:text>
@@ -56,7 +56,7 @@ new #[Title('Media Library')] class extends Component
                             />
                         @else
                             <div class="flex size-full items-center justify-center">
-                                <flux:icon icon="document" class="size-10 text-zinc-300" />
+                                <flux:icon icon="document" class="size-10 text-zinc-500" />
                             </div>
                         @endif
 

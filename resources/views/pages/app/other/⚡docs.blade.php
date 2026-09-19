@@ -20,7 +20,8 @@ new #[Title('Documentation')] class extends Component
             ['id' => 'roles', 'label' => 'Roles & permissions', 'icon' => 'shield-check'],
             ['id' => 'blog', 'label' => 'Blog', 'icon' => 'newspaper'],
             ['id' => 'settings', 'label' => 'Site settings', 'icon' => 'cog-6-tooth'],
-            ['id' => 'sitemap', 'label' => 'Sitemap', 'icon' => 'map'],
+            ['id' => 'sitemap', 'label' => 'Sitemap & SEO', 'icon' => 'map'],
+            ['id' => 'launch', 'label' => 'Launch checklist', 'icon' => 'globe-alt'],
             ['id' => 'stack', 'label' => 'Tech stack', 'icon' => 'cpu-chip'],
             ['id' => 'quality', 'label' => 'Tests & quality', 'icon' => 'beaker'],
         ];
@@ -36,7 +37,7 @@ new #[Title('Documentation')] class extends Component
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-[272px_1fr] lg:items-start">
         <flux:card class="lg:sticky lg:top-20">
-            <flux:text size="sm" class="mb-3 font-semibold tracking-wide text-zinc-400 uppercase">On this page</flux:text>
+            <flux:text size="sm" class="mb-3 font-semibold tracking-wide text-zinc-500 uppercase">On this page</flux:text>
             <nav class="flex flex-col gap-1">
                 @foreach ($this->sections() as $section)
                     <flux:link
@@ -45,7 +46,7 @@ new #[Title('Documentation')] class extends Component
                         class="rounded-lg px-2 py-1.5 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
                     >
                         <span class="flex items-center gap-2.5">
-                            <flux:icon :name="$section['icon']" class="size-4 text-zinc-400" />
+                            <flux:icon :name="$section['icon']" class="size-4 text-zinc-500" />
                             {{ $section['label'] }}
                         </span>
                     </flux:link>
@@ -57,7 +58,7 @@ new #[Title('Documentation')] class extends Component
             <section id="getting-started" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="rocket-launch" class="size-5 text-zinc-400" />
+                        <flux:icon name="rocket-launch" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Getting started</flux:heading>
                     </div>
                     <flux:text>
@@ -108,7 +109,7 @@ new #[Title('Documentation')] class extends Component
             <section id="authentication" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="key" class="size-5 text-zinc-400" />
+                        <flux:icon name="key" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Authentication</flux:heading>
                     </div>
                     <flux:text>
@@ -134,7 +135,7 @@ new #[Title('Documentation')] class extends Component
             <section id="roles" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="shield-check" class="size-5 text-zinc-400" />
+                        <flux:icon name="shield-check" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Roles &amp; permissions</flux:heading>
                     </div>
                     <flux:text>
@@ -173,7 +174,7 @@ new #[Title('Documentation')] class extends Component
             <section id="blog" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="newspaper" class="size-5 text-zinc-400" />
+                        <flux:icon name="newspaper" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Blog</flux:heading>
                     </div>
                     <flux:text>
@@ -216,16 +217,18 @@ new #[Title('Documentation')] class extends Component
             <section id="settings" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="cog-6-tooth" class="size-5 text-zinc-400" />
+                        <flux:icon name="cog-6-tooth" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Site settings</flux:heading>
                     </div>
                     <flux:text>
-                        Everything else on the public site (branding, copy, images) is hardcoded directly in
-                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/components/landing/*</code> — edit those
-                        files and redeploy. The handful of values that are genuinely per-deployment config live in the
+                        Everything else on the public site (branding, copy, images) is written directly in
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/pages/main/*</code> and
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/layouts/main.blade.php</code>, with no separate
+                        landing components. Edit those files and redeploy. The handful of values that are genuinely per-deployment config live in the
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">App\Models\Setting</code> key-value store instead, editable
                         from <flux:link :href="route('system.settings')">/system/settings</flux:link>: SEO meta description, a Google
-                        Analytics ID, social links, and the contact address/email/phone shown on the landing page's call-to-action.
+                        Analytics measurement ID (must look like <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">G-XXXXXXXXXX</code>),
+                        social links, and the contact address, email and phone shown on the landing page. Contact fields left empty are hidden, not replaced with placeholders.
                     </flux:text>
                 </flux:card>
             </section>
@@ -233,15 +236,25 @@ new #[Title('Documentation')] class extends Component
             <section id="sitemap" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="map" class="size-5 text-zinc-400" />
-                        <flux:heading size="lg">Sitemap</flux:heading>
+                        <flux:icon name="map" class="size-5 text-zinc-500" />
+                        <flux:heading size="lg">Sitemap &amp; SEO</flux:heading>
                     </div>
                     <flux:text>
-                        <flux:link href="https://github.com/spatie/laravel-sitemap" target="_blank">spatie/laravel-sitemap</flux:link>
+                        <flux:link href="https://github.com/spatie/laravel-sitemap" target="_blank" rel="noopener">spatie/laravel-sitemap</flux:link>
                         powers the public <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">/sitemap.xml</code>
                         (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">MainController::sitemap()</code>), built manually rather
-                        than crawled — it lists the home page, the blog index, and every published
+                        than crawled. It lists the home page, the blog index, the privacy and terms pages, and every published
                         <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">Post</code>, and never includes drafts or authenticated routes.
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">/robots.txt</code> is a route too
+                        (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">MainController::robots()</code>), so its
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">Sitemap:</code> line always carries your own domain.
+                    </flux:text>
+                    <flux:text>
+                        Every public page sets its own title, description, canonical URL and Open Graph/X tags in
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">resources/views/partials/head.blade.php</code>. Blog posts use their
+                        excerpt and featured image; everything else falls back to the SEO description setting and
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">public/images/og-default.png</code>. Signed-in and auth screens are marked
+                        <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm">noindex</code>.
                     </flux:text>
                     <flux:text>
                         Admins can review the same list in a friendlier table at
@@ -250,10 +263,62 @@ new #[Title('Documentation')] class extends Component
                 </flux:card>
             </section>
 
+            <section id="launch" class="scroll-mt-24">
+                <flux:card class="space-y-4">
+                    <div class="flex items-center gap-2.5">
+                        <flux:icon name="globe-alt" class="size-5 text-zinc-500" />
+                        <flux:heading size="lg">Launch checklist</flux:heading>
+                    </div>
+                    <flux:text>What ships with the kit, and what you still have to do before going live:</flux:text>
+                    <ul class="list-disc space-y-2 pl-6 text-sm text-zinc-700">
+                        <li>
+                            <strong>Legal pages.</strong> <flux:link :href="route('privacy')" target="_blank" rel="noopener">/privacy</flux:link> and
+                            <flux:link :href="route('terms')" target="_blank" rel="noopener">/terms</flux:link> describe this deployment and name
+                            PT Reka Mitra Teknologi. Rewrite them for your own company and have a lawyer review them before launch.
+                        </li>
+                        <li>
+                            <strong>Cookie consent.</strong> The banner only appears when a Google Analytics ID is set. The tracking script is never in the
+                            page HTML; <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">resources/js/app.js</code> injects it after the visitor accepts,
+                            and a "Cookie settings" link in the footer reopens the choice.
+                        </li>
+                        <li>
+                            <strong>Spam protection.</strong> Register and forgot-password forms carry a hidden honeypot field and allow five submissions
+                            per minute per address (<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">RejectSpamSubmissions</code>). Sign-in has its own
+                            Fortify throttle.
+                        </li>
+                        <li>
+                            <strong>HTTPS and headers.</strong> With <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">FORCE_HTTPS</code> on (the default in
+                            production), http requests are redirected, URLs are generated as https, HSTS is sent and the session cookie is marked secure. Set
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">TRUSTED_PROXIES</code> when TLS ends at a proxy. Every response also gets
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">X-Content-Type-Options</code>,
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">X-Frame-Options</code>,
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">Referrer-Policy</code> and
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">Permissions-Policy</code>. There is no
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">Content-Security-Policy</code>; write one for your deployment.
+                        </li>
+                        <li>
+                            <strong>Scheduler.</strong> Point cron at <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">php artisan schedule:run</code>.
+                            It runs <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">activitylog:clean</code> daily so audit-log entries older than
+                            {{ config('activitylog.clean_after_days') }} days are deleted, as the privacy policy says.
+                        </li>
+                        <li>
+                            <strong>Speed.</strong> Chart.js is a separate chunk that only the dashboards load, the logo is 256 px, and blog image
+                            conversions are WebP. Older uploads keep their JPG conversions until you run
+                            <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">php artisan media-library:regenerate</code>.
+                        </li>
+                        <li>
+                            <strong>Accessibility.</strong> Text colors are checked against WCAG AA (4.5:1), images carry alt text, and links that open a new
+                            tab use <code class="rounded bg-zinc-100 px-1.5 py-0.5 text-xs">rel="noopener"</code>. The test suite fails if a public link or
+                            in-page anchor breaks.
+                        </li>
+                    </ul>
+                </flux:card>
+            </section>
+
             <section id="stack" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="cpu-chip" class="size-5 text-zinc-400" />
+                        <flux:icon name="cpu-chip" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Tech stack</flux:heading>
                     </div>
                     <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -292,7 +357,7 @@ new #[Title('Documentation')] class extends Component
             <section id="quality" class="scroll-mt-24">
                 <flux:card class="space-y-4">
                     <div class="flex items-center gap-2.5">
-                        <flux:icon name="beaker" class="size-5 text-zinc-400" />
+                        <flux:icon name="beaker" class="size-5 text-zinc-500" />
                         <flux:heading size="lg">Tests &amp; quality</flux:heading>
                     </div>
                     <flux:text>Every change should pass all three before it's considered done:</flux:text>

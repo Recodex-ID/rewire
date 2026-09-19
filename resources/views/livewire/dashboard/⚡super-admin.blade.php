@@ -75,7 +75,7 @@ new class extends Component
                 <flux:icon icon="newspaper" class="text-emerald-600" />
             </div>
             <div>
-                <div class="font-display text-3xl font-bold tracking-tight">{{ $publishedPosts }}<span class="text-lg text-zinc-400">/{{ $totalPosts }}</span></div>
+                <div class="font-display text-3xl font-bold tracking-tight">{{ $publishedPosts }}<span class="text-lg text-zinc-500">/{{ $totalPosts }}</span></div>
                 <div class="mt-1 text-sm text-zinc-500">Blog posts published</div>
             </div>
         </flux:card>
@@ -110,14 +110,15 @@ new class extends Component
                 wire:ignore
                 class="mt-8 h-40"
                 x-data="{
-                    init() {
+                    async init() {
+                        const Chart = await window.loadChart();
                         new Chart(this.$refs.canvas, {
                             type: 'bar',
                             data: {
                                 labels: @js(collect($registrationsPerDay)->pluck('label')),
                                 datasets: [{
                                     data: @js(collect($registrationsPerDay)->pluck('count')),
-                                    backgroundColor: '#0f172a33',
+                                    backgroundColor: '#1a2a4b33',
                                     borderRadius: 4,
                                 }],
                             },
@@ -163,7 +164,7 @@ new class extends Component
                 <flux:subheading>Latest actions from the admin audit log.</flux:subheading>
             </div>
 
-            <flux:button as="a" :href="route('super-admin.activity')" wire:navigate variant="ghost" size="sm">
+            <flux:button as="a" :href="route('super-admin.activity')" wire:navigate variant="outline" size="sm">
                 View all
             </flux:button>
         </div>
@@ -178,11 +179,11 @@ new class extends Component
                         <div class="text-sm font-medium">{{ $item['title'] }}</div>
                         <div class="text-sm text-zinc-500">{{ $item['subtitle'] }}</div>
                     </div>
-                    <div class="font-mono text-xs text-zinc-400">{{ $item['at'] }}</div>
+                    <div class="font-mono text-xs text-zinc-500">{{ $item['at'] }}</div>
                 </div>
             @empty
                 <div class="flex flex-col items-center gap-3 py-8 text-center">
-                    <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
+                    <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-500">
                         <flux:icon icon="inbox" variant="micro" />
                     </div>
                     <flux:text>No recent activity yet.</flux:text>

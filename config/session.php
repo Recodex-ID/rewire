@@ -169,7 +169,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => env('SESSION_SECURE_COOKIE', (bool) env('FORCE_HTTPS', env('APP_ENV', 'production') === 'production')),
 
     /*
     |--------------------------------------------------------------------------

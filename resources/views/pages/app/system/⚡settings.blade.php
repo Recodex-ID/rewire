@@ -42,7 +42,7 @@ new #[Title('Settings')] class extends Component
     {
         $this->validate([
             'seoDescription' => ['nullable', 'string', 'max:255'],
-            'analyticsId' => ['nullable', 'string', 'max:64'],
+            'analyticsId' => ['nullable', 'string', 'max:64', 'regex:/^G-[A-Z0-9]+$/'],
             'socialLinkedin' => ['nullable', 'url', 'max:255'],
             'socialTwitter' => ['nullable', 'url', 'max:255'],
             'socialGithub' => ['nullable', 'url', 'max:255'],
@@ -83,14 +83,14 @@ new #[Title('Settings')] class extends Component
             <flux:textarea
                 wire:model="seoDescription"
                 label="SEO meta description"
-                description="Shown in search results and social previews. Falls back to nothing if left blank."
+                description="Shown in search results and social previews. A generic default is used if left blank."
                 rows="3"
             />
 
             <flux:input
                 wire:model="analyticsId"
                 label="Google Analytics measurement ID"
-                description="e.g. G-XXXXXXXXXX. Leave blank to disable tracking."
+                description="e.g. G-XXXXXXXXXX. Leave blank to disable tracking. Visitors are asked for consent before it loads."
             />
         </flux:card>
 

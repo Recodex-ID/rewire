@@ -12,6 +12,8 @@
 
         <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-5">
             @csrf
+            <x-honeypot />
+
             <!-- Name -->
             <flux:input
                 name="name"
@@ -86,6 +88,13 @@
             <flux:button type="submit" variant="primary" class="w-full" data-test="register-user-button">
                 Create account
             </flux:button>
+
+            <flux:text class="text-center text-xs">
+                By creating an account you agree to the
+                <flux:link :href="route('terms')" target="_blank" rel="noopener">Terms of Service</flux:link>
+                and the
+                <flux:link :href="route('privacy')" target="_blank" rel="noopener">Privacy Policy</flux:link>.
+            </flux:text>
         </form>
     </div>
 </x-layouts::auth>

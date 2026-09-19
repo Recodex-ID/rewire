@@ -35,9 +35,12 @@ Source of truth: `resources/css/app.css`. Do not introduce new colors outside th
 | `--color-brand-navy` | `#1a2a4b` | Primary text, dark surfaces, primary buttons |
 | `--color-brand-navy-light` | `#2a3a5b` | Hover state for navy surfaces |
 | `--color-brand-accent` | `#4da3ff` | The one deliberate accent — links, highlights, active states |
-| `--color-brand-accent-dark` | `#2e7dd8` | Accent on light backgrounds (better contrast) |
+| `--color-brand-accent-dark` | `#2871c7` | Accent on light backgrounds (4.87:1 on snow, passes AA for body text) |
 | `--color-brand-snow` | `#fefefe` | Page background, text on dark surfaces |
 | `--color-brand-silver` | `#bcbfc4` | Muted text on dark surfaces |
+
+One exception, set by the product owner: the "Recodex ID" credit link in the footer is `#CFF008`
+(10.92:1 on navy). It is Recodex's own brand color, used for that single link and nowhere else.
 
 This is 2 core colors (navy, snow) + 1 accent (blue), matching R-29's cap. Zinc/gray
 neutrals (already used throughout the authenticated app's System panel) are not part of

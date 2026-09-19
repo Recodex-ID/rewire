@@ -19,7 +19,7 @@
     --color-brand-silver: #bcbfc4;
     --color-brand-snow: #fefefe;
     --color-brand-accent: #4da3ff;
-    --color-brand-accent-dark: #2e7dd8;
+    --color-brand-accent-dark: #2871c7;
 
     /* Rebase Flux's "zinc" to a custom gray scale tinted with the brand navy's hue (~221deg),
        instead of Tailwind's generic slate, so the sidebar -- the only permanently-dark surface

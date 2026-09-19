@@ -47,14 +47,17 @@
             </div>
 
             <!-- Remember Me -->
-            <flux:checkbox name="remember" label="Keep me signed in for 30 days" :checked="old('remember')" />
+            <flux:checkbox name="remember" label="Keep me signed in on this device" :checked="old('remember')" />
 
             <flux:button variant="primary" type="submit" class="w-full" data-test="login-button">
                 Sign in securely
             </flux:button>
 
-            <flux:text class="text-center text-xs text-zinc-400">
-                Protected by industry-standard encryption. Your data is transmitted securely.
+            <flux:text class="text-center text-xs">
+                By signing in you agree to the
+                <flux:link :href="route('terms')" target="_blank" rel="noopener">Terms of Service</flux:link>
+                and the
+                <flux:link :href="route('privacy')" target="_blank" rel="noopener">Privacy Policy</flux:link>.
             </flux:text>
         </form>
     </div>

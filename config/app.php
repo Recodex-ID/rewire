@@ -56,6 +56,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Force HTTPS
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, generated URLs use https, plain-http requests are redirected
+    | to https, and the HSTS header is sent. On by default in production, off
+    | everywhere else so local development over http keeps working.
+    |
+    */
+
+    'force_https' => (bool) env('FORCE_HTTPS', env('APP_ENV', 'production') === 'production'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

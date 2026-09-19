@@ -131,6 +131,10 @@ test('uploading a featured image creates media with thumb, card, and hero conver
     expect($post->getFirstMediaUrl('featured_image', 'thumb'))->not->toBe('');
     expect($post->getFirstMediaUrl('featured_image', 'card'))->not->toBe('');
     expect($post->getFirstMediaUrl('featured_image', 'hero'))->not->toBe('');
+
+    foreach (['thumb', 'card', 'hero'] as $conversion) {
+        expect($post->getFirstMediaUrl('featured_image', $conversion))->toEndWith('.webp');
+    }
 });
 
 test('uploading a new featured image replaces the old one', function () {

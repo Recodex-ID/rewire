@@ -1,4 +1,4 @@
-<x-layouts::main title="Blog">
+<x-layouts::main title="Blog" seo-description="News, guides, and updates from the Rewire Starter Kit team.">
     <section class="landing-grid-bg relative overflow-hidden bg-brand-navy pt-32 pb-20 sm:pt-40 sm:pb-24">
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div class="landing-reveal max-w-2xl">
@@ -16,7 +16,7 @@
     <section class="bg-brand-snow py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             @if ($posts->isEmpty())
-                <p class="text-brand-navy/60">No posts published yet.</p>
+                <p class="text-brand-navy/70">No posts published yet.</p>
             @else
                 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($posts as $post)
@@ -28,6 +28,10 @@
                                 <img
                                     src="{{ $post->getFirstMediaUrl('featured_image', 'card') }}"
                                     alt="{{ $post->title }}"
+                                    width="800"
+                                    height="400"
+                                    loading="lazy"
+                                    decoding="async"
                                     class="h-48 w-full object-cover"
                                 >
                             @else
@@ -39,7 +43,7 @@
                                 @if ($post->excerpt)
                                     <p class="mt-3 flex-1 text-sm leading-relaxed text-brand-navy/70">{{ $post->excerpt }}</p>
                                 @endif
-                                <div class="mt-6 flex items-center gap-2 text-xs text-brand-navy/50">
+                                <div class="mt-6 flex items-center gap-2 text-xs text-brand-navy/70">
                                     <span>{{ $post->author?->name ?? 'Rewire Starter Kit' }}</span>
                                     <span>&middot;</span>
                                     <span>{{ $post->created_at->translatedFormat('l, j F Y') }}</span>

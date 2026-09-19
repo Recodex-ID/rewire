@@ -43,7 +43,7 @@ new class extends Component
                 <flux:icon icon="pencil-square" class="text-violet-600" />
             </div>
             <div>
-                <div class="font-display text-3xl font-bold tracking-tight">{{ $myPublishedPosts }}<span class="text-lg text-zinc-400">/{{ $myTotalPosts }}</span></div>
+                <div class="font-display text-3xl font-bold tracking-tight">{{ $myPublishedPosts }}<span class="text-lg text-zinc-500">/{{ $myTotalPosts }}</span></div>
                 <div class="mt-1 text-sm text-zinc-500">Your posts published</div>
             </div>
         </flux:card>
@@ -67,14 +67,15 @@ new class extends Component
             wire:ignore
             class="mx-auto h-40 w-40"
             x-data="{
-                init() {
+                async init() {
+                    const Chart = await window.loadChart();
                     new Chart(this.$refs.canvas, {
                         type: 'doughnut',
                         data: {
                             labels: ['Published', 'Draft'],
                             datasets: [{
                                 data: @js([$myPublishedPosts, max(0, $myTotalPosts - $myPublishedPosts)]),
-                                backgroundColor: ['#0f172a', '#0f172a33'],
+                                backgroundColor: ['#1a2a4b', '#1a2a4b33'],
                                 borderWidth: 0,
                             }],
                         },
@@ -124,11 +125,11 @@ new class extends Component
                         <div class="text-sm font-medium">{{ $item['title'] }}</div>
                         <div class="text-sm text-zinc-500">{{ $item['subtitle'] }}</div>
                     </div>
-                    <div class="font-mono text-xs text-zinc-400">{{ $item['at'] }}</div>
+                    <div class="font-mono text-xs text-zinc-500">{{ $item['at'] }}</div>
                 </div>
             @empty
                 <div class="flex flex-col items-center gap-3 py-8 text-center">
-                    <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400">
+                    <div class="flex size-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-500">
                         <flux:icon icon="inbox" variant="micro" />
                     </div>
                     <flux:text>No recent activity yet.</flux:text>

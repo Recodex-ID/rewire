@@ -35,11 +35,23 @@ class MainController extends Controller
         ]);
     }
 
+    public function privacy(): View
+    {
+        return view('pages.main.privacy');
+    }
+
+    public function terms(): View
+    {
+        return view('pages.main.terms');
+    }
+
     public function sitemap(): Response
     {
         $sitemap = Sitemap::create()
             ->add(Url::create(route('home')))
-            ->add(Url::create(route('blogs')));
+            ->add(Url::create(route('blogs')))
+            ->add(Url::create(route('privacy')))
+            ->add(Url::create(route('terms')));
 
         Post::query()->published()->get()->each(
             fn (Post $post) => $sitemap->add(
@@ -48,5 +60,32 @@ class MainController extends Controller
         );
 
         return $sitemap->toResponse(request());
+    }
+
+    /**
+     * Served from a route (not a static file) so the Sitemap line always carries
+     * this deployment's own absolute URL.
+     */
+    public function robots(): Response
+    {
+        $lines = [
+            'User-agent: *',
+            'Disallow: /dashboard',
+            'Disallow: /system/',
+            'Disallow: /super-admin/',
+            'Disallow: /content-management/',
+            'Disallow: /settings',
+            'Disallow: /other/',
+            'Disallow: /login',
+            'Disallow: /register',
+            'Disallow: /forgot-password',
+            'Disallow: /reset-password/',
+            'Disallow: /email/',
+            'Disallow: /user/',
+            '',
+            'Sitemap: '.route('sitemap'),
+        ];
+
+        return response(implode("\n", $lines)."\n", 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
     }
 }

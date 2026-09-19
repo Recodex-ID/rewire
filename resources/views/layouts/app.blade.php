@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        @include('partials.head')
+        @include('partials.head', ['noindex' => true])
     </head>
     <body class="min-h-screen bg-zinc-50">
 

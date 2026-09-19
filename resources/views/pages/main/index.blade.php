@@ -1,9 +1,9 @@
-<x-layouts::main :seo-description="$seoDescription" :analytics-id="$analyticsId">
+<x-layouts::main title="Laravel starter kit for client projects" :seo-description="$seoDescription" :analytics-id="$analyticsId">
     @php
         $heroStats = [
             ['value' => '12', 'label' => 'Composer packages'],
             ['value' => '3', 'label' => 'Roles built in'],
-            ['value' => '101', 'label' => 'Pest tests passing'],
+            ['value' => '151', 'label' => 'Pest tests passing'],
         ];
 
         $trustedByLogos = ['Laravel', 'Livewire', 'Flux UI', 'Tailwind', 'Pest', 'Spatie'];
@@ -81,26 +81,28 @@
             ['title' => 'Per-role dashboards', 'description' => 'Each role (super-admin, admin, staff) gets its own Livewire dashboard with Chart.js charts.'],
             ['title' => 'System panel', 'description' => 'Users, Sitemap, Settings, and Media Library, gated to admin and super-admin.'],
             ['title' => 'Activity log', 'description' => 'Every admin action is audited via Spatie Activitylog, visible to super-admins.'],
-            ['title' => 'Tests from day one', 'description' => '101 Pest tests, Pint formatting, and Larastan static analysis, wired into CI.'],
+            ['title' => 'Tests from day one', 'description' => '151 Pest tests, Pint formatting, and Larastan static analysis, wired into CI.'],
             ['title' => 'Automated releases', 'description' => 'release-please publishes a GitHub Release with a real changelog from Conventional Commits.'],
+            ['title' => 'Launch checklist built in', 'description' => 'Privacy and terms pages, cookie consent for analytics, meta tags with a sitemap and robots.txt, honeypot spam protection, security headers, and HTTPS enforcement in production.'],
         ];
 
         $whyStack = [
             ['title' => 'Why Livewire', 'description' => 'Server-driven UI: no separate API layer or SPA build to maintain alongside the backend.'],
             ['title' => 'Why Spatie packages', 'description' => 'Battle-tested roles, media, slugs, activity logging, and sitemaps: nothing reinvented.'],
-            ['title' => 'Why Pest', 'description' => 'Readable test syntax, and a real safety net: 101 tests covering every role boundary in this repo.'],
+            ['title' => 'Why Pest', 'description' => 'Readable test syntax, and a real safety net: 151 tests covering every role boundary in this repo.'],
         ];
 
         $statsStrip = [
             ['value' => '12', 'label' => 'Composer packages'],
             ['value' => '3', 'label' => 'Roles built in'],
-            ['value' => '101', 'label' => 'Tests passing'],
+            ['value' => '151', 'label' => 'Tests passing'],
             ['value' => 'MIT', 'label' => 'Licensed'],
         ];
 
         $contactAddress = \App\Models\Setting::get('contact_address');
         $contactEmail = \App\Models\Setting::get('contact_email');
         $contactPhone = \App\Models\Setting::get('contact_phone');
+        $hasContactDetails = filled($contactAddress) || filled($contactEmail) || filled($contactPhone);
     @endphp
 
     {{-- Hero --}}
@@ -124,7 +126,7 @@
                         Sign in to the dashboard
                         <x-heroicon-o-arrow-right class="size-4" />
                     </a>
-                    <a href="https://github.com/Recodex-ID/rewire" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-brand-navy/20 px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-navy/5">
+                    <a href="https://github.com/Recodex-ID/rewire" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-brand-navy/30 px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-navy/5">
                         <x-si-github class="size-4" />
                         View on GitHub
                     </a>
@@ -134,7 +136,7 @@
                     @foreach ($heroStats as $stat)
                         <div>
                             <div class="font-display text-3xl font-bold text-brand-navy">{{ $stat['value'] }}</div>
-                            <div class="mt-1 text-xs text-brand-navy/50">{{ $stat['label'] }}</div>
+                            <div class="mt-1 text-xs text-brand-navy/70">{{ $stat['label'] }}</div>
                         </div>
                     @endforeach
                 </div>
@@ -248,13 +250,14 @@
         </div>
     </section>
 
+
     {{-- CTA --}}
     <section id="contact" class="scroll-mt-24 bg-brand-snow py-24">
         <div class="landing-reveal relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-brand-navy px-6 py-16 sm:px-12 lg:px-16">
             <div class="landing-grid-bg-dark absolute inset-0"></div>
 
             <div class="relative grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-                <div class="lg:col-span-7">
+                <div @class(['lg:col-span-7' => $hasContactDetails, 'lg:col-span-12' => ! $hasContactDetails])>
                     <p class="font-mono text-sm font-medium tracking-wide text-brand-accent">
                         Let's build
                     </p>
@@ -268,56 +271,66 @@
                     </p>
 
                     <div class="mt-10 flex flex-wrap items-center gap-4">
-                        <a href="{{ route('register') }}" class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-accent-dark">
-                            Create an account
-                            <x-heroicon-o-arrow-right class="size-4" />
+                        <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-medium text-brand-navy transition hover:bg-brand-snow">
+                            Sign in to the dashboard
+                            <x-heroicon-o-arrow-right class="size-4" aria-hidden="true" />
                         </a>
-                        <a href="mailto:{{ $contactEmail }}" class="inline-flex items-center gap-2 rounded-full border border-brand-snow/20 px-6 py-3 text-sm font-medium text-brand-snow transition hover:bg-brand-snow/10">
-                            <x-heroicon-o-envelope class="size-4" />
-                            Contact us
-                        </a>
+                        @if (filled($contactEmail))
+                            <a href="mailto:{{ $contactEmail }}" class="inline-flex items-center gap-2 rounded-full border border-brand-snow/30 px-6 py-3 text-sm font-medium text-brand-snow transition hover:bg-brand-snow/10">
+                                <x-heroicon-o-envelope class="size-4" aria-hidden="true" />
+                                Contact us
+                            </a>
+                        @endif
                     </div>
                 </div>
 
-                <div class="lg:col-span-5">
-                    <div class="rounded-2xl border border-brand-snow/10 bg-brand-snow/5 p-8 backdrop-blur">
-                        <p class="font-mono text-xs font-medium tracking-wide text-brand-accent uppercase">
-                            Direct contact
-                        </p>
+                @if ($hasContactDetails)
+                    <div class="lg:col-span-5">
+                        <div class="rounded-2xl border border-brand-snow/10 bg-brand-snow/5 p-8">
+                            <p class="font-mono text-xs font-medium tracking-wide text-brand-accent uppercase">
+                                Direct contact
+                            </p>
 
-                        <div class="mt-6 space-y-6">
-                            <div class="flex items-start gap-4">
-                                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
-                                    <x-heroicon-o-map-pin class="size-5 text-brand-accent" />
-                                </span>
-                                <div>
-                                    <p class="text-sm text-brand-snow/60">HQ</p>
-                                    <p class="mt-1 font-medium text-brand-snow">{{ $contactAddress }}</p>
-                                </div>
-                            </div>
+                            <div class="mt-6 space-y-6">
+                                @if (filled($contactAddress))
+                                    <div class="flex items-start gap-4">
+                                        <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
+                                            <x-heroicon-o-map-pin class="size-5 text-brand-accent" aria-hidden="true" />
+                                        </span>
+                                        <div>
+                                            <p class="text-sm text-brand-snow/70">Address</p>
+                                            <p class="mt-1 font-medium text-brand-snow">{{ $contactAddress }}</p>
+                                        </div>
+                                    </div>
+                                @endif
 
-                            <div class="flex items-start gap-4">
-                                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
-                                    <x-heroicon-o-envelope class="size-5 text-brand-accent" />
-                                </span>
-                                <div>
-                                    <p class="text-sm text-brand-snow/60">Email</p>
-                                    <p class="mt-1 font-medium text-brand-snow">{{ $contactEmail }}</p>
-                                </div>
-                            </div>
+                                @if (filled($contactEmail))
+                                    <div class="flex items-start gap-4">
+                                        <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
+                                            <x-heroicon-o-envelope class="size-5 text-brand-accent" aria-hidden="true" />
+                                        </span>
+                                        <div>
+                                            <p class="text-sm text-brand-snow/70">Email</p>
+                                            <a href="mailto:{{ $contactEmail }}" class="mt-1 inline-block font-medium text-brand-snow underline-offset-4 hover:underline">{{ $contactEmail }}</a>
+                                        </div>
+                                    </div>
+                                @endif
 
-                            <div class="flex items-start gap-4">
-                                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
-                                    <x-heroicon-o-phone class="size-5 text-brand-accent" />
-                                </span>
-                                <div>
-                                    <p class="text-sm text-brand-snow/60">Phone</p>
-                                    <p class="mt-1 font-medium text-brand-snow">{{ $contactPhone }}</p>
-                                </div>
+                                @if (filled($contactPhone))
+                                    <div class="flex items-start gap-4">
+                                        <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
+                                            <x-heroicon-o-phone class="size-5 text-brand-accent" aria-hidden="true" />
+                                        </span>
+                                        <div>
+                                            <p class="text-sm text-brand-snow/70">Phone</p>
+                                            <a href="tel:{{ preg_replace('/[^+\d]/', '', $contactPhone) }}" class="mt-1 inline-block font-medium text-brand-snow underline-offset-4 hover:underline">{{ $contactPhone }}</a>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </section>

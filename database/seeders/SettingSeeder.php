@@ -12,8 +12,8 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
+        // No phone number on purpose: a made-up one would show on the public site. Set a real one in System > Settings.
         Setting::put('contact_address', 'Jakarta, Indonesia');
         Setting::put('contact_email', 'hello@recodex.id');
-        Setting::put('contact_phone', '+62 21 0000 0000');
     }
 }

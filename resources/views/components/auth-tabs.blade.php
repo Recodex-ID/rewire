@@ -7,7 +7,7 @@
         @class([
             'flex-1 rounded-full py-2.5 text-center text-sm font-medium transition-all',
             'bg-brand-navy text-brand-snow shadow-sm' => $active === 'login',
-            'text-brand-navy/60 hover:text-brand-navy' => $active !== 'login',
+            'text-brand-navy/70 hover:text-brand-navy' => $active !== 'login',
         ])
     >
         Sign in
@@ -18,7 +18,7 @@
         @class([
             'flex-1 rounded-full py-2.5 text-center text-sm font-medium transition-all',
             'bg-brand-navy text-brand-snow shadow-sm' => $active === 'register',
-            'text-brand-navy/60 hover:text-brand-navy' => $active !== 'register',
+            'text-brand-navy/70 hover:text-brand-navy' => $active !== 'register',
         ])
     >
         Create account

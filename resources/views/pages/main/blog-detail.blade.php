@@ -1,4 +1,10 @@
-<x-layouts::main :title="$post->title">
+<x-layouts::main
+    :title="$post->title"
+    :seo-description="filled($post->excerpt) ? $post->excerpt : \Illuminate\Support\Str::limit(strip_tags($post->body), 155)"
+    :meta-image="$post->getFirstMediaUrl('featured_image', 'hero') ?: null"
+    meta-type="article"
+    :published-at="$post->created_at->toIso8601String()"
+>
     <article class="pt-32 pb-24 sm:pt-40 sm:pb-32">
         <div class="mx-auto max-w-3xl px-6 lg:px-8">
             <a href="{{ route('blogs') }}" class="landing-reveal text-sm font-medium text-brand-accent-dark hover:text-brand-navy">
@@ -9,7 +15,7 @@
                 {{ $post->title }}
             </h1>
 
-            <div class="landing-reveal mt-6 flex items-center gap-2 text-sm text-brand-navy/50">
+            <div class="landing-reveal mt-6 flex items-center gap-2 text-sm text-brand-navy/70">
                 <span>{{ $post->author?->name ?? 'Rewire Starter Kit' }}</span>
                 <span>&middot;</span>
                 <span>{{ $post->created_at->translatedFormat('l, j F Y') }}</span>
@@ -19,6 +25,8 @@
                 <img
                     src="{{ $post->getFirstMediaUrl('featured_image', 'hero') }}"
                     alt="{{ $post->title }}"
+                    fetchpriority="high"
+                    decoding="async"
                     class="landing-reveal mt-10 w-full rounded-3xl object-cover"
                 >
             @endif

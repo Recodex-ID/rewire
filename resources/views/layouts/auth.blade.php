@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        @include('partials.head')
+        @include('partials.head', ['noindex' => true])
     </head>
     <body class="min-h-screen bg-brand-snow antialiased">
         <div class="flex min-h-screen flex-col lg:flex-row">
@@ -27,10 +27,10 @@
                 </div>
 
                 <a href="{{ route('home') }}" class="relative z-10 flex items-center gap-3" wire:navigate>
-                    <img src="{{ asset('images/logo.png') }}" alt="Rewire Starter Kit" class="size-11 rounded-xl border border-brand-navy bg-brand-snow p-2">
+                    <img src="{{ asset('images/logo.png') }}" alt="" width="44" height="44" class="size-11 rounded-xl border border-brand-navy bg-brand-snow p-2">
                     <span class="flex flex-col leading-none">
                         <span class="font-display text-lg font-bold text-brand-snow">Rewire</span>
-                        <span class="mt-1 font-mono text-[10px] tracking-[0.25em] text-brand-silver/60 uppercase">Starter Kit</span>
+                        <span class="mt-1 font-mono text-[10px] tracking-[0.25em] text-brand-silver/80 uppercase">Starter Kit</span>
                     </span>
                 </a>
 
@@ -47,16 +47,16 @@
 
                     <div class="grid grid-cols-3 gap-6 border-t border-brand-snow/10 pt-8">
                         <div>
-                            <div class="font-display text-2xl font-bold text-brand-snow">2</div>
-                            <div class="mt-1 text-[10px] tracking-wider text-brand-silver/50 uppercase">Roles built in</div>
+                            <div class="font-display text-2xl font-bold text-brand-snow">3</div>
+                            <div class="mt-1 text-[11px] tracking-wider text-brand-silver/80 uppercase">Roles built in</div>
                         </div>
                         <div>
-                            <div class="font-display text-2xl font-bold text-brand-snow">100%</div>
-                            <div class="mt-1 text-[10px] tracking-wider text-brand-silver/50 uppercase">CMS editable</div>
+                            <div class="font-display text-2xl font-bold text-brand-snow">12</div>
+                            <div class="mt-1 text-[11px] tracking-wider text-brand-silver/80 uppercase">Composer packages</div>
                         </div>
                         <div>
-                            <div class="font-display text-2xl font-bold text-brand-snow">1 day</div>
-                            <div class="mt-1 text-[10px] tracking-wider text-brand-silver/50 uppercase">To first deploy</div>
+                            <div class="font-display text-2xl font-bold text-brand-snow">151</div>
+                            <div class="mt-1 text-[11px] tracking-wider text-brand-silver/80 uppercase">Pest tests passing</div>
                         </div>
                     </div>
                 </div>
@@ -65,10 +65,10 @@
             {{-- Form panel --}}
             <div class="relative flex flex-1 flex-col justify-center bg-brand-snow px-6 py-12 sm:px-12 lg:px-16 xl:px-24">
                 <a href="{{ route('home') }}" class="absolute top-8 left-6 flex items-center gap-3 sm:left-12 lg:hidden" wire:navigate>
-                    <img src="{{ asset('images/logo.png') }}" alt="Rewire Starter Kit" class="size-10 rounded-xl border border-brand-navy bg-brand-snow p-1.5">
+                    <img src="{{ asset('images/logo.png') }}" alt="" width="40" height="40" class="size-10 rounded-xl border border-brand-navy bg-brand-snow p-1.5">
                     <span class="flex flex-col leading-none">
                         <span class="font-display font-bold text-brand-navy">Rewire</span>
-                        <span class="mt-1 font-mono text-[9px] tracking-[0.25em] text-brand-navy/60 uppercase">Starter Kit</span>
+                        <span class="mt-1 font-mono text-[9px] tracking-[0.25em] text-brand-navy/70 uppercase">Starter Kit</span>
                     </span>
                 </a>
 

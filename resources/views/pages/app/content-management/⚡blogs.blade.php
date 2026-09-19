@@ -151,7 +151,7 @@ new #[Title('Blog')] class extends Component
                             @if ($post->getFirstMediaUrl('featured_image', 'thumb'))
                                 <img src="{{ $post->getFirstMediaUrl('featured_image', 'thumb') }}" alt="" class="h-10 w-16 rounded-lg object-cover">
                             @else
-                                <div class="flex h-10 w-16 items-center justify-center rounded-lg bg-zinc-100 text-zinc-400">
+                                <div class="flex h-10 w-16 items-center justify-center rounded-lg bg-zinc-100 text-zinc-500">
                                     <flux:icon icon="photo" variant="micro" />
                                 </div>
                             @endif
